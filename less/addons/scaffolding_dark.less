@@ -1,0 +1,70 @@
+//== Scaffolding
+//
+// ## Settings for some of the most global styles.
+
+//** Background color for `<body>`.
+@body-bg:               @gray-dark;
+//** Global text color on `<body>`.
+@text-color:            contrast(@body-bg);
+
+//** Global textual link color.
+@link-color:            @brand-primary;
+@link-hover-color:      darken(@link-color, 15%);
+
+//** Global colors for content areas (e.g., navs or dropdowns).
+@content-color:    #eee;
+@content-bg:       @gray-darker;
+@content-border:   @gray-darker;
+
+//** Global colors for components (e.g., navs or dropdowns).
+@component-color:    #eee;
+@component-bg:       @gray-darker;
+@component-border:   @gray-darker;
+
+//** Global colors for component headers (e.g., navs or dropdowns).
+@component-header-color:    @gray-light;
+@component-header-bg:       #000;
+@component-header-border:   @component-bg;
+
+//** Global color for active items (e.g., navs or dropdowns).
+@component-active-color:    lighten(@component-color, 25%);
+@component-active-bg:       @component-bg;
+@component-active-border:   lighten(@component-border, 10%);
+
+//** Global color for active items (e.g., navs or dropdowns),
+@component-highlight-bg:       lighten(@brand-warning, 50%);
+@component-highlight-color:    contrast(@component-highlight-bg);
+@component-highlight-border:   @brand-warning;
+
+//** Global color for clickable items (e.g., links or tabs).
+@component-hover-color:    @brand-text;
+@component-hover-bg:       @brand-light;
+
+//** Global color for clickable items (e.g., links or tabs).
+@clickable-color:    @brand-text-dark;
+@clickable-bg:       @brand-primary;
+
+//** Global color for clickable items (e.g., links or tabs).
+@clickable-active-color:    @brand-text;
+@clickable-active-bg:       @brand-primary;
+
+//** Global color for clickable items (e.g., links or tabs).
+@clickable-disabled-color:    @brand-text-darker;
+@clickable-disabled-bg:       @brand-darker;
+
+//** Global color for clickable items (e.g., links or tabs).
+@clickable-hover-color:    @brand-text;
+@clickable-hover-bg:       @brand-light;
+
+//** Global color for clickable items (e.g., links or tabs).
+@clickable-inverse-bg:       @gray-lighter;
+@clickable-inverse-color:    contrast(@clickable-inverse-bg);
+
+@clickable-inverse-active-color:    @brand-primary;
+@clickable-inverse-active-bg:       @brand-text;
+
+@clickable-inverse-disabled-color:    @brand-text;
+@clickable-inverse-disabled-bg:       @brand-primary;
+
+@clickable-inverse-hover-color:    @brand-text;
+@clickable-inverse-hover-bg:       @brand-light;
