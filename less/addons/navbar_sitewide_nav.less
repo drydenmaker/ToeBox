@@ -1,0 +1,56 @@
+
+#sitewide_nav
+{
+		margin-bottom: 0;
+		text-transform: uppercase;
+		font-weight: bold;
+				
+		.sublink
+		{
+			clear: both;
+			font-size: x-small;
+			font-weight: normal;
+			
+			color: @navbar-inverse-sublink-color;
+			background-color: @navbar-inverse-sublink-bg;
+		}
+		
+		a.dropdown-toggle
+		{
+			padding: 3px 9px 3px 9px;
+		}
+		
+		.dropdown-menu
+		{
+			font-size: x-small;
+			.border-bottom-radius(5px);
+		}
+		
+		#searchbox
+		{
+			background-color: @brand-light;
+			.border-left-radius(3px);
+			.placeholder(@brand-text-contrast);
+			width: 45%;
+			float: right;
+		}
+		
+		#searchbox:focus
+		{
+			width: 100%;
+		}
+		
+		#global_search_button
+		{
+			background-color: @brand-text;
+			.border-right-radius(3px);
+		}
+		
+		#searchbox, #global_search_button 
+		{
+			
+			color: @brand-text-contrast;
+			border-color: @brand-text;
+		}
+		
+}
