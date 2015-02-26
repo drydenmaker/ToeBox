@@ -1,23 +1,39 @@
-<?php get_header(); ?>
-<!-- START INDEX CONTENT -->
-<div class="col-sm-8 tb-main">
-<?php
-if (have_posts()) :
- 
-    while (have_posts()) : the_post();
-       get_template_part( 'content', get_post_format() );
-     endwhile;
-     
-    else :
-        echo '<p>No content found</p>';
-    endif;
+<?php 
+get_header(); 
 ?>
-	<div class="tb-comments">
-        <?php comments_template(); ?> 
-    </div>
+
+<!-- START SINGLE CONTENT -->
+<div class="container">
+
+	<div class="tb-header">
+		<h1 class="tb-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+		<p class="lead tb-description"><p class="site-description"><?php echo get_bloginfo( 'description', 'display' ); ?></p></p>
+	</div>
+
+	<div class="row">
+		<!-- START MAINBODY ROW -->
+
+		<div class="col-sm-8 tb-main">
+		
+<?php
+inc\ToeBox::HandleLoop($posts, 'content-single'); 
+?>
+ 
+            <div class="tb-comments">
+                <?php comments_template(); ?> 
+            </div>
+            
+        </div>
+		<div class="col-sm-3 col-sm-offset-1 tb-sidebar">
+<?php get_sidebar() ?>
+        </div>
+
+		<!-- END MAINBODY ROW -->
+	</div>
+	<!-- /.row -->
 </div>
-<div class="col-sm-3 col-sm-offset-1 tb-sidebar">
-    <?php get_sidebar() ?>
-</div>
-<!-- END INDEX CONTENT -->
-<?php get_footer(); ?>
+<!-- /.container -->
+<!-- END SINGLE CONTENT -->
+<?php 
+// get_footer(); 
+?>

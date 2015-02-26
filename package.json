@@ -1,7 +1,8 @@
 {
-  "name": "bootstrap",
-  "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
-  "version": "3.3.2",
+  "destinationDir": "dist/",
+  "name": "toebox",
+  "description": "A WordPress theme built on the most popular front-end framework for developing responsive, mobile first projects on the web.",
+  "version": "0.1",
   "keywords": [
     "css",
     "less",
@@ -11,24 +12,24 @@
     "framework",
     "web"
   ],
-  "homepage": "http://getbootstrap.com",
-  "author": "Twitter, Inc.",
+  "homepage": "http://gettoebox.com",
+  "author": "drydenmaker",
   "scripts": {
     "test": "grunt test"
   },
-  "style": "dist/css/bootstrap.css",
-  "less": "less/bootstrap.less",
+  "style": "dist/css/toebox.css",
+  "less": "less/toebox.less",
   "main": "./dist/js/npm",
   "repository": {
     "type": "git",
-    "url": "https://github.com/twbs/bootstrap.git"
+    "url": "https://github.com/drydenmaker/toebox.git"
   },
   "bugs": {
-    "url": "https://github.com/twbs/bootstrap/issues"
+    "url": "https://github.com/drydenmaker/toebox/issues"
   },
   "license": {
     "type": "MIT",
-    "url": "https://github.com/twbs/bootstrap/blob/master/LICENSE"
+    "url": "https://github.com/drydenmaker/toebox/blob/master/LICENSE"
   },
   "devDependencies": {
     "btoa": "~1.1.2",
@@ -65,13 +66,13 @@
     "node": "~0.10.1"
   },
   "jspm": {
-    "main": "js/bootstrap",
+    "main": "js/toebox",
     "directories": {
       "example": "examples",
       "lib": "dist"
     },
     "shim": {
-      "js/bootstrap": {
+      "js/toebox": {
         "imports": "jquery",
         "exports": "$"
       }
