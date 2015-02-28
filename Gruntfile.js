@@ -1,8 +1,8 @@
 /*!
- * Bootstrap's Gruntfile
+ * ToeBox's Gruntfile
  * http://getbootstrap.com
- * Copyright 2013-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2013-2015 Drydenmaker
+ * Licensed under MIT (https://github.com/drydenmaker/toebox/blob/master/LICENSE)
  */
 
 module.exports = function (grunt) {
@@ -14,6 +14,9 @@ module.exports = function (grunt) {
   RegExp.quote = function (string) {
     return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
   };
+  
+  var themeName = 'ToeBox';
+  var targetDir = 'dist/' + themeName + '/';
 
   var fs = require('fs');
   var path = require('path');
@@ -42,7 +45,7 @@ module.exports = function (grunt) {
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
     banner: '/*!\n' +
-            ' * Bootstrap v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+            ' * ToeBox v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
             ' * Copyright 2011-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
             ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
             ' */\n',
@@ -120,7 +123,7 @@ module.exports = function (grunt) {
           'js/tab.js',
           'js/affix.js'
         ],
-        dest: 'dist/js/<%= pkg.name %>.js'
+        dest: '<%= pkg.destinationDir %><%= pkg.name %>/js/<%= pkg.name %>.js'
       }
     },
 
@@ -130,7 +133,7 @@ module.exports = function (grunt) {
       },
       core: {
         src: '<%= concat.bootstrap.dest %>',
-        dest: 'dist/js/<%= pkg.name %>.min.js'
+        dest: '<%= pkg.destinationDir %><%= pkg.name %>/js/<%= pkg.name %>.min.js'
       },
       customize: {
         src: configBridge.paths.customizerJs,
@@ -156,10 +159,10 @@ module.exports = function (grunt) {
           sourceMap: true,
           outputSourceFiles: true,
           sourceMapURL: '<%= pkg.name %>.css.map',
-          sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
+          sourceMapFilename: '<%= pkg.destinationDir %><%= pkg.name %>/css/<%= pkg.name %>.css.map'
         },
         src: 'less/bootstrap.less',
-        dest: 'dist/css/<%= pkg.name %>.css'
+        dest: '<%= pkg.destinationDir %><%= pkg.name %>/css/<%= pkg.name %>.css'
       },
       compileTheme: {
         options: {
@@ -167,10 +170,10 @@ module.exports = function (grunt) {
           sourceMap: true,
           outputSourceFiles: true,
           sourceMapURL: '<%= pkg.name %>-theme.css.map',
-          sourceMapFilename: 'dist/css/<%= pkg.name %>-theme.css.map'
+          sourceMapFilename: '<%= pkg.destinationDir %><%= pkg.name %>/css/<%= pkg.name %>-theme.css.map'
         },
         src: 'less/theme.less',
-        dest: 'dist/css/<%= pkg.name %>-theme.css'
+        dest: '<%= pkg.destinationDir %><%= pkg.name %>/css/<%= pkg.name %>-theme.css'
       }
     },
 
@@ -182,13 +185,13 @@ module.exports = function (grunt) {
         options: {
           map: true
         },
-        src: 'dist/css/<%= pkg.name %>.css'
+        src: '<%= pkg.destinationDir %><%= pkg.name %>/css/<%= pkg.name %>.css'
       },
       theme: {
         options: {
           map: true
         },
-        src: 'dist/css/<%= pkg.name %>-theme.css'
+        src: '<%= pkg.destinationDir %><%= pkg.name %>/css/<%= pkg.name %>-theme.css'
       },
       docs: {
         src: ['docs/assets/css/anchor.css', 'docs/assets/css/src/docs.css']
@@ -206,8 +209,8 @@ module.exports = function (grunt) {
         csslintrc: 'less/.csslintrc'
       },
       dist: [
-        'dist/css/bootstrap.css',
-        'dist/css/bootstrap-theme.css'
+        '<%= pkg.destinationDir %><%= pkg.name %>/css/bootstrap.css',
+        '<%= pkg.destinationDir %><%= pkg.name %>/css/bootstrap-theme.css'
       ],
       examples: [
         'docs/examples/**/*.css'
@@ -228,12 +231,12 @@ module.exports = function (grunt) {
         advanced: false
       },
       minifyCore: {
-        src: 'dist/css/<%= pkg.name %>.css',
-        dest: 'dist/css/<%= pkg.name %>.min.css'
+        src: '<%= pkg.destinationDir %><%= pkg.name %>/css/<%= pkg.name %>.css',
+        dest: '<%= pkg.destinationDir %><%= pkg.name %>/css/<%= pkg.name %>.min.css'
       },
       minifyTheme: {
-        src: 'dist/css/<%= pkg.name %>-theme.css',
-        dest: 'dist/css/<%= pkg.name %>-theme.min.css'
+        src: '<%= pkg.destinationDir %><%= pkg.name %>/css/<%= pkg.name %>-theme.css',
+        dest: '<%= pkg.destinationDir %><%= pkg.name %>/css/<%= pkg.name %>-theme.min.css'
       },
       docs: {
         src: [
@@ -252,7 +255,7 @@ module.exports = function (grunt) {
         banner: '<%= banner %>'
       },
       files: {
-        src: 'dist/css/*.css'
+        src: '<%= pkg.destinationDir %><%= pkg.name %>/css/*.css'
       }
     },
 
@@ -262,9 +265,9 @@ module.exports = function (grunt) {
       },
       dist: {
         expand: true,
-        cwd: 'dist/css/',
+        cwd: '<%= pkg.destinationDir %><%= pkg.name %>/css/',
         src: ['*.css', '!*.min.css'],
-        dest: 'dist/css/'
+        dest: '<%= pkg.destinationDir %><%= pkg.name %>/css/'
       },
       examples: {
         expand: true,
@@ -281,11 +284,23 @@ module.exports = function (grunt) {
     copy: {
       fonts: {
         src: 'fonts/*',
-        dest: 'dist/'
+        dest: targetDir
+      },
+	  js: {
+        src: 'js/vendor/*',
+        dest: targetDir
       },
       docs: {
         src: 'dist/*/*',
         dest: 'docs/'
+      },
+	  php: {
+		expand: true,
+		cwd: 'php/',
+        src: '**',
+        dest: targetDir,
+		flatten: true,
+		filter: 'isFile',
       }
     },
 
@@ -452,7 +467,7 @@ module.exports = function (grunt) {
   grunt.registerTask('dist-css', ['less-compile', 'autoprefixer:core', 'autoprefixer:theme', 'usebanner', 'csscomb:dist', 'cssmin:minifyCore', 'cssmin:minifyTheme']);
 
   // Full distribution task.
-  grunt.registerTask('dist', ['clean:dist', 'dist-css', 'copy:fonts', 'dist-js']);
+  grunt.registerTask('dist', ['clean:dist', 'dist-css', 'copy:fonts', 'copy:php', 'copy:js', 'dist-js']);
 
   // Default task.
   grunt.registerTask('default', ['clean:dist', 'copy:fonts', 'test']);
@@ -474,7 +489,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('commonjs', 'Generate CommonJS entrypoint module in dist dir.', function () {
     var srcFiles = grunt.config.get('concat.bootstrap.src');
-    var destFilepath = 'dist/js/npm.js';
+	var pkgName = grunt.config.get('pkg.name');
+    var destFilepath = targetDir+'/js/npm.js';
     generateCommonJSModule(grunt, srcFiles, destFilepath);
   });
 
