@@ -4,6 +4,6 @@
 		?>
 		
 		<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
-		  <img src="<?php print $src ?>" class="$sizeClass img-responsive" title="<?php print $title ?>" alt="<?php print $alt ?>">
+		  <img src="<?php print $src ?>" class="<?php print $sizeClass ?> img-responsive" title="<?php print $title ?>" alt="<?php print $alt ?>">
 	    </a>
 </div>

@@ -12,62 +12,41 @@ if (!isset($content_width)) {
 	$content_width = 1170;
 }
 
-if (!function_exists('toeboxBasicSetup')) {
-	/**
-	 * Setup theme and register support wp features.
-	 */
-	function toeboxBasicSetup()
-	{
-		/**
-		 * Make theme available for translation
-		 * Translations can be filed in the /languages/ directory
-		 *
-		 * copy from underscores theme
-		 */
-		load_theme_textdomain('toebox-basic', get_template_directory() . '/languages');
+require_once TEMPLATEPATH.'/inc/NavMenuWalker.php';
+add_filter( 'wp_nav_menu_args', 'toebox\\inc\\NavMenuWalker::MenuArguments');
 
-		// add theme support post and comment automatic feed links
-		add_theme_support('automatic-feed-links');
-		// enable support for post thumbnail or feature image on posts and pages
-		add_theme_support('post-thumbnails');
+add_filter('nav_menu_link_attributes', function($atts = array()){
+    return $atts;
+});
 
-		add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
+add_action( 'init', function()
+{
+	add_post_type_support('page', array('excerpt', 'revisions', 'comments', 'custom-fields', 'page-attributes'));
+});
 
-		// add support menu
-		register_nav_menus(array(
-			'primary' => __('Primary Menu', 'toebox-basic'),
-		));
+add_action( 'after_setup_theme', function()
+{
+	load_theme_textdomain('toebox-basic', get_template_directory() . '/languages');
 
-		// add post formats support
-		add_theme_support('post-formats', array('aside', 'image', 'video', 'quote', 'link'));
+	add_theme_support('automatic-feed-links');
+	add_theme_support('post-thumbnails');
+	add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
+	add_theme_support('post-formats', array('aside', 'image', 'video', 'quote', 'link'));
 
-		// add support custom background
-		add_theme_support(
-			'custom-background',
-			apply_filters(
-				'toebox_basic_custom_background_args',
-				array(
-					'default-color'          => '333',
-                    'default-image'          => '%1$s/images/background.jpg',
-                    'default-repeat'         => '%1$s/images/repeat_background.jpg',
-                    'default-position-x'     => 'center',
-				)
+	// add support custom background
+	add_theme_support(
+		'custom-background',
+		apply_filters(
+			'toebox_basic_custom_background_args',
+			array(
+				'default-color'          => '333',
+                'default-image'          => '%1$s/images/background.jpg',
+                'default-repeat'         => '%1$s/images/repeat_background.jpg',
+                'default-position-x'     => 'center',
 			)
-		);
-	} // toeboxBasicSetup
-}
-add_action('after_setup_theme', 'toeboxBasicSetup');
-
-
-/**
- * Register Navigation Menus
-*/
-function toeboxInit() {
-
-
-} // Hook into the 'init' action
-add_action( 'init', 'toeboxInit' );
-
+		)
+	);
+}); // toeboxBasicSetup
 
 
 
@@ -77,54 +56,60 @@ add_action( 'init', 'toeboxInit' );
 add_action( 'widgets_init', function()
 {
     // --------------  WIDGETS ---------------------------------------------
-    //require_once 'inc/widget/TitleWidget.php';
-    //register_widget( 'toebox\inc\widget\TitleWidget' );
+    require_once 'inc/widget/TitleCornersWidget.php';
+    register_widget( 'toebox\inc\widget\TitleWidget' );
+    register_widget( 'toebox\inc\widget\TitleCornersWidget' );
+
+
+    // --------------  WIDGET AREAS -------------------------------------------
+
+    register_sidebar(array(
+        'name'          => __('Global Header', 'toebox-basic'),
+        'description'   => __('Appears on all pages before all content.', 'toebox-basic'),
+        'id'            => 'toebox-header',
+        'before_widget' => '',
+        'after_widget'  => '',
+        'before_title'  => '',
+        'after_title'   => '',
+    ));
+
+    register_sidebar(array(
+        'name'          => __('Global Footer', 'toebox-basic'),
+        'description'   => __('Appears on all pages after all content.', 'toebox-basic'),
+        'id'            => 'toebox-footer',
+        'before_widget' => '',
+        'after_widget'  => '',
+        'before_title'  => '',
+        'after_title'   => '',
+    ));
+
+
+    register_sidebar(array(
+        'name'          => __('Left Sidebar', 'toebox-basic'),
+        'description'   => __('Appears on all pages that have a left sidebar.', 'toebox-basic'),
+        'id'            => 'toebox_left_sidebar',
+        'before_widget' => '',
+        'after_widget'  => '',
+        'before_title'  => '',
+        'after_title'   => '',
+    ));
+
 
 	register_sidebar(array(
 		'name'          => __('Right Sidebar', 'toebox-basic'),
 		'description'   => __('Appears on all pages that have a right sidebar.', 'toebox-basic'),
-		'id'            => 'toebox-right-sidebar',
+		'id'            => 'toebox_right_sidebar',
 		'before_widget' => '',
 		'after_widget'  => '',
 		'before_title'  => '',
 		'after_title'   => '',
 	));
-
-	register_sidebar(array(
-		'name'          => __('Left Sidebar', 'toebox-basic'),
-		'description'   => __('Appears on all pages that have a left sidebar.', 'toebox-basic'),
-		'id'            => 'toebox-left-sidebar',
-		'before_widget' => '',
-		'after_widget'  => '',
-		'before_title'  => '',
-		'after_title'   => '',
-	));
-
-    register_sidebar(array(
-	    'name'          => __('Global Header', 'toebox-basic'),
-	    'description'   => __('Appears on all pages before all content.', 'toebox-basic'),
-	    'id'            => 'toebox-header',
-	    'before_widget' => '',
-	    'after_widget'  => '',
-	    'before_title'  => '',
-	    'after_title'   => '',
-    ));
-
-    register_sidebar(array(
-	    'name'          => __('Global Footer', 'toebox-basic'),
-	    'description'   => __('Appears on all pages after all content.', 'toebox-basic'),
-	    'id'            => 'toebox-footer',
-	    'before_widget' => '',
-	    'after_widget'  => '',
-	    'before_title'  => '',
-	    'after_title'   => '',
-    ));
 
 
     register_sidebar(array(
 	    'name'          => __('Content Top', 'toebox-basic'),
 	    'description'   => __('Appears on all pages before content between sidebars.', 'toebox-basic'),
-	    'id'            => 'toebox-content-top',
+	    'id'            => 'toebox_content_top',
 	    'before_widget' => '',
 	    'after_widget'  => '',
 	    'before_title'  => '',
@@ -134,7 +119,7 @@ add_action( 'widgets_init', function()
 	register_sidebar(array(
 		'name'          => __('Content Bottom', 'toebox-basic'),
 		'description'   => __('Appears on all pages after content between sidebars.', 'toebox-basic'),
-		'id'            => 'toebox-content-bottom',
+		'id'            => 'toebox_content_bottom',
 		'before_widget' => '',
 		'after_widget'  => '',
 		'before_title'  => '',
@@ -144,22 +129,17 @@ add_action( 'widgets_init', function()
 });
 
 
-if (!function_exists('toeboxBasicEnqueueScriptsAndStyles')) {
-	/**
-	 * Enqueue scripts & styles
-	 */
-	function toeboxBasicEnqueueScriptsAndStyles()
-	{
-	    wp_enqueue_style('toebox-style', get_template_directory_uri() . '/css/toebox.min.css');
-	    wp_enqueue_style('toebox-theme-style', get_template_directory_uri() . '/css/toebox-theme.min.css');
-	    wp_enqueue_style('fontawesome-style', '//maxcdn.toeboxcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+add_action( 'wp_enqueue_scripts', function()
+{
+    wp_enqueue_style('toebox-style', get_template_directory_uri() . '/css/toebox.min.css');
+    wp_enqueue_style('toebox-theme-style', get_template_directory_uri() . '/css/toebox-theme.min.css');
+    wp_enqueue_style('fontawesome-style', '//maxcdn.toeboxcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 
-		wp_enqueue_script('jquery');
-		wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/toebox.js');
+	wp_enqueue_script('jquery');
+	wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/toebox.js');
 
-	}// toeboxBasicEnqueueScripts
-}
-add_action('wp_enqueue_scripts', 'toeboxBasicEnqueueScriptsAndStyles');
+});// toeboxBasicEnqueueScripts
+
 
 
 /**
@@ -167,23 +147,20 @@ add_action('wp_enqueue_scripts', 'toeboxBasicEnqueueScriptsAndStyles');
  * SETTINGS UI
  * ----------------------------------------------------------------------------
  */
-add_action( 'admin_menu', 'toebox_add_admin_menu' );
-add_action( 'admin_init', 'toebox_settings_init' );
 
-
-function toebox_add_admin_menu(  ) {
+add_action( 'admin_menu', function (  ) {
 
 	add_menu_page( 'ToeBox', 'ToeBox', 'manage_options', 'toebox', 'toebox_options_page' );
 
-}
+});
 
-define(TOEBOX_DEFAULT_PAGE_LAYOUT, 'toebox_1');
-define(TOEBOX_DEFAULT_LIST_LAYOUT, 'toebox_2');
-define(TOEBOX_DEFAULT_STORY_LAYOUT, 'toebox_3');
+define(TOEBOX_DEFAULT_PAGE_LAYOUT, 'toebox_page_laout');
+define(TOEBOX_DEFAULT_LIST_LAYOUT, 'toebox_list_laout');
+define(TOEBOX_DEFAULT_STORY_LAYOUT, 'toebox_story_laout');
+define(TOEBOX_HIDE_SMALL_SIDEBARS, 'toebox_hide_small_sidebars');
 
 
-
-function toebox_settings_init(  ) {
+add_action( 'admin_init', function (  ) {
 
 	register_setting( 'pluginPage', 'toebox_settings' );
 
@@ -221,14 +198,14 @@ function toebox_settings_init(  ) {
 
 	add_settings_field(
     	'toebox_checkbox_field_3',
-    	__( 'Settings field description', 'text_domain' ),
+    	__( 'Hide Left Side Bar On Small Screens', 'text_domain' ),
     	'toebox_checkbox_field_3_render',
     	'pluginPage',
     	'toebox_pluginPage_section'
     );
 
 
-}
+});
 
 
 function toebox_select_default_page_layout_render(  ) {
@@ -288,7 +265,7 @@ function toebox_checkbox_field_3_render(  ) {
 
     $options = get_option( 'toebox_settings' );
     ?>
-	<input type='checkbox' name='toebox_settings[toebox_checkbox_field_3]' <?php checked( $options['toebox_checkbox_field_3'], 1 ); ?> value='1'>
+	<input type='checkbox' name='toebox_settings[<?php print TOEBOX_HIDE_SMALL_SIDEBARS ?>]' <?php checked( $options[TOEBOX_HIDE_SMALL_SIDEBARS], 1 ); ?> value='1'>
 	<?php
 
 }
@@ -324,10 +301,9 @@ function toebox_options_page(  ) {
  * SEARCH
  * ----------------------------------------------------------------------------
  */
- function toebox_search()
+ register_sidebar_widget(__('Search'), function()
  {
     ?>
     <!-- < PASTE YOUR SEARCH FORM HERE > -->
     <?php
- }
- if ( function_exists('register_sidebar_widget') ) register_sidebar_widget(__('Search'), 'toebox_search');
+ });

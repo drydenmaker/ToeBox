@@ -1,58 +1,68 @@
 <?php
 namespace toebox\inc\widget;
 
-class TitleWidget extends \WP_Widget
+require_once TEMPLATEPATH.'/inc/Forms.php';
+require_once TEMPLATEPATH.'/inc/widget/BaseWidget.php';
+
+class TitleWidget extends BaseWidget
 {
-
+    // WIDGET SETTINGS 
     /**
-     * Sets up the widgets name etc
+     * Base ID
+     * @var string
      */
-    public function __construct()
-    {
-        parent::__construct(
-			'toebox_title_widget', // Base ID
-			__( 'Toebox Title', 'text_domain' ), // Name
-			array( 'description' => __( 'A Widget for Displaying The Blog Title', 'text_domain' ), ) // Args
-		);
+    public $BaseId = 'toebox_title_widget';
+    /**
+     * Friendly Widget Name
+     * @var string
+     */
+    public $Name = 'Toebox Title';
+    /**
+     * Friendly Widget Name
+     *
+     * @var string
+     */
+    public $Description = 'A widget for displaying a typical wordpress blog title';
+    /**
+     * unique template part
+     * @var string
+     */
+    public $TemplateName = 'title';
+
+    
+    function admin_setup(){
+    
+        wp_enqueue_media();
+        wp_enqueue_script('tpw-admin-js', get_template_directory_uri() . '/js/toebox_admin.js');
+        wp_enqueue_style('tpw-admin-js', get_template_directory_uri() . '/css/toebox_admin.css');
+    
     }
 
-    public static $TemplatePrefix = '/tpl/widget_';
 
     /**
-     * Outputs the content of the widget
-     *
+     * set defaults for this widget
      * @param array $args
-     * @param array $instance
      */
-    public function widget($args, $instance)
+    public function setDefaults(&$args = array())
     {
-        // outputs the content of the widget
-        include TEMPLATEPATH.self::$TemplatePrefix . 'title.php';
+        $this->defaultValue($args, 'logo_style', '');
+        $this->defaultValue($args, 'background_style', 'no-repeat top center');
+        
+        $this->defaultValue($args, 'container_class', 'tb-header');
+        $this->defaultValue($args, 'title_class', 'text-hide tb-title');
+        $this->defaultValue($args, 'description_class', 'lead tb-description site-description');
     }
-
     /**
-     * Outputs the options form on admin
-     *
-     * @param array $instance
-     *            The widget options
+     * sets a value in an array if it is not already set
+     * @param array $array target array
+     * @param string $key array key
+     * @param unkown $default value to set
      */
-    public function form($instance)
+    public function defaultValue(&$array, $key, $default)
     {
-        toebox\inc\Form::Display('title_widget', $instance);
+        if (array_key_exists($key, $array) && $array[$key]) return $array;
+        $array[$key] = $default;
+        return $array;
     }
-
-    /**
-     * Processing widget options on save
-     *
-     * @param array $new_instance
-     *            The new options
-     * @param array $old_instance
-     *            The previous options
-     */
-    public function update($new_instance, $old_instance)
-    {
-        // processes widget options to be saved
-    }
+    
 }
-
-?>

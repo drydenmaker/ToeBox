@@ -20,14 +20,57 @@ class ToeBox
      * location and prefix of layout pages
      * @var string
      */
-    public static $LaoutPrefix = '/layout_page_';
+    public static $LaoutPrefix = '/tpl/layout_page_';
     /**
      * Load page layout which contains content loop
      * @param array $settings
      */
     public static function Layout(array $settings, $toeboxSlug = 'content')
     {
-        include_once TEMPLATEPATH.self::$LaoutPrefix . $settings[TOEBOX_DEFAULT_PAGE_LAYOUT] . '.php';
+        $hideSideBarsOnSmallScreens = $settings[TOEBOX_HIDE_SMALL_SIDEBARS];
+        $ifHideOnSmallCss = ($hideSideBarsOnSmallScreens) ? 'hidden-xs hidden-sm' : '' ;
+        require TEMPLATEPATH.self::$LaoutPrefix . $settings[TOEBOX_DEFAULT_PAGE_LAYOUT] . '.php';
+    }
+    /**
+     * location and prefix of layout pages
+     * @var string
+     */
+    public static $LaoutContentPrefix = '/tpl/layout_content_';
+    /**
+     * Use template to handle content layout
+     * This method uses the settings for the theme to format a post. It uses
+     * array variable expansion to make individual attributes of $post available
+     * to the template directly in the form $<propertyname>
+     *
+     * A special variable is made available called $body that is the excerpt if
+     * within a single post and if it is set. Otherwise it is the content of
+     * the post.
+     *
+     * @param \WP_Post $post
+     * @param array $settings
+     */
+    public static function LayoutContent(\WP_Post $post, array $settings)
+    {
+        //$arr = get_defined_vars();
+        //print '<pre>'.print_r($arr, true).'</pre>';
+
+        foreach ($post as $var => $value)
+        {
+            $$var = $value;
+        }
+        foreach ($settings as $var => $value)
+        {
+            $$var = $value;
+        }
+
+        $body = (is_single()) ?
+                $post_content :
+                (@trim($post_excerpt)) ? $post_excerpt : $post_content;
+
+        $body = apply_filters('the_content', $body);
+
+        $template = (is_single()) ? $settings[TOEBOX_DEFAULT_STORY_LAYOUT] : $settings[TOEBOX_DEFAULT_LIST_LAYOUT];
+        require TEMPLATEPATH.self::$LaoutContentPrefix . $template . '.php';
     }
     /**
      * Handle the wordpress loop
@@ -41,7 +84,7 @@ class ToeBox
             while ( have_posts() )
             {
                 the_post();
-                 get_template_part($slug, $post->post_mime_type);
+                get_template_part($slug, $post->post_mime_type);
             } // end while
         } // end if
         else
@@ -90,7 +133,7 @@ class ToeBox
 
         $title = get_the_title();
 
-        include_once TEMPLATEPATH.self::$TemplatePrefix . 'content_featured_image.php';
+        require TEMPLATEPATH.self::$TemplatePrefix . 'content_featured_image.php';
 
     }
 }
