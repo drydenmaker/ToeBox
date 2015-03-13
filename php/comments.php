@@ -29,8 +29,6 @@ if ( post_password_required() ) {
 		?>
 	   </h4>
 
-		<?php twentyfifteen_comment_nav(); ?>
-
 		<ol class="comment-list">
 			<?php
 				wp_list_comments( array(

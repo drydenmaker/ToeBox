@@ -1,5 +1,6 @@
-<!-- START CONTENT -->
+<!-- START CONTENT DO NOT USE -->
 <?php 
+return;
 $arr = get_defined_vars();
 print '<pre>'.print_r($arr, true).'</pre>';
 ?>
@@ -27,6 +28,9 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     <div class="entry-excerpt">
         <?php print the_content(); ?>
     </div>
+    
+</div>
+<div class="row">
 
     <?php if (is_single()) :?>
     <div class="tb-comments">

@@ -2,7 +2,7 @@
   "destinationDir": "dist/",
   "name": "toebox",
   "description": "A WordPress theme built on the most popular front-end framework for developing responsive, mobile first projects on the web.",
-  "version": "0.1",
+  "version": "0.1.1",
   "keywords": [
     "css",
     "less",

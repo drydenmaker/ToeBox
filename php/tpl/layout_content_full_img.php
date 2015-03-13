@@ -18,8 +18,11 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     </div>
 
     <div class="entry-excerpt">
-        <?php print the_content(); ?>
+        <?php print $body; ?>
     </div>
+    
+</div>
+<div class="row">
 
     <div class="tb-comments">
         <?php comments_template(); ?>

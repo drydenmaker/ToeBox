@@ -16,7 +16,7 @@
     </div>
 
     <div class="entry-excerpt">
-        <?php print the_content(); ?>
+        <?php print $body; ?>
     </div>
 
 </article>

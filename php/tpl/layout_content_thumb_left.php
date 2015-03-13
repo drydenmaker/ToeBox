@@ -1,11 +1,13 @@
 <!-- START CONTENT thumb left-->
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
+<div class="row">
+    <div class="col-xs-5">
 <?php
 toebox\inc\ToeBox::HandleFeaturedImage();
 ?>
-
+    </div>
+    
     <header class="entry-header">
         <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
     </header>
@@ -19,15 +21,16 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     </div>
 
     <div class="entry-excerpt">
-        <?php print the_content(); ?>
+        <?php print $body; ?>
     </div>
+    
+</div>
+<div class="row">
 
-    <?php if (is_single()) :?>
     <div class="tb-comments">
         <?php comments_template(); ?>
     </div>
-    <?php endif; ?>
 
-
+</div>
 </article>
 <!-- END CONTENT -->

@@ -299,7 +299,6 @@ module.exports = function (grunt) {
 		cwd: 'php/',
         src: '**',
         dest: targetDir,
-		flatten: true,
 		filter: 'isFile',
       }
     },

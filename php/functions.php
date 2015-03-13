@@ -12,6 +12,22 @@ if (!isset($content_width)) {
 	$content_width = 1170;
 }
 
+
+/**
+ * init general
+ */
+add_action( 'init', function()
+{
+    $settings = get_option( 'toebox_settings' );
+    
+    toebox\inc\Toebox::$Settings = array_merge(toebox\inc\Toebox::$Settings, (is_array($settings)) ? $settings : array());
+    
+	add_post_type_support('page', array('excerpt', 'revisions', 'comments', 'custom-fields', 'page-attributes'));
+});
+
+/**
+ * setup menu walker
+ */
 require_once TEMPLATEPATH.'/inc/NavMenuWalker.php';
 add_filter( 'wp_nav_menu_args', 'toebox\\inc\\NavMenuWalker::MenuArguments');
 
@@ -19,10 +35,6 @@ add_filter('nav_menu_link_attributes', function($atts = array()){
     return $atts;
 });
 
-add_action( 'init', function()
-{
-	add_post_type_support('page', array('excerpt', 'revisions', 'comments', 'custom-fields', 'page-attributes'));
-});
 
 add_action( 'after_setup_theme', function()
 {
@@ -137,6 +149,7 @@ add_action( 'wp_enqueue_scripts', function()
 
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/toebox.js');
+	wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/vendor/modernizr.min.js');
 
 });// toeboxBasicEnqueueScripts
 
@@ -153,11 +166,6 @@ add_action( 'admin_menu', function (  ) {
 	add_menu_page( 'ToeBox', 'ToeBox', 'manage_options', 'toebox', 'toebox_options_page' );
 
 });
-
-define(TOEBOX_DEFAULT_PAGE_LAYOUT, 'toebox_page_laout');
-define(TOEBOX_DEFAULT_LIST_LAYOUT, 'toebox_list_laout');
-define(TOEBOX_DEFAULT_STORY_LAYOUT, 'toebox_story_laout');
-define(TOEBOX_HIDE_SMALL_SIDEBARS, 'toebox_hide_small_sidebars');
 
 
 add_action( 'admin_init', function (  ) {
@@ -210,7 +218,7 @@ add_action( 'admin_init', function (  ) {
 
 function toebox_select_default_page_layout_render(  ) {
 
-	$options = get_option( 'toebox_settings' );
+	$options = toebox\inc\Toebox::$Settings;
 	?>
 	<select name='toebox_settings[<?php print TOEBOX_DEFAULT_PAGE_LAYOUT ?>]'>
 		<option value='open' <?php selected( $options[TOEBOX_DEFAULT_PAGE_LAYOUT], 'open' ); ?>>Open</option>
@@ -219,6 +227,7 @@ function toebox_select_default_page_layout_render(  ) {
 		<option value='three_column' <?php selected( $options[TOEBOX_DEFAULT_PAGE_LAYOUT], 'three_column' ); ?>>Three Column</option>
 		<option value='right_column' <?php selected( $options[TOEBOX_DEFAULT_PAGE_LAYOUT], 'right_column' ); ?>>Right Column</option>
 		<option value='two_right_column' <?php selected( $options[TOEBOX_DEFAULT_PAGE_LAYOUT], 'two_right_column' ); ?>>Two Right Columns</option>
+		<option value='two_right_column' <?php selected( $options[TOEBOX_DEFAULT_PAGE_LAYOUT], 'two_left_column' ); ?>>Two Left Columns</option>
 	</select>
 
 <?php
@@ -228,7 +237,7 @@ function toebox_select_default_page_layout_render(  ) {
 
 function toebox_select_field_1_render(  ) {
 
-	$options = get_option( 'toebox_settings' );
+	$options = toebox\inc\Toebox::$Settings;
 	?>
 	<select name='toebox_settings[<?php print TOEBOX_DEFAULT_LIST_LAYOUT ?>]'>
 		<option value='list_text_only' <?php selected( $options[TOEBOX_DEFAULT_LIST_LAYOUT], 'list_text_only', true); ?>>Text Only</option>
@@ -237,8 +246,6 @@ function toebox_select_field_1_render(  ) {
 		<option value='list_thumb_left' <?php selected( $options[TOEBOX_DEFAULT_LIST_LAYOUT], 'list_thumb_left', true); ?>>Thumbnail Left</option>
 		<option value='list_thumb_right' <?php selected( $options[TOEBOX_DEFAULT_LIST_LAYOUT], 'list_thumb_right', true); ?>>Thumbnail Right</option>
 		<option value='list_thumb_grid' <?php selected( $options[TOEBOX_DEFAULT_LIST_LAYOUT], 'list_thumb_grid', true); ?>>Thumbnail Grid</option>
-		<option value='list_small_thumb_grid' <?php selected( $options[TOEBOX_DEFAULT_LIST_LAYOUT], 'list_small_thumb_grid', true); ?>>Small Thumbnail Grid</option>
-		<option value='list_thumb_tiled' <?php selected( $options[TOEBOX_DEFAULT_LIST_LAYOUT], 'list_thumb_tiled', true); ?>>Tiled Thumbnails</option>
 	</select>
 
 <?php
@@ -247,8 +254,7 @@ function toebox_select_field_1_render(  ) {
 
 
 function toebox_select_field_2_render(  ) {
-
-	$options = get_option( 'toebox_settings' );
+    $options = toebox\inc\Toebox::$Settings;
 	?>
 	<select name='toebox_settings[<?php print TOEBOX_DEFAULT_STORY_LAYOUT ?>]'>
 		<option value='full_img' <?php selected( $options[TOEBOX_DEFAULT_STORY_LAYOUT],'full_img' ); ?>>Full Image</option>
@@ -263,7 +269,7 @@ function toebox_select_field_2_render(  ) {
 
 function toebox_checkbox_field_3_render(  ) {
 
-    $options = get_option( 'toebox_settings' );
+    $options = toebox\inc\Toebox::$Settings;
     ?>
 	<input type='checkbox' name='toebox_settings[<?php print TOEBOX_HIDE_SMALL_SIDEBARS ?>]' <?php checked( $options[TOEBOX_HIDE_SMALL_SIDEBARS], 1 ); ?> value='1'>
 	<?php
@@ -307,3 +313,17 @@ function toebox_options_page(  ) {
     <!-- < PASTE YOUR SEARCH FORM HERE > -->
     <?php
  });
+ 
+/**
+ * ----------------------------------------------------------------------------
+ * EXTRA MIME TYPES
+ * ----------------------------------------------------------------------------
+ */
+add_filter('upload_mimes', function ( $existing_mimes=array() ) {
+
+	$existing_mimes['svg'] = 'image/svg+xml';
+	$existing_mimes['svgz'] = 'image/svg+xml';
+	return $existing_mimes;
+
+});
+

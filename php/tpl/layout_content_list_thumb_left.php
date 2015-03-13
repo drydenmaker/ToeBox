@@ -1,15 +1,13 @@
-<!-- START CONTENT thumb left -->
-<?php 
-$arr = get_defined_vars();
-print '<pre>'.print_r($arr, true).'</pre>';
-return;
-?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<!-- START CONTENT thumb left-->
 
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<div class="row">
+    <div class="col-xs-5">
 <?php
 toebox\inc\ToeBox::HandleFeaturedImage();
 ?>
-
+    </div>
+    
     <header class="entry-header">
         <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
     </header>
@@ -23,9 +21,9 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     </div>
 
     <div class="entry-excerpt">
-        <?php print the_content(); ?>
+        <?php print $body; ?>
     </div>
 
-
+</div>
 </article>
 <!-- END CONTENT -->
