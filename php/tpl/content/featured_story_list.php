@@ -11,9 +11,12 @@ toebox\inc\ToeBox::HandleFeaturedImageTemplated('featured_image_featured_story')
     <div class="entry-metadata">
 
         <!-- TODO: allow setting for turning author and date off on posts -->
-        <span class="tb-date"><?php the_time('F j, Y'); ?></span>
+        <span class="tb-date"><?php the_time(); ?></span>
         |
         <span class="tb-author"><?php print get_the_author(); ?></span>
+        |
+        <span class="tb-author"><?php the_category(', ') ?></span>
+        
 
     </div>
 

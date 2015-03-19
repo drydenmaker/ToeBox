@@ -8,7 +8,7 @@
 
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
-	<title><?php wp_title( ' ', true, 'right' ); ?></title>
+	<title><?php wp_title(' | ', 'echo', 'right'); ?><?php bloginfo('name'); ?></title>
 
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

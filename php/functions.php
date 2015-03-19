@@ -68,10 +68,15 @@ add_action( 'after_setup_theme', function()
 add_action( 'widgets_init', function()
 {
     // --------------  WIDGETS ---------------------------------------------
-    require_once 'inc/widget/TitleCornersWidget.php';
-    register_widget( 'toebox\inc\widget\TitleWidget' );
-    register_widget( 'toebox\inc\widget\TitleCornersWidget' );
-
+    require_once 'inc/widget/HeaderLogoCornersWidget.php';
+    require_once 'inc/widget/HeaderLogoWidget.php';    
+    require_once 'inc/widget/HeaderWidget.php';
+    require_once 'inc/widget/SearchRowWidget.php';
+    
+    register_widget( 'toebox\inc\widget\HeaderLogoWidget' );
+    register_widget( 'toebox\inc\widget\HeaderLogoCornersWidget' );
+    register_widget( 'toebox\inc\widget\HeaderWidget' );
+    register_widget( 'toebox\inc\widget\SearchRowWidget' );
 
     // --------------  WIDGET AREAS -------------------------------------------
 
@@ -148,8 +153,8 @@ add_action( 'wp_enqueue_scripts', function()
     wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 
 	wp_enqueue_script('jquery');
-	wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/toebox.js');
-	wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/vendor/modernizr.min.js');
+	wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/toebox.js', array(), false, true);
+	wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/vendor/modernizr.min.js', array(), false, true);
 	
 	wp_enqueue_style('tb_css', get_template_directory_uri() . 'less/style.css');
 

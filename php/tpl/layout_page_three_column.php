@@ -22,6 +22,15 @@ global $posts;
 toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_top');
 toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
 toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_bottom');
+
+wp_link_pages( array(
+'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'toebox-basic' ) . '</span>',
+'after'       => '</div>',
+'link_before' => '<span>',
+'link_after'  => '</span>',
+'pagelink'    => '[ % ]',
+'separator'   => '<span class="screen-reader-text">&nbsp;</span>',
+) );
 ?>
 
         </div>

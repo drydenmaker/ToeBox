@@ -1,6 +1,7 @@
 <?php
 namespace toebox\inc;
 
+define('TOEBOX_MORE_TEXT', 'toebox_more_text');
 
 define('TOEBOX_PAGE_LAYOUT', 'toebox_page_laout');
 define('TOEBOX_FEATURED_STORY_LAYOUT', 'toebox_custom_page_laout');
@@ -26,7 +27,9 @@ $pageLayoutOptions = array(
     'three_column' => __( 'Three Column','toebox-basic' ),
     'right_column' => __( 'Right Column','toebox-basic' ),
     'two_right_column' => __( 'Two Right Columns','toebox-basic' ),
-    'two_left_column' => __( 'Two Left Columns','toebox-basic' )
+    'two_left_column' => __( 'Two Left Columns','toebox-basic' ),
+    'featured_story' => __( 'Featured Story','toebox-basic' ),
+    'featured_story_left_sidebar' => __( 'Featured Story Left Sidebar','toebox-basic' ),
 );
 
 /**
@@ -42,6 +45,7 @@ class ToeBox
      */
     public static $Settings = array(
         'ver' => '0.0.1',
+        TOEBOX_MORE_TEXT => 'More...',
         TOEBOX_PAGE_LAYOUT => 'right_column',
         TOEBOX_FEATURED_STORY_LAYOUT => 'featured_story',
         TOEBOX_LIST_LAYOUT => 'list_large_img',
@@ -84,10 +88,7 @@ class ToeBox
     public static function Layout($toeboxSlug = 'content')
     {
         global $wp_the_query;
-        
-//         $arr = get_defined_vars();
-//         print '<pre>'.print_r($arr, true).'</pre>';
-        
+
         $postType = $wp_the_query->query_vars['post_type'];
         
         
@@ -133,18 +134,31 @@ class ToeBox
             $$var = $value;
         }
         
-        if (is_single())
+        // set template
+        if (is_single() || is_sticky())
         {
-            $body = $post_content;
             $templateType = TOEBOX_TEMPLATE_SINGLE;
         }
         else 
         {
-            $body = (trim($post_excerpt)) ? $post_excerpt : $post_content;
             $templateType = TOEBOX_TEMPLATE_LIST;
         }
         
+        // process body content
+        $body = get_the_content(__(self::$Settings[TOEBOX_MORE_TEXT],'toebox-basic' ));
         $body = apply_filters('the_content', $body);
+        $body = str_replace( ']]>', ']]&gt;', $body );
+        
+        // add pagination
+//         $body .= wp_link_pages( array(
+// 				'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'toebox-basic' ) . '</span>',
+// 				'after'       => '</div>',
+// 				'link_before' => '<span>',
+// 				'link_after'  => '</span>',
+// 				'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'toebox-basic' ) . ' </span>%',
+// 				'separator'   => '<span class="screen-reader-text">, </span>',
+//                 'echo'        => false,
+// 			) );
         
         if (in_array($post_type, self::$CustomLayoutTemplates))
         {

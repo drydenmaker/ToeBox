@@ -34,5 +34,14 @@ class TitleCornersWidget extends TitleWidget
         $this->defaultValue($args, 'title_class', 'text-hide tb-title');
         $this->defaultValue($args, 'description_class', 'tb-description site-description pull-right text-right');
     }
+    
+
+    function admin_setup(){
+    
+        wp_enqueue_media();
+        wp_enqueue_script('tpw-admin-js', get_template_directory_uri() . '/js/toebox_admin.js');
+        wp_enqueue_style('tpw-admin-js', get_template_directory_uri() . '/css/toebox_admin.css');
+    
+    }
 }
 

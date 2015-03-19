@@ -4,24 +4,6 @@
  * SEARCH
  * ----------------------------------------------------------------------------
  */
- wp_register_sidebar_widget('search', __('Search'), function($configuration)
- { 
-    print $configuration['before_widget'];
-    get_search_form();
-    print $configuration['after_widget'];
- });
- 
- wp_register_sidebar_widget('search_row', __('Search Row'), function($configuration)
- {
-     print '<div class="row">';
-     print $configuration['before_widget'];
-     get_search_form();
-     print $configuration['after_widget'];
-     print '</div>';
- });
- 
-
- 
  add_filter( 'get_search_form',function ( $form ) 
  {    
      $formTemplate = <<<'EOT'

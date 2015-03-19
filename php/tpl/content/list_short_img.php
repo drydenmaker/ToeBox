@@ -13,7 +13,7 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     <div class="entry-metadata">
 
         <!-- TODO: allow setting for turning author and date off on posts -->
-        <span class="tb-date"><?php the_time('F j, Y'); ?></span>
+        <span class="tb-date"><?php the_time(); ?></span>
         |
         <span class="tb-author"><?php print get_the_author(); ?></span>
 
@@ -21,7 +21,8 @@ toebox\inc\ToeBox::HandleFeaturedImage();
 
     <div class="entry-excerpt">
         <?php print $body ?>
-    </div>
 
+    </div>
+    
 </article>
 <!-- END CONTENT -->
