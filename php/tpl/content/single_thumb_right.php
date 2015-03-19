@@ -1,17 +1,19 @@
-<!-- START CONTENT thumb left-->
+<!-- START CONTENT thumb right-->
 
 
 <div class="row">
-    <div class="col-xs-5 pull-right">
+
+  <div class="col-xs-5 pull-right">
 <?php
 toebox\inc\ToeBox::HandleFeaturedImage();
 ?>
-    </div>
- <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+  </div>
+
+  <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <header class="entry-header">
         <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
     </header>
-    <div class="tb-entry-metadata">
+    <div class="entry-metadata">
 
         <!-- TODO: allow setting for turning author and date off on posts -->
         <span class="tb-date"><?php the_time('F j, Y'); ?></span>
@@ -20,18 +22,13 @@ toebox\inc\ToeBox::HandleFeaturedImage();
 
     </div>
 
-    <div class="entry-excerpt">
+    <div class="entry-content">
         <?php print $body; ?>
     </div>
   </article>
-</div>
+  
+</div><!-- /row -->
 
-<div class="row">
-
-    <div class="tb-comments">
-        <?php comments_template(); ?>
-    </div>
-
-</div>
+<?php comments_template(); ?>
 
 <!-- END CONTENT -->

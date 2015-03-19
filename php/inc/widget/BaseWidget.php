@@ -57,7 +57,7 @@ class BaseWidget extends \WP_Widget
         wp_enqueue_style('toebox-admin-js', get_template_directory_uri() . '/css/some custom .css');
     }
 
-    public $TemplatePrefix = '/tpl/widget_';
+    public $TemplatePrefix = '/tpl/widget/';
 
     /**
      * Outputs the content of the widget
@@ -90,7 +90,7 @@ class BaseWidget extends \WP_Widget
     {
         $this->setDefaults($instance);
         
-        $instance[widget] = $this;
+        $instance['widget'] = $this;
         \toebox\inc\Forms::Display($this->TemplateName . '_widget_form', $instance);
     }
 
@@ -129,15 +129,7 @@ class BaseWidget extends \WP_Widget
      *
      * @param array $args            
      */
-    public function setDefaults(&$args = array())
-    {
-        $this->defaultValue($args, 'logo_style', '');
-        $this->defaultValue($args, 'background_style', 'no-repeat top center');
-        
-        $this->defaultValue($args, 'container_class', 'tb-header');
-        $this->defaultValue($args, 'title_class', 'text-hide tb-title');
-        $this->defaultValue($args, 'description_class', 'lead tb-description site-description');
-    }
+    public function setDefaults(&$args = array()) {    }
 
     /**
      * sets a value in an array if it is not already set

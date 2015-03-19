@@ -13,6 +13,7 @@ get_header();
 		<div class="col-sm-12 tb-main">
 
 <?php
+global $posts;
 toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_top');
 toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
 toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_bottom');

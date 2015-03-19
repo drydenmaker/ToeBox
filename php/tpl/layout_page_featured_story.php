@@ -1,3 +1,11 @@
+<?php
+/*
+Template Name: Featured Story No Columns
+Description: A Page with a fluid container and featured header and footer.
+*/
+wp_enqueue_style('toebox-theme-style', get_template_directory_uri() . '/css/featured_story.css');
+wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/featured_story.js');
+?>
 <!doctype html>
 <html <?php language_attributes(); ?>/>
 <head>
@@ -22,13 +30,6 @@
 <?php wp_head(); ?>
 <!-- WP HEAD END -->
 
-    <style>
-        .tb-main
-        {
-        	background-color: <?php print toebox\inc\Toebox::$Settings[TOEBOX_CONTENT_BACKGROUND_COLOR]; ?>;
-        }
-    </style>
-
 </head>
 <body <?php body_class(); ?>>
 <!--[if lt IE 9]>
@@ -37,7 +38,36 @@
 <!-- END HEADER -->
 <!-- TOEBOX HEADER -->
 <?php
-toebox\inc\ToeBox::HandleDynamicSidebar('toebox-header');
+toebox\inc\ToeBox::HandleDynamicSidebar('featured_header');
 ?>
 <!-- END TOEBOX HEADER -->
 
+<!-- START INDEX CONTENT -->
+<div class="container-fluid">
+
+	<div class="row">
+		<!-- START MAINBODY ROW -->
+<?php
+global $posts;
+toebox\inc\ToeBox::HandleDynamicSidebar('featured_content_top');
+toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
+toebox\inc\ToeBox::HandleDynamicSidebar('featured_content_bottom');
+?>
+		<!-- END MAINBODY ROW -->
+	</div><!-- /.row -->
+
+</div>
+<!-- /.container -->
+<!-- END INDEX CONTENT -->
+
+<!-- TOEBOX FOOTER -->
+<?php
+toebox\inc\ToeBox::HandleDynamicSidebar('featured_footer');
+?>
+<!-- END TOEBOX FOOTER -->
+<!-- START FOOTER -->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<?php wp_footer(); ?>
+</body>
+</html>

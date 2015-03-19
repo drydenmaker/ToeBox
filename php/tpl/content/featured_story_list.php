@@ -2,7 +2,7 @@
 
 <article id="post-<?php print $ID ?>" <?php post_class(); ?>>
 <?php
-toebox\inc\ToeBox::HandleFeaturedImage();
+toebox\inc\ToeBox::HandleFeaturedImageTemplated('featured_image_featured_story');
 ?>
 
     <header class="entry-header">

@@ -6,8 +6,8 @@
  * and the comment form.
  *
  * @package WordPress
- * @subpackage Twenty_Fifteen
- * @since Twenty Fifteen 1.0
+ * @subpackage ToeBox
+ * @since ToeBox 1.0
  */
 
 /*
@@ -15,11 +15,22 @@
  * the visitor has not yet entered the password we will
  * return early without loading the comments.
  */
-if ( post_password_required() ) {
-	return;
-}
-?>
+  if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
+    die ('Please do not load this page directly. Thanks!');
 
+  if ( post_password_required() ) { ?>
+  	<div class="alert alert-primary"><?php _e("This post is password protected. Enter the password to view comments.",'toebox-theme'); ?></div>
+  <?php
+    return;
+  }
+  
+  $req      = get_option('require_name_email');
+  $aria_req = ($req ? " aria-required='true'" : '');
+  $html5 = true;
+?>
+<div class="row">
+    <div class="tb-comments">
+    
 <div id="comments" class="comments-area">
 
 	<?php if ( have_comments() ) : ?>
@@ -54,7 +65,7 @@ if ( post_password_required() ) {
                     		      '<div class="comment-form-comment form-group">' .
                         		      '<label for="comment" class="control-label">' . _x( 'Comment', 'noun' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label>' .
                         		      '<div class="">' .
-                            		      '<textarea name="comment" type="text" class="form-control" id="comment" placeholder="" ' .
+                            		      '<textarea name="comment" type="text" class="form-control" id="comment" placeholder="'.__("Your Comment Here...",'toebox-theme').'" ' .
                             		      'value="' . esc_attr(  $commenter['comment_author'] ) . '"  aria-describedby="email-notes" rows="8" aria-describedby="form-allowed-tags" aria-required="true">' .
                             		      '</textarea>'.
                         		      '</div>' .
@@ -97,4 +108,8 @@ if ( post_password_required() ) {
             )); ?>
 
 </div><!-- .comments-area -->
+
+</div>
+    
+</div><!-- /row -->
 
