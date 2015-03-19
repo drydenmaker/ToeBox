@@ -54,3 +54,30 @@
 		}
 		
 }
+
+.navbar-form .search-form input
+{
+	background-color: @brand-light;
+	.border-left-radius(3px);
+	.placeholder(@brand-text-contrast);
+	width: 45%;
+	float: right;
+}
+
+.navbar-form .search-form input:focus
+{
+	width: 100%;
+}
+
+.navbar-form .search-submit
+{
+	background-color: @brand-text;
+	.border-right-radius(3px);
+}
+
+.navbar-form .search-form input, .navbar-form .search-submit 
+{
+	
+	color: @brand-text-contrast;
+	border-color: @brand-text;
+}

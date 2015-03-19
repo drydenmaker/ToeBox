@@ -22,7 +22,7 @@ toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_bottom');
         </div>
 
 		<div class="col-sm-3 col-lg-offset-1 tb-sidebar">
-<?php inc\ToeBox::HandleDynamicSidebar('toebox_right_sidebar') ?>
+<?php toebox\inc\ToeBox::HandleDynamicSidebar('toebox_right_sidebar') ?>
         </div>
 
 		<!-- END MAINBODY ROW -->
@@ -34,3 +34,4 @@ toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_bottom');
 <?php 
 // output footer
 get_footer();
+

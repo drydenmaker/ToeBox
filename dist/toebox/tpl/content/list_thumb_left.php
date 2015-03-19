@@ -1,17 +1,13 @@
-<!-- START CONTENT -->
-<?php 
-$arr = get_defined_vars();
-print '<pre>'.print_r($arr, true).'</pre>';
-?>
+<!-- START CONTENT thumb left-->
+
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-<?php 
-toebox\inc\ToeBox::LayoutContent(get_option( 'toebox_settings' ));
-exit(0);
-?>
+<div class="row">
+    <div class="col-xs-5">
 <?php
 toebox\inc\ToeBox::HandleFeaturedImage();
 ?>
-
+    </div>
+    
     <header class="entry-header">
         <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
     </header>
@@ -25,15 +21,9 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     </div>
 
     <div class="entry-excerpt">
-        <?php print the_content(); ?>
+        <?php print $body; ?>
     </div>
 
-    <?php if (is_single()) :?>
-    <div class="tb-comments">
-        <?php comments_template(); ?>
-    </div>
-    <?php endif; ?>
-
-
+</div>
 </article>
 <!-- END CONTENT -->

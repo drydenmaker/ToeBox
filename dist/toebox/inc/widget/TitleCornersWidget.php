@@ -32,7 +32,7 @@ class TitleCornersWidget extends TitleWidget
         $this->defaultValue($args, 'background_style', 'no-repeat top middle');
     
         $this->defaultValue($args, 'title_class', 'text-hide tb-title');
-        $this->defaultValue($args, 'description_class', 'lead tb-description site-description pull-right');
+        $this->defaultValue($args, 'description_class', 'tb-description site-description pull-right text-right');
     }
 }
 

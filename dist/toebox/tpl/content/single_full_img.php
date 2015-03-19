@@ -1,7 +1,9 @@
-<!-- START CONTENT text only -->
+<!-- START CONTENT full image-->
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
+<?php
+toebox\inc\ToeBox::HandleFeaturedImage();
+?>
 
     <header class="entry-header">
         <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
@@ -16,7 +18,14 @@
     </div>
 
     <div class="entry-excerpt">
-        <?php print the_content(); ?>
+        <?php print $body; ?>
+    </div>
+    
+</div>
+<div class="row">
+
+    <div class="tb-comments">
+        <?php comments_template(); ?>
     </div>
 
 </article>

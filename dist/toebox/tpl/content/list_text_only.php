@@ -1,10 +1,7 @@
-<!-- START CONTENT thumb left-->
+<!-- START CONTENT text only -->
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-<?php
-toebox\inc\ToeBox::HandleFeaturedImage();
-?>
 
     <header class="entry-header">
         <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
@@ -19,15 +16,8 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     </div>
 
     <div class="entry-excerpt">
-        <?php print the_content(); ?>
+        <?php print $body; ?>
     </div>
-
-    <?php if (is_single()) :?>
-    <div class="tb-comments">
-        <?php comments_template(); ?>
-    </div>
-    <?php endif; ?>
-
 
 </article>
 <!-- END CONTENT -->

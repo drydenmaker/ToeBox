@@ -1,6 +1,14 @@
 <?php
 namespace toebox\inc;
 
+
+define(TOEBOX_DEFAULT_PAGE_LAYOUT, 'toebox_page_laout');
+define(TOEBOX_DEFAULT_LIST_LAYOUT, 'toebox_list_laout');
+define(TOEBOX_DEFAULT_STORY_LAYOUT, 'toebox_story_laout');
+define(TOEBOX_HIDE_SMALL_SIDEBARS, 'toebox_hide_small_sidebars');
+define(TOEBOX_FEATURED_IMG_CLASS, 'toebox_featured_img_class');
+
+
 /**
  *
  * @author alton.crossley
@@ -8,6 +16,23 @@ namespace toebox\inc;
  */
 class ToeBox
 {
+    /**
+     * settings registry
+     * @var Array
+     */
+    public static $Settings = array(
+        'ver' => '0.0.1',
+        TOEBOX_DEFAULT_PAGE_LAYOUT => 'right_column',
+        TOEBOX_DEFAULT_LIST_LAYOUT => 'list_large_img',
+        TOEBOX_DEFAULT_STORY_LAYOUT => 'full_img',
+        TOEBOX_HIDE_SMALL_SIDEBARS => '1',
+        TOEBOX_FEATURED_IMG_CLASS => 'img-rounded'
+    );
+    
+    /**
+     * output dynamic sidebar contnet
+     * @param unknown $sidebarName
+     */
     public static function HandleDynamicSidebar($sidebarName)
     {
         if ( is_active_sidebar( $sidebarName ) )
@@ -15,7 +40,6 @@ class ToeBox
             sprintf('<div id="%1$s" class="container" role="complementary">%2$s</div><!-- #%1$s -->', $sidebarName, dynamic_sidebar( $sidebarName ));
         }
     }
-
     /**
      * location and prefix of layout pages
      * @var string
@@ -25,8 +49,9 @@ class ToeBox
      * Load page layout which contains content loop
      * @param array $settings
      */
-    public static function Layout(array $settings, $toeboxSlug = 'content')
+    public static function Layout($toeboxSlug = 'content')
     {
+        $settings = self::$Settings;
         $hideSideBarsOnSmallScreens = $settings[TOEBOX_HIDE_SMALL_SIDEBARS];
         $ifHideOnSmallCss = ($hideSideBarsOnSmallScreens) ? 'hidden-xs hidden-sm' : '' ;
         require TEMPLATEPATH.self::$LaoutPrefix . $settings[TOEBOX_DEFAULT_PAGE_LAYOUT] . '.php';
@@ -51,8 +76,6 @@ class ToeBox
      */
     public static function LayoutContent(\WP_Post $post, array $settings)
     {
-        //$arr = get_defined_vars();
-        //print '<pre>'.print_r($arr, true).'</pre>';
 
         foreach ($post as $var => $value)
         {
@@ -63,14 +86,22 @@ class ToeBox
             $$var = $value;
         }
 
-        $body = (is_single()) ?
-                $post_content :
-                (@trim($post_excerpt)) ? $post_excerpt : $post_content;
-
+        
+        if (is_single())
+        {
+            $body = $post_content;
+        }
+        else 
+        {
+            $body = (trim($post_excerpt)) ? $post_excerpt : $post_content;
+        }
+        
         $body = apply_filters('the_content', $body);
 
         $template = (is_single()) ? $settings[TOEBOX_DEFAULT_STORY_LAYOUT] : $settings[TOEBOX_DEFAULT_LIST_LAYOUT];
-        require TEMPLATEPATH.self::$LaoutContentPrefix . $template . '.php';
+        $templatePath = TEMPLATEPATH.self::$LaoutContentPrefix . $template . '.php';
+        
+        require $templatePath;
     }
     /**
      * Handle the wordpress loop
@@ -97,8 +128,14 @@ class ToeBox
      * @var string
      */
     public static $TemplatePrefix = '/tpl/';
-
-    public static function HandleFeaturedImage($post_id = null, $size = 'post-thumbnail', $attr = '') {
+    /**
+     * Featured Image Standard Format
+     * 
+     * @param string $post_id
+     * @param string $size
+     * @param string $attr
+     */
+    public static function HandleFeaturedImage($post_id = null, $size = 'post-thumbnail', $attr = '', $template = 'content_featured_image.php') {
         if ( post_password_required() || is_attachment() || !has_post_thumbnail() ) {
             return;
         }
@@ -115,8 +152,6 @@ class ToeBox
 
         list($src, $width, $height) = $image;
 
-            //$hwstring = image_hwstring($width, $height);
-
         $size_class = $size;
         if ( is_array( $size_class ) ) {
             $size_class = join( 'x', $size_class );
@@ -132,9 +167,20 @@ class ToeBox
         $alt = trim(strip_tags( get_post_meta($attachment_id, '_wp_attachment_image_alt', true) ));
 
         $title = get_the_title();
+        
+        $class = self::$Settings[TOEBOX_FEATURED_IMG_CLASS];
 
-        require TEMPLATEPATH.self::$TemplatePrefix . 'content_featured_image.php';
+        require TEMPLATEPATH.self::$TemplatePrefix . $template;
 
+    }
+    /**
+     * Featured Image with alternate template 
+     * 
+     * @param string $template
+     */
+    public static function HandleFeaturedImageTemplated($template = 'content_featured_image_overlay.php')
+    {
+        self::HandleFeaturedImage(null, 'post-thumbnail', '', $template);
     }
 }
 

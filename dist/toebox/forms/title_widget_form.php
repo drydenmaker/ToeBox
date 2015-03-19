@@ -1,7 +1,3 @@
-<?php 
-//$arr = get_defined_vars();
-//print '<pre>'.print_r($arr, true).'</pre>';
-?>
 
 <p>
 <div style="border:thin solid Silver; padding: 4px; margine: 4px;">
