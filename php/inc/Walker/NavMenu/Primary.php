@@ -82,18 +82,28 @@ class Primary extends \Walker_Nav_Menu
         $atts['target'] = ! empty($item->target) ? $item->target : '';
         $atts['rel'] = ! empty($item->xfn) ? $item->xfn : '';
         $atts['href'] = ! empty($item->url) ? $item->url : '';
+        
 
-        $caret = '';
         if (@$args->has_children)
         {
-            $caret = ' <b class="caret"></b>';
 
             $atts['class'] = 'dropdown-toggle';
             $atts['data-toggle'] = 'dropdown';
             $atts['aria-expanded'] = 'false';
+
         }
 
         $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);
+        
+        $title = '';
+        if (\toebox\inc\Toebox::$Settings[TOEBOX_MENU_SUBTITLES])
+        {
+            if (array_key_exists('title', $atts))
+            {
+                $title .= "<div class='subtitle'>{$atts['title']}</div>";
+                $atts['title'] = null;
+            }
+        }
 
         $attributes = '';
         foreach ($atts as $attr => $value) {
@@ -102,12 +112,12 @@ class Primary extends \Walker_Nav_Menu
                 $attributes .= ' ' . $attr . '="' . $value . '"';
             }
         }
-
+        
         $item_output = $args->before;
         $item_output .= '<a' . $attributes . ' el>';
 
-        $item_output .= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $caret . $args->link_after;
-        $item_output .= '</a>';
+        $item_output .= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
+        $item_output .= $title . '</a>';
         $item_output .= $args->after;
 
         $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);

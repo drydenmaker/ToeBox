@@ -1,8 +1,8 @@
-<div class="<?php print $container_class ?>" style="background: url(<?php print $background ?>) <?php print $background_style ?>">
+<div class="<?php print $container_class ?> clearfix" style="background: url(<?php print $background ?>) <?php print $background_style ?>">
 
     <div class="visible-sm-inline visible-md-inline visible-lg-inline visible-xl-inline <?php print $description_class ?>">
         <?php if ($sub_logo) : ?><img src="<?php print $sub_logo ?>" style="<?php print $sub_logo_style ?>" /><?php endif;?>
-        <h2><?php echo get_bloginfo( 'description', 'display' ); ?></h2>
+        <div class='description'><?php echo get_bloginfo( 'description', 'display' ); ?></div>
     </div>
 
     <h1 class="<?php print $title_class ?>">
@@ -12,6 +12,6 @@
         </a>
     </h1>
     <div class="visible-xs-inline-block <?php print $description_class ?>">
-        <h2><?php echo get_bloginfo( 'description', 'display' ); ?></h2>
+        <span class='description'><?php echo get_bloginfo( 'description', 'display' ); ?></span>
     </div>
 </div>

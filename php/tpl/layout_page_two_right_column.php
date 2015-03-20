@@ -18,6 +18,9 @@ get_header();
 global $posts;
 toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_top');
 toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
+
+toebox\inc\ToeBox::HandleLinkPages();
+
 toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_bottom');
 ?>
 
@@ -30,6 +33,10 @@ toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_bottom');
         <div class="col-lg-3 tb-sidebar">
 <?php toebox\inc\ToeBox::HandleDynamicSidebar('toebox_right_sidebar') ?>
         </div>
+
+<?php 
+toebox\inc\ToeBox::HandleListNavigation();
+?>
 
 		<!-- END MAINBODY ROW -->
 	</div>

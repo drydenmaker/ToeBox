@@ -13,11 +13,16 @@ define('TOEBOX_CONTENT_BACKGROUND_COLOR', 'toebox_background_collor');
 
 define('TOEBOX_404_MESSAGE', 'toebox_404_message');
 define('TOEBOX_ENABLE_404_SEARCH', 'toebox_404_search');
+define('TOEBOX_ENABLE_LIST_PAGING', 'toebox_list_paging');
+
+
+define('TOEBOX_MENU_SUBTITLES', 'toebox_menu_subtitles');
+
 
 define('TOEBOX_TEMPLATE_SINGLE', 'single_');
 define('TOEBOX_TEMPLATE_LIST', 'list_');
 
-
+define('TOEBOX_LINK_PAGES_ARGS', 'toebox_link_pages_args');
 
 
 $pageLayoutOptions = array(
@@ -54,7 +59,23 @@ class ToeBox
         TOEBOX_FEATURED_IMG_CLASS => 'img-rounded',
         TOEBOX_CONTENT_BACKGROUND_COLOR => '#222',
         TOEBOX_404_MESSAGE => '<p>Sorry, no content was found.</p>',
-        TOEBOX_ENABLE_404_SEARCH => true
+        TOEBOX_ENABLE_404_SEARCH => true,
+        TOEBOX_ENABLE_LIST_PAGING => false,
+        
+        TOEBOX_MENU_SUBTITLES => true,
+        
+        TOEBOX_LINK_PAGES_ARGS => array(
+            'before'      => '<nav><ul class="page-links pagination"><li>',
+            'after'       => '</li></ul></nav>',
+            'link_before' => '',
+            'link_after'  => '',
+            'pagelink'    => '%',
+            'separator'   => '</li><li>',
+//             'next_or_number'=>'next',
+//             'previouspagelink' => ' &laquo; ',
+//             'nextpagelink'=>' &raquo;',
+            )
+        
     );
     
     public static function InitSettings(array $otherSettings = array())
@@ -149,17 +170,6 @@ class ToeBox
         $body = apply_filters('the_content', $body);
         $body = str_replace( ']]>', ']]&gt;', $body );
         
-        // add pagination
-//         $body .= wp_link_pages( array(
-// 				'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'toebox-basic' ) . '</span>',
-// 				'after'       => '</div>',
-// 				'link_before' => '<span>',
-// 				'link_after'  => '</span>',
-// 				'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'toebox-basic' ) . ' </span>%',
-// 				'separator'   => '<span class="screen-reader-text">, </span>',
-//                 'echo'        => false,
-// 			) );
-        
         if (in_array($post_type, self::$CustomLayoutTemplates))
         {
             $extension = (is_single()) ? 'single' : 'list';
@@ -167,7 +177,7 @@ class ToeBox
         }
         else
         {
-            $template = (is_single()) ? $settings[TOEBOX_STORY_LAYOUT] : $settings[TOEBOX_LIST_LAYOUT];
+            $template = (is_single() || is_page()) ? $settings[TOEBOX_STORY_LAYOUT] : $settings[TOEBOX_LIST_LAYOUT];
             $templatePath = sprintf('%s%s.php', TEMPLATEPATH.self::$LaoutContentPrefix, $template);
         }
         
@@ -193,7 +203,22 @@ class ToeBox
         else
         {
             print self::$Settings[TOEBOX_404_MESSAGE];
+            if (self::$Settings[TOEBOX_ENABLE_404_SEARCH]) include TEMPLATEPATH . '/tpl/widget/search_row.php';
         }
+    }
+    public static function HandleLinkPages()
+    {
+        wp_link_pages( self::$Settings[TOEBOX_LINK_PAGES_ARGS] );
+    }
+    public static function HandleListNavigation()
+    {
+        print self::$Settings[TOEBOX_ENABLE_LIST_PAGING];
+        if (self::$Settings[TOEBOX_ENABLE_LIST_PAGING])
+            print sprintf("<div class='postlinks clearfix'>
+                        <div class='new-posts-link pull-right'>%2\$s </div>
+                        <div class='old-posts-link'>%1\$s </div>
+                        </div>",
+                        get_next_posts_link('<< Older Posts'), get_previous_posts_link('Newer Posts >>'));
     }
     /**
      * relative file path of template files

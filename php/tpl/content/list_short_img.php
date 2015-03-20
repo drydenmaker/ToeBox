@@ -1,4 +1,4 @@
-<!-- START CONTENT large image -->
+<!-- START CONTENT list short image -->
 
 <article id="post-<?php print $ID ?>" <?php post_class(); ?>>
 <div class="tb-short-img">
@@ -13,7 +13,7 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     <div class="entry-metadata">
 
         <!-- TODO: allow setting for turning author and date off on posts -->
-        <span class="tb-date"><?php the_time(); ?></span>
+        <span class="tb-date"><?php the_time(get_option('date_format')); ?></span>
         |
         <span class="tb-author"><?php print get_the_author(); ?></span>
 

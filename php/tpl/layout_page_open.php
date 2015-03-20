@@ -12,7 +12,12 @@ get_header();
 global $posts;
 toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_top');
 toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
+
+wp_link_pages( $toebox_link_pages_args );
+
 toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_bottom');
+
+toebox\inc\ToeBox::HandleListNavigation();
 ?>
     </div>
 </div>

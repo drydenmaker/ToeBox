@@ -20,18 +20,85 @@ add_action( 'init', function()
 {
     toebox\inc\Toebox::InitSettings();
 	add_post_type_support('page', array('excerpt', 'revisions', 'comments', 'custom-fields', 'page-attributes'));
+	
+	$WPLessPlugin = WPLessPlugin::getInstance();
+	if (WP_DEBUG) $WPLessPlugin->processStylesheets();
+	$WPLessPlugin->dispatch();
+	
+	/**
+	 * setup menu walker
+	 */
+	require_once TEMPLATEPATH.'/inc/Walker/NavMenu/Primary.php';
+	add_filter( 'wp_nav_menu_args', 'toebox\\inc\\Walker\\NavMenu\\Primary::MenuArguments');
 });
 
-/**
- * setup menu walker
- */
-require_once TEMPLATEPATH.'/inc/Walker/NavMenu/Primary.php';
-add_filter( 'wp_nav_menu_args', 'toebox\\inc\\Walker\\NavMenu\\Primary::MenuArguments');
+add_filter( 'embed_oembed_html', function ( $html, $data, $url )
+{
 
-add_filter('nav_menu_link_attributes', function($atts = array()){
-    // alter links
-    return $atts;
-});
+//     $arr = get_defined_vars();
+//     print 'embed_oembed_html<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
+    
+    
+//     if ( FALSE !== strpos( $url, 'deviantart.com' ) ) {
+//         return $html . '<br/>Author: ' . $data->author_name;
+//     }
+    return '<div class="embed-responsive embed-responsive-16by9">' . $html . '</div>';
+}, 10, 3 );
+
+add_filter( 'oembed_dataparse', function ( $html, $data, $url )
+{
+
+//     $arr = get_defined_vars();
+//     print 'oembed_dataparse<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
+
+
+    //     if ( FALSE !== strpos( $url, 'deviantart.com' ) ) {
+    //         return $html . '<br/>Author: ' . $data->author_name;
+    //     }
+    return $html;
+}, 10, 3 );
+
+// add_filter('nav_menu_link_attributes', function($atts = array()){
+
+//     $arr = get_defined_vars();
+//     print 'link_attributes<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
+    
+    
+//     // alter links
+//     return $atts;
+// });
+
+// add_filter('nav_menu_attr_title', function($atts = array()){
+
+//     $arr = get_defined_vars();
+//     print 'titl<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
+
+
+//     // alter links
+//     return $atts;
+// });
+
+// add_filter('nav_menu_description', function($atts = array()){
+
+//     $arr = get_defined_vars();
+//     print 'description<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
+
+
+//     // alter links
+//     return $atts;
+// });
+
+// add_filter('nav_menu_meta_box_object', function($atts = array()){
+
+//     $arr = get_defined_vars();
+//     print 'box_object<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
+
+
+//     // alter links
+//     return $atts;
+// });
+
+    
 
 
 add_action( 'after_setup_theme', function()
@@ -148,19 +215,37 @@ add_action( 'widgets_init', function()
 
 add_action( 'wp_enqueue_scripts', function()
 {
-    wp_enqueue_style('toebox-style', get_template_directory_uri() . '/css/toebox.min.css');
-    wp_enqueue_style('toebox-theme-style', get_template_directory_uri() . '/css/toebox-theme.min.css');
+//     wp_enqueue_style('toebox-style', get_template_directory_uri() . '/css/toebox.min.css');
+//     wp_enqueue_style('toebox-theme-style', get_template_directory_uri() . '/css/toebox-theme.min.css');
+    wp_enqueue_style('tb_css', get_template_directory_uri() . '/less/style.less');
     wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/toebox.js', array(), false, true);
 	wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/vendor/modernizr.min.js', array(), false, true);
 	
-	wp_enqueue_style('tb_css', get_template_directory_uri() . 'less/style.css');
+	
 
 });// toeboxBasicEnqueueScripts
 
 
+add_filter('wp_link_pages_link', function($link){
+
+    if (strstr($link, 'href') === false)
+    {
+        $link = "<a href='#'>{$link}</a>" ;
+    }
+    
+    return $link;
+});
+
+add_filter('wp_link_pages', function($atts){
+
+
+    $atts = str_replace("<li><a href='#'", "<li class='active'><a href='#'", $atts);
+
+    return $atts;
+});
 
 
 
@@ -171,5 +256,5 @@ require_once 'inc/core/upload_mimes.php';
 require_once 'inc/core/featured_story_post_type.php';
 
 
-//require_once 'vendor/autoload.php';
-//require_once 'vendor/oncletom/wp-less/bootstrap-for-theme.php';
+require_once 'vendor/autoload.php';
+require_once 'vendor/oncletom/wp-less/bootstrap-for-theme.php';
