@@ -146,14 +146,8 @@ class ToeBox
      */
     public static function LayoutContent(\WP_Post $post, array $settings)
     {
-        foreach ($post as $var => $value)
-        {
-            $$var = $value;
-        }
-        foreach ($settings as $var => $value)
-        {
-            $$var = $value;
-        }
+        extract($post);
+        extract($settings);
         
         // set template
         if (is_single() || is_sticky())
@@ -180,6 +174,10 @@ class ToeBox
             $template = (is_single() || is_page()) ? $settings[TOEBOX_STORY_LAYOUT] : $settings[TOEBOX_LIST_LAYOUT];
             $templatePath = sprintf('%s%s.php', TEMPLATEPATH.self::$LaoutContentPrefix, $template);
         }
+        
+        // wordpress output
+        $post_title = get_the_title();
+        $post_date = get_the_time(get_option('date_format'));
         
         require $templatePath;
     }
@@ -278,6 +276,28 @@ class ToeBox
     public static function HandleFeaturedImageTemplated($template = 'featured_image_overlay', $post_id = null, $size = 'post-thumbnail', $attr = array())
     {
         self::HandleFeaturedImage($post_id, $size, $attr, $template);
+    }
+    
+    public static $Debug = true;
+    
+    public static function DebugFile($location = 'START')
+    {
+        //print 'BASE<pre>'.htmlspecialchars(print_r(debug_backtrace(), true)).'</pre>';
+        if (self::$Debug)
+        {
+            $trace = debug_backtrace();
+            try 
+            {
+                $callingFileName = str_replace(
+                                str_replace('/', '\\', TEMPLATEPATH), null, 
+                                str_replace('/', '\\', 
+                                                    str_ireplace('.php', null, array_shift($trace)['file']))); 
+                
+                print sprintf('%3$s<!-- %1$s %2$s -->', $callingFileName, $location, str_repeat(' ', count($trace)) );
+            }
+            catch(Exception $e){}
+            //print 
+        }
     }
 }
 
