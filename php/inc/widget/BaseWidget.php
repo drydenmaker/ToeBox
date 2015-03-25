@@ -68,13 +68,8 @@ class BaseWidget extends \WP_Widget
     public function widget($args, $instance)
     {
         $this->setDefaults($instance);
-        
-        foreach ($args as $var => $value) {
-            $$var = $value;
-        }
-        foreach ($instance as $var => $value) {
-            $$var = $value;
-        }
+        extract($args);
+        extract($instance);
         
         // outputs the content of the widget
         include TEMPLATEPATH . $this->TemplatePrefix . $this->TemplateName . '.php';
