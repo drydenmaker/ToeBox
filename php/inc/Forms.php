@@ -12,7 +12,7 @@ class Forms
      * the path from theme root and file prefix
      * @var string
      */
-    public static $FormTemplatePrefix = '/forms/';
+    public static $FormTemplatePrefix = '/tpl/admin-forms/';
 
     /**
      * output a form template
@@ -20,10 +20,7 @@ class Forms
      */
     public static function Display($formName, array $extras = array())
     {
-        foreach ($extras as $var => $value)
-        {
-            $$var = $value;
-        }
+        extract($extras);
         include TEMPLATEPATH.self::$FormTemplatePrefix . $formName . '.php';
     }
     
