@@ -19,6 +19,8 @@ toebox\inc\ToeBox::HandleFeaturedImage();
             <span class="tb-author"><?php print get_the_author(); ?></span>
             |
             <span class="tb-categoryr"><?php the_category(', ') ?></span>
+            |
+            <span class="tb-tags"><?php the_tags( 'Tags: ', ', ', '' ); ?></span>
         </div>
         <?php endif;?>
     

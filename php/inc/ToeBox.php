@@ -384,6 +384,20 @@ class ToeBox
                             str_replace('/', '\\', get_template_directory()), null,
                             str_replace('/', '\\', $fileName));
     }
+    /**
+     * includes a theme php file
+     * @param string $fileName
+     */
+    public static function GetFileContents($fileName)
+    {
+        ob_start();
+        
+        require get_template_directory() . '/' . self::GetThemeRelativeFileName($fileName);
+        
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    } 
 }
 
 ?>

@@ -45,7 +45,6 @@ class Primary extends \Walker_Nav_Menu
         return parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
     }
 
-
     /**
      *
      * @see Walker::start_el()
@@ -152,7 +151,7 @@ class Primary extends \Walker_Nav_Menu
         
         $args['items_wrap'] = str_replace('tb-navbar-collapse', 'tb-navbar-collapse-' . $args['menu']->term_id,
                                 str_replace('<!-- Search -->', get_search_form(false), 
-                                file_get_contents(get_template_directory() . '/tpl/menu_wrap.html')));
+                                \toebox\inc\ToeBox::GetFileContents('/tpl/menu_wrap.php')));
         
         
 

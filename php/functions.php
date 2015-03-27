@@ -33,8 +33,10 @@ add_action( 'init', function()
 add_action( 'wp_enqueue_scripts', function()
 {
     wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
-    wp_enqueue_style('tb_css', get_template_directory_uri() . '/less/style.less');
-
+    
+    wp_enqueue_style('tb_css', get_template_directory_uri() . 
+                    class_exists('WPLessPlugin', false) ? '/less/style.less' : '/css/bootstrap-Toebox.min.css');
+    
     wp_enqueue_script('jquery');
     wp_enqueue_script('toebox-script', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), false, true);
     wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/vendor/modernizr.min.js');
@@ -79,6 +81,8 @@ require_once 'inc/core/carousel_post_type.php';
 require_once 'inc/core/widgets.php';
 require_once 'inc/core/bootstrap_shortcodes.php';
 
+require_once get_template_directory() . '/inc/core/less.php';
+
 add_action( 'after_setup_theme', function()
 {
     load_theme_textdomain('toebox-basic', get_template_directory() . '/languages');
@@ -101,7 +105,5 @@ add_action( 'after_setup_theme', function()
             )
         )
     );
-    
-    require_once get_template_directory() . '/inc/core/less.php';
 
 }); // toeboxBasicSetup

@@ -158,7 +158,8 @@ function bootstrap_button_function($attirbutes, $content = 'Button')
         'type' => 'button',
         'block' => false,
         'active' => false,
-        'disbled' => null
+        'disabled' => '',
+        'class' => ''
     );
     
     // combine and filter attributes
@@ -200,7 +201,7 @@ function bootstrap_button_function($attirbutes, $content = 'Button')
         $class .= ' '. $attirbutes['class'];
     }
     
-    $filteredAttributes = array_diff_key($target, array_flip(array('url', 'size', 'block', 'active', 'class')));
+    $filteredAttributes = array_diff_key($attirbutes, array_flip(array('url', 'size', 'block', 'active', 'class')));
         
     $tag = "<a class='$class'";
     foreach ( $filteredAttributes as $attribute => $value ) {

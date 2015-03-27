@@ -1,5 +1,5 @@
 {
     "require": {
-        "oncletom/wp-less": "dev-master"
+        "tgm/plugin-activation": "2.4.0"
     }
 }

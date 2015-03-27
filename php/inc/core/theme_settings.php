@@ -233,7 +233,7 @@ add_action( 'admin_enqueue_scripts', function ( $hook )
 
 add_action( 'admin_menu', function (  ) {
 
-    add_menu_page( 'ToeBox', 'ToeBox', 'manage_options', 'toebox', 'toebox_options_page' );
+    add_theme_page( 'ToeBox Settings', 'ToeBox Settings', 'manage_options', 'toebox', 'toebox_options_page' );
 
 });
 
