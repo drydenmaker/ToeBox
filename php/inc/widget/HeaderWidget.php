@@ -1,8 +1,8 @@
 <?php
 namespace toebox\inc\widget;
 
-require_once TEMPLATEPATH.'/inc/Forms.php';
-require_once TEMPLATEPATH.'/inc/widget/BaseWidget.php';
+require_once get_template_directory().'/inc/Forms.php';
+require_once get_template_directory().'/inc/widget/BaseWidget.php';
 
 class HeaderWidget extends BaseWidget
 {

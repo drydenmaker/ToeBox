@@ -1,7 +1,7 @@
 <?php
 namespace toebox\inc\widget;
 
-require_once TEMPLATEPATH.'/inc/Forms.php';
+require_once get_template_directory().'/inc/Forms.php';
 
 class BaseWidget extends \WP_Widget
 {
@@ -72,7 +72,7 @@ class BaseWidget extends \WP_Widget
         extract($instance);
         
         // outputs the content of the widget
-        include TEMPLATEPATH . $this->TemplatePrefix . $this->TemplateName . '.php';
+        include get_template_directory() . $this->TemplatePrefix . $this->TemplateName . '.php';
     }
 
     /**

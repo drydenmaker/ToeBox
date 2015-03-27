@@ -124,11 +124,11 @@ class ToeBox
         
         if (($postType) && in_array($postType, self::$CustomLayoutTemplates))
         {
-            $templatePath = TEMPLATEPATH.self::$LaoutPrefix . $settings[TOEBOX_FEATURED_STORY_LAYOUT] . '.php';
+            $templatePath = get_template_directory().self::$LaoutPrefix . $settings[TOEBOX_FEATURED_STORY_LAYOUT] . '.php';
         }
         else 
         {
-            $templatePath = TEMPLATEPATH.self::$LaoutPrefix . $settings[TOEBOX_PAGE_LAYOUT] . '.php';
+            $templatePath = get_template_directory().self::$LaoutPrefix . $settings[TOEBOX_PAGE_LAYOUT] . '.php';
         }
         
         require $templatePath;
@@ -171,12 +171,12 @@ class ToeBox
         if (in_array($post_type, self::$CustomLayoutTemplates))
         {
             $extension = (is_single()) ? 'single' : 'list';
-            $templatePath = sprintf('%s%s_%s.php', TEMPLATEPATH.self::$LaoutContentPrefix, $post_type, $extension);
+            $templatePath = sprintf('%s%s_%s.php', get_template_directory().self::$LaoutContentPrefix, $post_type, $extension);
         }
         else
         {
             $template = (is_single() || is_page()) ? $settings[TOEBOX_STORY_LAYOUT] : $settings[TOEBOX_LIST_LAYOUT];
-            $templatePath = sprintf('%s%s.php', TEMPLATEPATH.self::$LaoutContentPrefix, $template);
+            $templatePath = sprintf('%s%s.php', get_template_directory().self::$LaoutContentPrefix, $template);
         }
         
         // wordpress output
@@ -237,7 +237,7 @@ class ToeBox
         else
         {
             print self::$Settings[TOEBOX_404_MESSAGE];
-            if (self::$Settings[TOEBOX_ENABLE_404_SEARCH]) include TEMPLATEPATH . '/tpl/widget/search_row.php';
+            if (self::$Settings[TOEBOX_ENABLE_404_SEARCH]) include get_template_directory() . '/tpl/widget/search_row.php';
         }
     }
     public static function HandleLinkPages()
@@ -298,7 +298,7 @@ class ToeBox
         
         $class = self::$Settings[TOEBOX_FEATURED_IMG_CLASS];
 
-        $filePath = TEMPLATEPATH.self::$TemplatePrefix . $template . '.php';
+        $filePath = get_template_directory().self::$TemplatePrefix . $template . '.php';
         
         self::DebugFile('START', $filePath);
         require $filePath;
@@ -381,7 +381,7 @@ class ToeBox
     public static function GetThemeRelativeFileName($fileName)
     {
         return str_replace(
-                            str_replace('/', '\\', TEMPLATEPATH), null,
+                            str_replace('/', '\\', get_template_directory()), null,
                             str_replace('/', '\\', $fileName));
     }
 }

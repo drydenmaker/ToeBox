@@ -63,7 +63,7 @@
 		      'class_submit' => 'btn btn-default comment-submit',
 		      'comment_field' => 
                     		      '<div class="comment-form-comment form-group">' .
-                        		      '<label for="comment" class="control-label">' . _x( 'Comment', 'noun' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label>' .
+                        		      '<label for="comment" class="control-label">' . _x( 'Comment', 'noun', 'tobox-basic' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label>' .
                         		      '<div class="">' .
                             		      '<textarea name="comment" type="text" class="form-control" id="comment" placeholder="'.__("Your Comment Here...",'toebox-theme').'" ' .
                             		      'value="' . esc_attr(  $commenter['comment_author'] ) . '"  aria-describedby="email-notes" rows="8" aria-describedby="form-allowed-tags" aria-required="true">' .
@@ -75,7 +75,7 @@
               
             		            'author'  =>
                         		            '<div class="form-group">' .
-                            		            '<label for="author" class="control-label">' . __( 'Name' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label>' .
+                            		            '<label for="author" class="control-label">' . __( 'Name', 'toebox-basic' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label>' .
                             		            '<div class="">' .
                             		            '<input name="author" type="text" class="form-control" id="email" placeholder="" ' .
                             		            'value="' . esc_attr(  $commenter['comment_author'] ) . '" ' . $aria_req . ' size="30" >' .
@@ -83,7 +83,7 @@
                         		            '</div>',
                         		'email'  => 
                                             '<div class="form-group">' .
-                                                '<label for="email" class="control-label">' . __( 'Email' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label>' .
+                                                '<label for="email" class="control-label">' . __( 'Email', 'toebox-basic' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label>' .
                                                 '<div class="">' .
                                                   '<input name="email" type="' . 
                                                         ( $html5 ? 'email' : 'text' ) . 
@@ -94,7 +94,7 @@
                                             
                                 'url'  =>
                                             '<div class="form-group">' .
-                                                '<label for="url" class="control-label">' . __( 'Website' ) . '</label>' .
+                                                '<label for="url" class="control-label">' . __( 'Website', 'toebox-basic' ) . '</label>' .
                                                 '<div class="">' .
                                                     '<input name="url" type="' . 
                                                         ( $html5 ? 'text' : 'text' ) . 

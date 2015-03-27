@@ -152,7 +152,7 @@ class Primary extends \Walker_Nav_Menu
         
         $args['items_wrap'] = str_replace('tb-navbar-collapse', 'tb-navbar-collapse-' . $args['menu']->term_id,
                                 str_replace('<!-- Search -->', get_search_form(false), 
-                                file_get_contents(TEMPLATEPATH . '/tpl/menu_wrap.html')));
+                                file_get_contents(get_template_directory() . '/tpl/menu_wrap.html')));
         
         
 

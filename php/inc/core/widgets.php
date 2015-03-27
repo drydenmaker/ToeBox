@@ -6,10 +6,10 @@
 add_action( 'widgets_init', function()
 {
     // --------------  WIDGETS ---------------------------------------------
-    require_once TEMPLATEPATH.'/inc/widget/HeaderLogoCornersWidget.php';
-    require_once TEMPLATEPATH.'/inc/widget/HeaderLogoWidget.php';
-    require_once TEMPLATEPATH.'/inc/widget/HeaderWidget.php';
-    require_once TEMPLATEPATH.'/inc/widget/SearchRowWidget.php';
+    require_once get_template_directory().'/inc/widget/HeaderLogoCornersWidget.php';
+    require_once get_template_directory().'/inc/widget/HeaderLogoWidget.php';
+    require_once get_template_directory().'/inc/widget/HeaderWidget.php';
+    require_once get_template_directory().'/inc/widget/SearchRowWidget.php';
 
     register_widget( 'toebox\inc\widget\HeaderLogoWidget' );
     register_widget( 'toebox\inc\widget\HeaderLogoCornersWidget' );

@@ -122,7 +122,7 @@ if (toebox\inc\Toebox::$Settings[TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE])
         extract($attirbutes);
         
         ob_start();
-        include TEMPLATEPATH . "/tpl/carousel/$templateName.php";
+        include get_template_directory() . "/tpl/carousel/$templateName.php";
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
