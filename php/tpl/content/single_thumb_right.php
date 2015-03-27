@@ -1,4 +1,6 @@
-<!-- START CONTENT thumb right-->
+<?php
+toebox\inc\ToeBox::DebugFile();
+?>
 
 
 <div class="row">
@@ -32,6 +34,7 @@ toebox\inc\ToeBox::HandleFeaturedImage();
   
 </div><!-- /row -->
 
-<?php comments_template(); ?>
-
-<!-- END CONTENT -->
+<?php 
+comments_template();
+toebox\inc\ToeBox::DebugFile('END');
+?>

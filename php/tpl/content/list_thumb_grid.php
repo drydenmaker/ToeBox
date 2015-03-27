@@ -1,4 +1,6 @@
-<!-- START CONTENT thumb gird-->
+<?php
+toebox\inc\ToeBox::DebugFile();
+?>
 
 
     <span class="article-grid col-md-4">
@@ -6,6 +8,6 @@
 toebox\inc\ToeBox::HandleFeaturedImageTemplated();
 ?>   
     </span>
-    
-
-<!-- END CONTENT -->
+<?php
+toebox\inc\ToeBox::DebugFile('END');
+?>

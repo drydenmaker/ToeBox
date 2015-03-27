@@ -1,4 +1,6 @@
-<!-- START CONTENT large image -->
+<?php
+toebox\inc\ToeBox::DebugFile();
+?>
 
 <article id="post-<?php print $ID ?>" <?php post_class(); ?>>
 <?php
@@ -24,4 +26,6 @@ toebox\inc\ToeBox::HandleFeaturedImage();
    
 
 </article>
-<!-- END CONTENT -->
+<?php
+toebox\inc\ToeBox::DebugFile('END');
+?>

@@ -1,5 +1,6 @@
-<!-- START CONTENT large image -->
-
+<?php
+toebox\inc\ToeBox::DebugFile();
+?>
 <article id="post-<?php print $ID ?>" <?php post_class(); ?>>
 <?php
 toebox\inc\ToeBox::HandleFeaturedImageTemplated('featured_image_featured_story');
@@ -25,4 +26,6 @@ toebox\inc\ToeBox::HandleFeaturedImageTemplated('featured_image_featured_story')
     </div>
 
 </article>
-<!-- END CONTENT -->
+<?php
+toebox\inc\ToeBox::DebugFile('END');
+?>

@@ -1,3 +1,6 @@
+<?php
+toebox\inc\ToeBox::DebugFile();
+?>
 <a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
 
 <div class="tb-post-thumbnail-overlay">
@@ -9,3 +12,6 @@
 </div>
 
 </a>
+<?php
+toebox\inc\ToeBox::DebugFile('END');
+?>

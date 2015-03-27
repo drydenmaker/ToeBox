@@ -1,4 +1,6 @@
-<!-- START CONTENT text only -->
+<?php
+toebox\inc\ToeBox::DebugFile();
+?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
@@ -21,4 +23,6 @@
     </div>
     
 </article>
-<!-- END CONTENT -->
+<?php
+toebox\inc\ToeBox::DebugFile('END');
+?>
