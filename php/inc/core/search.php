@@ -21,7 +21,7 @@ EOT;
      $form = sprintf($formTemplate, 
                      home_url( '/' ), // %1$s action
                      get_search_query(), // %2$s query
-                     __( 'Search' ) // %3$s button caption
+                     __( 'Search', 'toebox-basic') // %3$s button caption
                     );
  
      return $form;

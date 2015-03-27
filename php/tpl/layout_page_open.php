@@ -5,8 +5,8 @@ Description: A page template that puts everything inside a single bootstrap 'con
 */
 get_header();
 ?>
-<!-- START INDEX CONTENT -->
-<div class="container">
+<!-- START INDEX CONTENT LAYOUT PAGE OPEN -->
+<div class="container-fluid">
     <div class="tb-main">
 <?php
 global $posts;

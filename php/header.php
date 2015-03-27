@@ -1,4 +1,8 @@
-<!doctype html>
+<?php 
+// set some defaults so templates work native
+$toeboxSlug = empty($toeboxSlug) ? 'content' : $toeboxSlug;
+$toebox_link_pages_args = empty($toebox_link_pages_args) ? array() : $toebox_link_pages_args;
+?><!doctype html>
 <html <?php language_attributes(); ?>/>
 <head>
 

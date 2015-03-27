@@ -1,6 +1,3 @@
-<?php
-toebox\inc\ToeBox::DebugFile();
-?>
 
 <article id="post-<?php print $ID ?>" <?php post_class(); ?>>
 <div class="tb-short-img">
@@ -27,6 +24,3 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     </div>
     
 </article>
-<?php
-toebox\inc\ToeBox::DebugFile('END');
-?>

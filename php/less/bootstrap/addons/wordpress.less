@@ -1,3 +1,12 @@
+.wp-caption { .caption }
+.wp-caption-text { .caption }
+.sticky  { .jumbotron }
+.gallery-caption  { .text-uppercase }
+.bypostauthor  { .text-uppercase }
+.alignright  { .text-right }
+.alignleft { .text-left }
+.aligncenter { .text-center }
+
 table
 {
 	.table;
@@ -102,7 +111,10 @@ article .entry-content
 	position: relative;
 	top: -9vw;
 }
-
+.post-thumbnail
+{
+	text-align: center;
+}
 .tb-post-thumbnail-overlay
 {
 	float: left;
@@ -248,4 +260,51 @@ article .entry-content
 .bypostauthor
 {
 	border-right: 5px solid @blockquote-border-color;
+}
+
+.img-xs, .img-sm, .img-md, .img-lg
+{
+	height: auto; 
+	max-width: none;
+}
+/* Small devices (tablets, 768px and up) */
+@media (max-width: @screen-md-min) 
+{
+	.img-xs
+	{
+		width: 6vw;
+	}
+	.img-sm
+	{
+		width: 24vw;
+	}
+	.img-md
+	{
+		width: 64vw;
+	}
+	.img-lg
+	{
+		width: 92vw;
+	}
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: @screen-md-min) 
+{
+	.img-xs
+	{
+		width: 64px;
+	}
+	.img-sm
+	{
+		width: 240px;
+	}
+	.img-md
+	{
+		width: 640px;
+	}
+	.img-lg
+	{
+		width: 920px;
+	}
 }

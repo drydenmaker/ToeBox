@@ -1,4 +1,5 @@
 <?php
+use Symfony\Component\Finder\Iterator\FilenameFilterIterator;
 /*
 Template Name: Featured Story Left Column
 Description: A Page with a fluid container and featured header and footer.
@@ -13,6 +14,8 @@ wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/featured_
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<meta template="<?php dirname( __FILE__ ); ?>">
 
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 

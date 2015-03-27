@@ -18,6 +18,9 @@ define('TOEBOX_ENABLE_LIST_PAGING', 'toebox_list_paging');
 
 define('TOEBOX_MENU_SUBTITLES', 'toebox_menu_subtitles');
 
+define('TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE', 'toebox_feature_stories');
+define('TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE', 'toebox_carousel_links');
+
 
 define('TOEBOX_TEMPLATE_SINGLE', 'single_');
 define('TOEBOX_TEMPLATE_LIST', 'list_');
@@ -61,6 +64,9 @@ class ToeBox
         TOEBOX_404_MESSAGE => '<p>Sorry, no content was found.</p>',
         TOEBOX_ENABLE_404_SEARCH => true,
         TOEBOX_ENABLE_LIST_PAGING => false,
+        
+        TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE => false,
+        TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE => false,
         
         TOEBOX_MENU_SUBTITLES => true,
         
@@ -111,20 +117,21 @@ class ToeBox
         global $wp_the_query;
 
         $postType = $wp_the_query->query_vars['post_type'];
-        
-        
+                
         $settings = self::$Settings;
         $hideSideBarsOnSmallScreens = $settings[TOEBOX_HIDE_SMALL_SIDEBARS];
         $ifHideOnSmallCss = ($hideSideBarsOnSmallScreens) ? 'hidden-xs hidden-sm' : '' ;
         
         if (($postType) && in_array($postType, self::$CustomLayoutTemplates))
         {
-            require TEMPLATEPATH.self::$LaoutPrefix . $settings[TOEBOX_FEATURED_STORY_LAYOUT] . '.php';
+            $templatePath = TEMPLATEPATH.self::$LaoutPrefix . $settings[TOEBOX_FEATURED_STORY_LAYOUT] . '.php';
         }
         else 
         {
-            require TEMPLATEPATH.self::$LaoutPrefix . $settings[TOEBOX_PAGE_LAYOUT] . '.php';
+            $templatePath = TEMPLATEPATH.self::$LaoutPrefix . $settings[TOEBOX_PAGE_LAYOUT] . '.php';
         }
+        
+        require $templatePath;
     }
     /**
      * location and prefix of layout pages
@@ -146,7 +153,7 @@ class ToeBox
      */
     public static function LayoutContent(\WP_Post $post, array $settings)
     {
-        extract($post);
+        extract((array)$post);
         extract($settings);
         
         // set template
@@ -159,10 +166,7 @@ class ToeBox
             $templateType = TOEBOX_TEMPLATE_LIST;
         }
         
-        // process body content
-        $body = get_the_content(__(self::$Settings[TOEBOX_MORE_TEXT],'toebox-basic' ));
-        $body = apply_filters('the_content', $body);
-        $body = str_replace( ']]>', ']]&gt;', $body );
+        $body = self::GetCurrentContent();
         
         if (in_array($post_type, self::$CustomLayoutTemplates))
         {
@@ -179,22 +183,54 @@ class ToeBox
         $post_title = get_the_title();
         $post_date = get_the_time(get_option('date_format'));
         
+        self::DebugFile('START', $templatePath);
         require $templatePath;
+        self::DebugFile('END', $templatePath);
+    }
+    /**
+     * get the content from the current clobal post
+     * @return string
+     */
+    public static function GetCurrentContent()
+    {
+        // process body content
+        $body = get_the_content(__(self::$Settings[TOEBOX_MORE_TEXT],'toebox-basic' ));
+        $body = apply_filters('the_content', $body);
+        return str_replace( ']]>', ']]&gt;', $body );
+        
+    }
+    /**
+     * process content from a post object
+     * @param \WP_Post $post
+     * @return Ambigous <string, mixed>
+     */
+    public static function GetContent(\WP_Post $post)
+    {
+        if ( post_password_required( $post ) )
+            return get_the_password_form( $post );
+    
+        // process body content
+        $body = $post->post_content;
+        $body = apply_filters('the_content', $body);
+        return str_replace( ']]>', ']]&gt;', $body );
+    
     }
     /**
      * Handle the wordpress loop
      * @param unknown $posts
      * @param string $slug
      */
-    public static function HandleLoop($posts, $slug = 'content')
+    public static function HandleLoop($posts, $slug)
     {
+        $slug = empty($slug) ? 'content' : $slug;
+        
         if ( have_posts() )
         {
             while ( have_posts() )
             {
                 the_post();
                 global $post;
-                
+             
                 get_template_part($slug, $post->post_mime_type);
             } // end while
         } // end if
@@ -238,10 +274,7 @@ class ToeBox
         if ( in_the_loop() )
             update_post_thumbnail_cache();
 
-        $post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-
-        $attachment_id = get_post_thumbnail_id( $post_id );
-        $image = wp_get_attachment_image_src($attachment_id, $size);
+        $image =  self::GetImageForPost($post_id, $size);
 
         if ( $image === false ) return;
 
@@ -265,9 +298,39 @@ class ToeBox
         
         $class = self::$Settings[TOEBOX_FEATURED_IMG_CLASS];
 
-        require TEMPLATEPATH.self::$TemplatePrefix . $template . '.php';
+        $filePath = TEMPLATEPATH.self::$TemplatePrefix . $template . '.php';
+        
+        self::DebugFile('START', $filePath);
+        require $filePath;
+        self::DebugFile('END', $filePath);
 
     }
+    /**
+     * obtain the thumbnail image array from a post id
+     * @param string $post_id
+     * @param string $size
+     * @return Ambigous <boolean, multitype:, multitype:unknown multitype: Ambigous <string, boolean, mixed> , mixed, multitype:boolean mixed unknown Ambigous <multitype:, mixed, multitype:int > >
+     */
+    public static function GetImageForPost($post_id = null, $size = 'post-thumbnail')
+    {
+        $post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
+        
+        $attachment_id = get_post_thumbnail_id( $post_id );
+        return wp_get_attachment_image_src($attachment_id, $size);
+    }
+    /**
+     * obtain the thumbnail url for a post id 
+     * @param string $post_id
+     * @param string $size
+     * @return mixed|NULL
+     */
+    public static function GetImageUrlForPost($post_id = null, $size = 'post-thumbnail')
+    {
+        $imgArray = self::GetImageForPost($post_id, $size);
+        if (is_array($imgArray) && count($imgArray)) return array_shift($imgArray);
+        return null;
+    }
+    
     /**
      * Featured Image with alternate template 
      * 
@@ -278,26 +341,48 @@ class ToeBox
         self::HandleFeaturedImage($post_id, $size, $attr, $template);
     }
     
-    public static $Debug = true;
+    public static $Debug = false;
     
-    public static function DebugFile($location = 'START')
+    public static function DebugFile($location = 'START', $callingFileName = '')
     {
-        //print 'BASE<pre>'.htmlspecialchars(print_r(debug_backtrace(), true)).'</pre>';
+        
+        
         if (self::$Debug)
         {
-            $trace = debug_backtrace();
-            try 
+            
+            if (empty($callingFileName))
             {
-                $callingFileName = str_replace(
-                                str_replace('/', '\\', TEMPLATEPATH), null, 
-                                str_replace('/', '\\', 
-                                                    str_ireplace('.php', null, array_shift($trace)['file']))); 
-                
-                print sprintf('%3$s<!-- %1$s %2$s -->', $callingFileName, $location, str_repeat(' ', count($trace)) );
+                $trace = debug_backtrace();
+                try 
+                {
+                    $callingFileName = array_shift($trace)['file'];
+                }
+                catch(Exception $e){}
             }
-            catch(Exception $e){}
-            //print 
+            
+            print sprintf('%3$s<!-- %1$s %2$s -->', self::GetThemeRealtiveFileTitle($callingFileName), $location, str_repeat(' ', count($trace)) );
+
         }
+    }
+    /**
+     * reduces a full file path to a title (no .php)
+     * @param string $fileName
+     * @return string
+     */
+    public static function GetThemeRealtiveFileTitle($fileName)
+    {
+        return str_ireplace('.php', null, self::GetThemeRelativeFileName($fileName));
+    }
+    /**
+     * reduces a absolute file name to a path relative to the theme root
+     * @param string $fileName
+     * @return string
+     */
+    public static function GetThemeRelativeFileName($fileName)
+    {
+        return str_replace(
+                            str_replace('/', '\\', TEMPLATEPATH), null,
+                            str_replace('/', '\\', $fileName));
     }
 }
 

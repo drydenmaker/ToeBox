@@ -42,8 +42,8 @@ add_action( 'wp_enqueue_scripts', function()
     wp_enqueue_style('tb_css', get_template_directory_uri() . '/less/style.less');
     
     wp_enqueue_script('jquery');
-    wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/toebox.js', array(), false, true);
-    wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/vendor/modernizr.min.js', array(), false, true);
+    wp_enqueue_script('toebox-script', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), false, true);
+    wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/vendor/modernizr.min.js');
 
 });// toeboxBasicEnqueueScripts
 
@@ -69,8 +69,7 @@ add_action( 'after_setup_theme', function()
 			)
 		)
 	);
-	
-	
+		
 }); // toeboxBasicSetup
 
 add_filter('wp_link_pages_link', function($link){

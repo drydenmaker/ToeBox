@@ -2,7 +2,7 @@
 <p>
 <div style="border:thin solid Silver; padding: 4px; margine: 4px;">
 
-	<label for="<?php echo $widget->get_field_id( 'logo' ); ?>"><?php _e( 'Logo URL' ); ?>:</label>
+	<label for="<?php echo $widget->get_field_id( 'logo' ); ?>"><?php _e( 'Logo URL', 'toebox-basic' ); ?>:</label>
 	<div id="logo_preview" class="preview_placholder">
 <?php 
 	if ($logo!='') echo '<img src="' . $logo . '" style="max-width: 100%;">';
@@ -17,7 +17,7 @@
     	Select Image</button>
     	
     <hr/>
-    <label for="<?php echo $widget->get_field_id( 'logo_style' ); ?>"><?php _e( 'Logo Style' ); ?>:</label>
+    <label for="<?php echo $widget->get_field_id( 'logo_style' ); ?>"><?php _e( 'Logo Style', 'toebox-basic' ); ?>:</label>
     <input class="widefat"
 		id="<?php echo $widget->get_field_id( 'logo_style' ); ?>"
 		name="<?php echo $widget->get_field_name( 'logo_style' ); ?>" type="text"
@@ -28,7 +28,7 @@
 </p>
 <p>
 <div style="border:thin solid Silver; padding: 4px; margine: 4px;">
-	<label for="<?php echo $widget->get_field_id( 'background' ); ?>"><?php _e( 'Background URL' ); ?>:</label>
+	<label for="<?php echo $widget->get_field_id( 'background' ); ?>"><?php _e( 'Background URL', 'toebox-basic' ); ?>:</label>
 	<div id="background_preview" class="preview_placholder">
 <?php 
 	if ($background !='') echo '<img src="' . $background . '" style="width: 100%;">';
@@ -43,7 +43,7 @@
     	Select Image</button>
     
     <hr/>
-    <label for="<?php echo $widget->get_field_id( 'background_style' ); ?>"><?php _e( 'Background Style' ); ?>:</label>
+    <label for="<?php echo $widget->get_field_id( 'background_style' ); ?>"><?php _e( 'Background Style', 'toebox-basic' ); ?>:</label>
     <input class="widefat"
 		id="<?php echo $widget->get_field_id( 'background_style' ); ?>"
 		name="<?php echo $widget->get_field_name( 'background_style' ); ?>" type="text"
@@ -56,7 +56,7 @@
 <p>
 <div style="border:thin solid Silver; padding: 4px; margine: 4px;">
 
-    <label for="<?php echo $widget->get_field_id( 'container_class' ); ?>"><?php _e( 'Container Class' ); ?>:</label>
+    <label for="<?php echo $widget->get_field_id( 'container_class' ); ?>"><?php _e( 'Container Class', 'toebox-basic' ); ?>:</label>
     <input class="widefat"
 		id="<?php echo $widget->get_field_id( 'container_class' ); ?>"
 		name="<?php echo $widget->get_field_name( 'container_class' ); ?>" type="text"
@@ -64,7 +64,7 @@
 	<small>(Css class set on title container)</small>
 	
 	
-	<label for="<?php echo $widget->get_field_id( 'title_class' ); ?>"><?php _e( 'Title Class' ); ?>:</label>
+	<label for="<?php echo $widget->get_field_id( 'title_class' ); ?>"><?php _e( 'Title Class', 'toebox-basic' ); ?>:</label>
     <input class="widefat"
 		id="<?php echo $widget->get_field_id( 'title_class' ); ?>"
 		name="<?php echo $widget->get_field_name( 'title_class' ); ?>" type="text"
@@ -72,7 +72,7 @@
 	<small>(Css class set on title container)</small>
 	
 	
-	<label for="<?php echo $widget->get_field_id( 'description_class' ); ?>"><?php _e( 'Description Class' ); ?>:</label>
+	<label for="<?php echo $widget->get_field_id( 'description_class' ); ?>"><?php _e( 'Description Class', 'toebox-basic' ); ?>:</label>
     <input class="widefat"
 		id="<?php echo $widget->get_field_id( 'description_class' ); ?>"
 		name="<?php echo $widget->get_field_name( 'description_class' ); ?>" type="text"
