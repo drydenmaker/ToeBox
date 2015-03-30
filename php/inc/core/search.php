@@ -16,19 +16,19 @@ add_filter('get_search_form', function ($form) {
 	</form>
 </div>
 EOT;
-    
+
     $form = sprintf($formTemplate, home_url('/'), // %1$s action
 get_search_query(), // %2$s query
 __('Search', 'toebox-basic')) // %3$s button caption
 ;
-    
+
     return $form;
 });
 
 add_filter('nav_menu_walker_arguments', function ($arguments) {
-    
+
     $searchForm = sprintf('<!-- SEARCH -->%s<!-- SEARCH -->', get_search_form(false));
     $arguments['items_wrap'] = str_ireplace('<!-- SEARCH -->', $searchForm, $arguments['items_wrap']);
-    
+
     return $arguments;
 }, 0, 1);
