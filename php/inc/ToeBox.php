@@ -173,6 +173,8 @@ class ToeBox
         
         $body = self::GetCurrentContent();
         
+        $postFormat = get_post_format();
+        
         if (in_array($post_type, self::$CustomLayoutTemplates))
         {
             $templatePath = sprintf('%s%s_%s.php', get_template_directory().self::$LaoutContentPrefix, $post_type, $templateType);

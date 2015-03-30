@@ -278,6 +278,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_PAGE_LAYOUT,
                         array(
                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_PAGE_LAYOUT],
+                            'sanitize_callback' => 'sanitize_option'
                         )
         );
         
@@ -293,6 +294,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_FEATURED_STORY_LAYOUT,
                         array(
                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_FEATURED_STORY_LAYOUT],
+                            'sanitize_callback' => 'sanitize_option'
                         )
         );
         
@@ -307,6 +309,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_CONTENT_BACKGROUND_COLOR,
                         array(
                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_CONTENT_BACKGROUND_COLOR],
+                            'sanitize_callback' => 'sanitize_hex_color'
                         )
         );
         
@@ -324,6 +327,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_LIST_LAYOUT,
                         array(
                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_LIST_LAYOUT],
+                            'sanitize_callback' => 'sanitize_option'
                         )
         );
 
@@ -339,6 +343,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_STORY_LAYOUT,
                         array(
                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_STORY_LAYOUT],
+                            'sanitize_callback' => 'sanitize_option'
                         )
         );
         
@@ -354,6 +359,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_HIDE_SMALL_SIDEBARS,
                         array(
                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_HIDE_SMALL_SIDEBARS],
+                            'sanitize_callback' => 'sanitize_text_field'
                         )
         );
         
