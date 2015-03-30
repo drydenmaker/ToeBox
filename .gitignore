@@ -42,3 +42,6 @@ bower_components
 node_modules
 /php/.buildpath
 /php/vendor
+/php/js/npm.js
+/php/js/toebox.js
+/php/js/vendor/modernizr.min.js

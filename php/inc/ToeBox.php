@@ -81,13 +81,13 @@ class ToeBox
             'link_after'  => '',
             'pagelink'    => '%',
             'separator'   => '</li><li>',
-//             'next_or_number'=>'next',
-//             'previouspagelink' => ' &laquo; ',
-//             'nextpagelink'=>' &raquo;',
             )
         
     );
-    
+    /**
+     * prepare settings with defaults
+     * @param array $otherSettings
+     */
     public static function InitSettings(array $otherSettings = array())
     {
 
@@ -96,7 +96,6 @@ class ToeBox
         
         self::$Settings = array_merge(self::$Settings, $themeMods, $otherSettings);
     }
-    
     /**
      * output dynamic sidebar contnet
      * @param unknown $sidebarName
@@ -299,7 +298,8 @@ class ToeBox
         if ( is_array( $size_class ) ) {
             $size_class = join( 'x', $size_class );
         }
-
+        
+        $attachment_id = get_post_thumbnail_id( $post_id );
         $attachment = get_post($attachment_id);
 
         $sizeClass = "attachment-$size_class";
