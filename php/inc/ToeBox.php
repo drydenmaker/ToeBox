@@ -90,7 +90,11 @@ class ToeBox
     
     public static function InitSettings(array $otherSettings = array())
     {
-        self::$Settings = array_merge(self::$Settings, get_theme_mods(), $otherSettings);
+
+        $themeMods = get_theme_mods();
+        $themeMods = (!empty($themeMods) && is_array($themeMods)) ? $themeMods : array() ; 
+        
+        self::$Settings = array_merge(self::$Settings, $themeMods, $otherSettings);
     }
     
     /**
@@ -125,7 +129,7 @@ class ToeBox
         $settings = self::$Settings;
         $hideSideBarsOnSmallScreens = $settings[TOEBOX_HIDE_SMALL_SIDEBARS];
         $ifHideOnSmallCss = ($hideSideBarsOnSmallScreens) ? 'hidden-xs hidden-sm' : '' ;
-        
+                
         if (($postType) && in_array($postType, self::$CustomLayoutTemplates))
         {
             $templatePath = get_template_directory().self::$LaoutPrefix . $settings[TOEBOX_FEATURED_STORY_LAYOUT] . '.php';
@@ -188,6 +192,11 @@ class ToeBox
         // wordpress output
         $post_title = get_the_title();
         $post_date = get_the_time(get_option('date_format'));
+        
+
+//         $arr = get_defined_vars();
+//         print 'BASE<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
+        
         
         self::DebugFile('START', $templatePath);
         require $templatePath;
