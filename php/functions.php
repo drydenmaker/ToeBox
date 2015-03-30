@@ -26,20 +26,34 @@ add_action( 'init', function()
 	 */
 	require_once get_template_directory().'/inc/Walker/NavMenu/Primary.php';
 	add_filter( 'wp_nav_menu_args', 'toebox\\inc\\Walker\\NavMenu\\Primary::MenuArguments');
+	
+	add_filter('wp_title', function($args){
+	    
+	    if (\toebox\inc\ToeBox::$Settings[TOEBOX_TITLE_SEO])
+	    {
+	        $args .= (strlen($args)) ? ' | ' : get_bloginfo( 'description') . ' | ';
+	        $blogName = get_bloginfo('name');
+	        return str_ireplace($blogName, '', $args) . $blogName;
+	    }
+	    return $args;
+	});
 });
+
 /**
  * Frontend styles and script
  */
 add_action( 'wp_enqueue_scripts', function()
 {
+    $templateDir = get_template_directory_uri();
+    
     wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
     
-    wp_enqueue_style('tb_css', get_template_directory_uri() . 
-                    class_exists('WPLessPlugin', false) ? '/less/style.less' : '/css/bootstrap-Toebox.min.css');
+    wp_enqueue_style('toebox', $templateDir
+                    . (class_exists('WPLessPlugin', false) ? '/less/style.less' : '/css/bootstrap-Toebox.min.css'));
     
     wp_enqueue_script('jquery');
-    wp_enqueue_script('toebox-script', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), false, true);
-    wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/vendor/modernizr.min.js');
+    wp_enqueue_script('bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), false, true);
+    wp_enqueue_script('modernizr', $templateDir . '/js/vendor/modernizr.min.js');
 
 });// toeboxBasicEnqueueScripts
 

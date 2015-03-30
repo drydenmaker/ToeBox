@@ -18,6 +18,8 @@ define('TOEBOX_ENABLE_LIST_PAGING', 'toebox_list_paging');
 
 define('TOEBOX_MENU_SUBTITLES', 'toebox_menu_subtitles');
 
+define('TOEBOX_TITLE_SEO', 'toebox_title_seo');
+
 define('TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE', 'toebox_feature_stories');
 define('TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE', 'toebox_carousel_links');
 
@@ -69,6 +71,8 @@ class ToeBox
         TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE => false,
         
         TOEBOX_MENU_SUBTITLES => true,
+        
+        TOEBOX_TITLE_SEO => true,
         
         TOEBOX_LINK_PAGES_ARGS => array(
             'before'      => '<nav><ul class="page-links pagination"><li>',

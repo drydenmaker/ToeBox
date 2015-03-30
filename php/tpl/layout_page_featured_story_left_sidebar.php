@@ -4,8 +4,8 @@ use Symfony\Component\Finder\Iterator\FilenameFilterIterator;
 Template Name: Featured Story Left Column
 Description: A Page with a fluid container and featured header and footer.
 */
-wp_enqueue_style('toebox-theme-style', get_template_directory_uri() . '/css/featured_story.css');
-wp_enqueue_script('toebox-script', get_template_directory_uri() . '/js/featured_story.js', array(), false, true);
+wp_enqueue_style('toebox-theme-style', get_theme_root_uri() . '/css/featured_story.css');
+wp_enqueue_script('toebox-script', get_theme_root_uri() . '/js/featured_story.js', array(), false, true);
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>/>

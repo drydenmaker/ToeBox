@@ -66,7 +66,7 @@ if (toebox\inc\Toebox::$Settings[TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE])
     
     function tb_carousel_add_tmce_plugin($plugin_array)
     {
-        $plugin_array['tb_carousel'] = get_template_directory_uri() . '/js/toebox_carousel_tmce.js';
+        $plugin_array['tb_carousel'] = get_theme_root_uri() . '/js/toebox_carousel_tmce.js';
         return $plugin_array;
     }
     

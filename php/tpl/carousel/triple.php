@@ -34,7 +34,7 @@ $counter = 0;
         <!-- ITEM START -->
         <div class="item<?php print $active?>">
             
-            <img src="<?php print get_template_directory_uri() . '/images/carousel_triple_clear_bg.png' ?>">
+            <img src="<?php print get_theme_root_uri() . '/images/carousel_triple_clear_bg.png' ?>">
             <div class="carousel-caption">
 		<?php endif;
 		
