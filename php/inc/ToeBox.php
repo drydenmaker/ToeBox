@@ -24,8 +24,8 @@ define('TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE', 'toebox_feature_stories');
 define('TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE', 'toebox_carousel_links');
 
 
-define('TOEBOX_TEMPLATE_SINGLE', 'single_');
-define('TOEBOX_TEMPLATE_LIST', 'list_');
+define('TOEBOX_TEMPLATE_SINGLE', 'single');
+define('TOEBOX_TEMPLATE_LIST', 'list');
 
 define('TOEBOX_LINK_PAGES_ARGS', 'toebox_link_pages_args');
 
@@ -164,6 +164,7 @@ class ToeBox
         if (is_single() || is_sticky())
         {
             $templateType = TOEBOX_TEMPLATE_SINGLE;
+            wp_enqueue_script( "comment-reply" );
         }
         else 
         {
@@ -174,8 +175,7 @@ class ToeBox
         
         if (in_array($post_type, self::$CustomLayoutTemplates))
         {
-            $extension = (is_single()) ? 'single' : 'list';
-            $templatePath = sprintf('%s%s_%s.php', get_template_directory().self::$LaoutContentPrefix, $post_type, $extension);
+            $templatePath = sprintf('%s%s_%s.php', get_template_directory().self::$LaoutContentPrefix, $post_type, $templateType);
         }
         else
         {
