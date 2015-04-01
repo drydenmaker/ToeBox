@@ -38,6 +38,11 @@ $toebox_link_pages_args = empty($toebox_link_pages_args) ? array() : $toebox_lin
 <!--[if lt IE 9]>
 	<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 <![endif]-->
+<?php if (!empty(get_header_image())) :?>
+<div style="height: 39vh; margin-bottom: -39vh; overflow:hidden; background: transparent url('<?php header_image(); ?>'); background-repeat: no-repeat; background-position: center center; background-size: cover;">
+&nbsp;
+</div>
+<?php endif; ?>
 <!-- END HEADER -->
 <!-- TOEBOX HEADER -->
 <?php
