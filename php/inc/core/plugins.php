@@ -10,6 +10,21 @@ add_action( 'tgmpa_register', function()
             'slug'      => 'wp-less',
             'required'  => true,
         ),
+        array(
+            'name'      => 'WP-ToeBox',
+            'slug'      => 'Toebox_Plugin',
+            'required'  => true,
+        ),
+        array(
+            'name' => 'Amazon S3 and Cloudfront',
+            'slug' => 'amazon-s3-and-cloudfront',   
+            'required'  => false,
+        ),
+        array(
+            'name' => 'W3 Total Cache',
+            'slug' => 'w3-total-cache',
+            'required'  => false,
+        ),
     );
     
     $config = array(

@@ -40,8 +40,8 @@ class BaseWidget extends \WP_Widget
     public function __construct()
     {
         parent::__construct($this->BaseId, // Base ID
-                __($this->Name, 'text_domain'), // Name
-                array('description' => __($this->Description, 'text_domain')
+                translate($this->Name, 'toebox-basic'), // Name
+                array('description' => translate($this->Description, 'toebox-basic')
         )); // Args
         
         add_action('sidebar_admin_setup', array(

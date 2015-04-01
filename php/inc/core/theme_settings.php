@@ -52,16 +52,6 @@ $SettingsControls = array(
                                 'single_thumb_right' => __( 'Thumbnail Right','toebox-basic' ),
                             )
                         ),
-    TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE =>  array(
-                            'label' => __( 'Enable Featured Stories', 'toebox-basic' ),
-                            'section' => 'toebox_post_type_section',
-                            'type' => 'checkbox'
-                    ),
-    TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE =>  array(
-                            'label' => __( 'Enable Carousel Links', 'toebox-basic' ),
-                            'section' => 'toebox_post_type_section',
-                            'type' => 'checkbox'
-                    ),
     
 );
 
@@ -69,21 +59,13 @@ add_action( 'admin_init', function (  ) {
 
     register_setting( 'toeboxSettingsPage', 'toebox_settings' );
 
-    // UNCOMMENT to display look and feel settings
-//     add_settings_section(
-//                         'toebox_pluginPage_section',
-//                         __( 'ToeBox lets you mix and match many different layout options. Select your default page layout and default list size below:', 'toebox-basic' ),
-//                         'toebox_settings_section_callback',
-//                         'toeboxSettingsPage'
-//                     );
-
     add_settings_field(
         TOEBOX_PAGE_LAYOUT,
         __( 'Page Layout', 'toebox-basic' ),
         'toebox_select_page_layout_render',
         'toeboxSettingsPage',
         'toebox_pluginPage_section',
-        toebox\inc\Toebox::$Settings[TOEBOX_PAGE_LAYOUT]
+        get_option(TOEBOX_PAGE_LAYOUT)
     );
     
     add_settings_field(
@@ -92,7 +74,7 @@ add_action( 'admin_init', function (  ) {
         'toebox_select_featured_story_layout_render',
         'toeboxSettingsPage',
         'toebox_pluginPage_section',
-        toebox\inc\Toebox::$Settings[TOEBOX_FEATURED_STORY_LAYOUT]
+        get_option(TOEBOX_FEATURED_STORY_LAYOUT)
     );
     
 
@@ -102,7 +84,7 @@ add_action( 'admin_init', function (  ) {
         'toebox_content_background_color_render',
         'toeboxSettingsPage',
         'toebox_pluginPage_section',
-        toebox\inc\Toebox::$Settings[TOEBOX_CONTENT_BACKGROUND_COLOR]
+        get_option(TOEBOX_CONTENT_BACKGROUND_COLOR)
     );
     
 
@@ -112,7 +94,7 @@ add_action( 'admin_init', function (  ) {
         'toebox_list_layout_select_render',
         'toeboxSettingsPage',
         'toebox_pluginPage_section',
-        toebox\inc\Toebox::$Settings[TOEBOX_LIST_LAYOUT]
+        get_option(TOEBOX_LIST_LAYOUT)
     );
 
     add_settings_field(
@@ -121,7 +103,7 @@ add_action( 'admin_init', function (  ) {
         'toebox_story_layout_select_render',
         'toeboxSettingsPage',
         'toebox_pluginPage_section',
-        toebox\inc\Toebox::$Settings[TOEBOX_STORY_LAYOUT]
+        get_option(TOEBOX_STORY_LAYOUT)
     );
 
 
@@ -131,33 +113,9 @@ add_action( 'admin_init', function (  ) {
         'toebox_hide_small_sidebars_render',
         'toeboxSettingsPage',
         'toebox_pluginPage_section',
-        toebox\inc\Toebox::$Settings[TOEBOX_HIDE_SMALL_SIDEBARS]
+        get_option(TOEBOX_HIDE_SMALL_SIDEBARS)
     );
-    /* POST TYPES */
     
-    add_settings_section(
-            'toebox_posttype_section',
-            null,
-            'toebox_posttype_section_callback',
-            'toeboxSettingsPage'
-        );
-    
-    add_settings_field(
-        TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE,
-        __( 'Enable Featured Stories', 'toebox-basic' ),
-        'toebox_feature_stories_posttype_render',
-        'toeboxSettingsPage',
-        'toebox_posttype_section',
-        get_option(TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE)
-    );
-    add_settings_field(
-        TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE,
-        __( 'Enable Carousel Links', 'toebox-basic' ),
-        'toebox_carousel_posttype_render',
-        'toeboxSettingsPage',
-        'toebox_posttype_section',
-        get_option(TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE)
-    );
 
 });
 
@@ -222,18 +180,14 @@ function toebox_content_background_color_render($value)
 add_action( 'admin_enqueue_scripts', function ( $hook ) 
 {
 
-    if( is_admin() ) {
-         
-        // Add the color picker css file
-        wp_enqueue_style( 'wp-color-picker' );         
-        // Include our custom jQuery file with WordPress Color Picker dependency
-       // wp_enqueue_script( 'custom-script-handle', plugins_url( 'custom-script.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
-    }
+    if( is_admin() ) wp_enqueue_style( 'wp-color-picker' );         
+
 });
 
 add_action( 'admin_menu', function (  ) {
-
-    add_theme_page( 'ToeBox Settings', 'ToeBox Settings', 'manage_options', 'toebox', 'toebox_options_page' );
+    // This is unnecessary 
+    // add_theme_page( 'ToeBox Settings', 'ToeBox Settings', 'manage_options', 'toebox', 'toebox_options_page' );
+    add_editor_style('custom-editor-style.css');
 
 });
 
@@ -260,17 +214,6 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         )
         );
         
-//         $wp_customize->add_section(
-//                         'toebox_post_type_section',
-//                         array(
-//                             'title' => __( 'Special Post Types', 'toebox-basic' ),
-//                             'description' => __( 'These settings are specific to ToeBox.', 'toebox-basic' ),
-//                             'priority' => 95,
-//                         )
-//         );
-        
-        
-    
         /**
          * TOEBOX_PAGE_LAYOUT
          */
@@ -278,7 +221,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_PAGE_LAYOUT,
                         array(
                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_PAGE_LAYOUT],
-                            'sanitize_callback' => 'sanitize_option'
+                            'sanitize_callback' => 'sanitize_text_field'
                         )
         );
         
@@ -294,7 +237,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_FEATURED_STORY_LAYOUT,
                         array(
                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_FEATURED_STORY_LAYOUT],
-                            'sanitize_callback' => 'sanitize_option'
+                            'sanitize_callback' => 'sanitize_text_field'
                         )
         );
         
@@ -327,7 +270,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_LIST_LAYOUT,
                         array(
                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_LIST_LAYOUT],
-                            'sanitize_callback' => 'sanitize_option'
+                            'sanitize_callback' => 'sanitize_text_field'
                         )
         );
 
@@ -343,7 +286,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_STORY_LAYOUT,
                         array(
                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_STORY_LAYOUT],
-                            'sanitize_callback' => 'sanitize_option'
+                            'sanitize_callback' => 'sanitize_text_field'
                         )
         );
         
@@ -367,36 +310,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_HIDE_SMALL_SIDEBARS,
                         $SettingsControls[TOEBOX_HIDE_SMALL_SIDEBARS]
         );
-        
-        /**
-         * TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE
-         */
-//         $wp_customize->add_setting(
-//                         TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE,
-//                         array(
-//                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE],
-//                         )
-//         );
-        
-//         $wp_customize->add_control(
-//                         TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE,
-//                         $SettingsControls[TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE]
-//         );
-        
-        /**
-         * TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE
-         */
-//         $wp_customize->add_setting(
-//                         TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE,
-//                         array(
-//                             'default' => toebox\inc\ToeBox::$Settings[TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE],
-//                         )
-//         );
-        
-//         $wp_customize->add_control(
-//                         TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE,
-//                         $SettingsControls[TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE]
-//         );
+
         
 });
 
@@ -430,12 +344,12 @@ function toebox_options_page(  ) {
         print '</div>';
 
     }
-    
+
 	?>
 	<form action='options.php' method='post'>
 
 		<h2>ToeBox Layout</h2>
-        <h4>(You can use Appearance > Customize to change theme settings too.)</h4>
+        <h4>Use Appearance > <a href="./customize.php">Customize</a> to change theme settings.</h4>
 		<?php
 		settings_fields( 'toeboxSettingsPage' );
 		do_settings_sections( 'toeboxSettingsPage' );

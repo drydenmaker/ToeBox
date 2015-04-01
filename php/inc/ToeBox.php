@@ -15,14 +15,9 @@ define('TOEBOX_404_MESSAGE', 'toebox_404_message');
 define('TOEBOX_ENABLE_404_SEARCH', 'toebox_404_search');
 define('TOEBOX_ENABLE_LIST_PAGING', 'toebox_list_paging');
 
-
 define('TOEBOX_MENU_SUBTITLES', 'toebox_menu_subtitles');
 
 define('TOEBOX_TITLE_SEO', 'toebox_title_seo');
-
-define('TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE', 'toebox_feature_stories');
-define('TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE', 'toebox_carousel_links');
-
 
 define('TOEBOX_TEMPLATE_SINGLE', 'single');
 define('TOEBOX_TEMPLATE_LIST', 'list');
@@ -66,10 +61,7 @@ class ToeBox
         TOEBOX_404_MESSAGE => '<p>Sorry, no content was found.</p>',
         TOEBOX_ENABLE_404_SEARCH => true,
         TOEBOX_ENABLE_LIST_PAGING => false,
-        
-        TOEBOX_ENABLE_FEATURE_STORIES_POSTTYPE => false,
-        TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE => false,
-        
+       
         TOEBOX_MENU_SUBTITLES => true,
         
         TOEBOX_TITLE_SEO => true,
@@ -191,7 +183,7 @@ class ToeBox
         // wordpress output
         $post_title = get_the_title();
         $post_date = get_the_time(get_option('date_format'));
-        
+        $the_post_thumbnail = get_the_post_thumbnail( $post->ID, 'full');
 
 //         $arr = get_defined_vars();
 //         print 'BASE<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
@@ -208,7 +200,7 @@ class ToeBox
     public static function GetCurrentContent()
     {
         // process body content
-        $body = get_the_content(__(self::$Settings[TOEBOX_MORE_TEXT],'toebox-basic' ));
+        $body = get_the_content(__('More','toebox-basic' ));
         $body = apply_filters('the_content', $body);
         return str_replace( ']]>', ']]&gt;', $body );
         

@@ -14,6 +14,9 @@ if (!isset($content_width)) {
 
 toebox\inc\Toebox::InitSettings();
 
+//print __FUNCTION__.'<pre>'.htmlspecialchars(print_r(\toebox\inc\Toebox::$Settings, true)).'</pre>';
+
+
 /**
  * init general
  */
@@ -85,22 +88,37 @@ add_filter('wp_link_pages', function($atts){
     return $atts;
 });
 
+require_once get_template_directory() . '/inc/core/search.php';
+require_once get_template_directory() . '/inc/core/post_status.php';
+require_once get_template_directory() . '/inc/core/theme_settings.php';
+require_once get_template_directory() . '/inc/core/upload_mimes.php';
+require_once get_template_directory() . '/inc/core/widgets.php';
 
-require_once 'inc/core/search.php';
-require_once 'inc/core/post_status.php';
-require_once 'inc/core/theme_settings.php';
-require_once 'inc/core/upload_mimes.php';
-require_once 'inc/core/featured_story_post_type.php';
-require_once 'inc/core/carousel_post_type.php';
-require_once 'inc/core/widgets.php';
-require_once 'inc/core/bootstrap_shortcodes.php';
-
-require_once get_template_directory() . '/inc/core/less.php';
+require_once get_template_directory() . '/inc/core/plugins.php';
 
 add_action( 'after_setup_theme', function()
 {
     load_theme_textdomain('toebox-basic', get_template_directory() . '/languages');
-
+    
+    add_theme_support( "title-tag" );
+    add_theme_support( "custom-header", array(
+    	'default-image'          => '',
+    	'width'                  => 0,
+    	'height'                 => 0,
+    	'flex-height'            => false,
+    	'flex-width'             => false,
+    	'uploads'                => true,
+    	'random-default'         => false,
+    	'header-text'            => true,
+    	'default-text-color'     => '',
+    	'wp-head-callback'       => '',
+    	'admin-head-callback'    => '',
+    	'admin-preview-callback' => '',
+    ));
+    /*
+     * TOOD add custom header via widget 
+     * <img src="<?php header_image(); ?>" height="<?php echo get_custom_header()->height; ?>" width="<?php echo get_custom_header()->width; ?>" alt="" />
+     */
     add_theme_support('automatic-feed-links');
     add_theme_support('post-thumbnails');
     add_theme_support('html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
