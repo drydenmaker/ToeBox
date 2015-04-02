@@ -113,7 +113,7 @@ class ToeBox
      */
     public static function Layout($toeboxSlug = 'content')
     {
-        global $wp_the_query;
+        global $wp_the_query, $toebox_link_pages_args, $toeboxSlug;
 
         $postType = $wp_the_query->query_vars['post_type'];
                 

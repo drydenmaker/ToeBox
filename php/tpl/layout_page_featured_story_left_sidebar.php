@@ -1,5 +1,4 @@
 <?php
-use Symfony\Component\Finder\Iterator\FilenameFilterIterator;
 /*
 Template Name: Featured Story Left Column
 Description: A Page with a fluid container and featured header and footer.
