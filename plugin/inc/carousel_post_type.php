@@ -1,5 +1,5 @@
 <?php
-if (toebox\inc\Toebox::$Settings[TOEBOX_ENABLE_CAROUSEL_LINKS_POSTTYPE])
+if (Toebox_Plugin_Option::get_option(TOEBOX_ENABLE_CAROUSEL, false))
 {
     
     class CarouselPostType

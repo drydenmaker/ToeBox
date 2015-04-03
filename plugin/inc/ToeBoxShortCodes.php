@@ -13,7 +13,7 @@ class ToeBoxShortCodes
         if (empty(self::$instance))
         {
             self::$instance = new self();
-            $cpt->Register();
+            self::$instance->Register();
         }
         return self::$instance;
     }
