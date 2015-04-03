@@ -1,34 +1,39 @@
-.wp-caption 
-{ 
-	.well 
+body > .page-header
+{
+  padding-left: 1vw;
 }
-.wp-caption-text 
-{ 
-	.well 
+
+.wp-caption
+{
+	.well
 }
-.sticky  
-{ 
-	.well 
+.wp-caption-text
+{
+	.well
 }
-.gallery-caption  
-{ 
-	.text-uppercase 
+.sticky
+{
+	.well
 }
-.bypostauthor  
-{ 
-	.text-uppercase 
+.gallery-caption
+{
+	.text-uppercase
 }
-.alignright  
-{ 
-	.text-right 
+.bypostauthor
+{
+	.text-uppercase
 }
-.alignleft 
-{ 
-	.text-left 
+.alignright
+{
+	.text-right
 }
-.aligncenter 
-{ 
-	.text-center 
+.alignleft
+{
+	.text-left
+}
+.aligncenter
+{
+	.text-center
 }
 
 table
@@ -43,10 +48,10 @@ img
   	max-width: 100%;
 }
 
-img[src$=".svg"] 
-{ 
-	width: 100% !important; 
-	height: auto !important; 
+img[src$=".svg"]
+{
+	width: 100% !important;
+	height: auto !important;
 }
 
 .tb-title a img
@@ -95,16 +100,16 @@ article header h3, article header h3 a
 {
 	font-family: Arimo,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	text-transform: uppercase;
-	
+
 	background-color: @brand-primary;
 	color: @brand-text-contrast;
-	
+
 }
 article .entry-metadata
 {
 	padding-left: 16px;
 	font-size: small;
-	color: @gray;	
+	color: @gray;
 }
 article .entry-content
 {
@@ -181,7 +186,7 @@ article .entry-content
 {
 	list-style: none;
 }
-.navbar-form 
+.navbar-form
 {
 	.search-form-container
 	{
@@ -201,7 +206,7 @@ article .entry-content
 			width: 45%;
 			float: right;
 		}
-	
+
 		input:focus
 		{
 			width: 194px;
@@ -218,64 +223,101 @@ article .entry-content
 		float: right;
 		.border-right-radius(3px);
 	}
-	.search-form input, .navbar-form .search-submit 
+	.search-form input, .navbar-form .search-submit
 	{
-		
+
 		color: @brand-text-contrast;
 		border-color: @brand-text;
 	}
 }
 
-/*  GALLERY */
-.gallery 
-{ 
-	margin: 0 auto 18px; 
+/* NAV */
+.navbar-inverse {
+  	text-transform: uppercase;
+  	font-size: 13px;
+	.navbar-nav > .menu-item > a > .subtitle {
+		clear: both;
+  		font: 11px Arial;
+  		color: #888985;
+  		font-weight: normal;
+	}
+	.navbar-nav > .dropdown {
+		background: url(../images/menu_close_bg.svg) no-repeat bottom center transparent;
+		background-size: 15px 15px;
+	}
+	.navbar-nav > .open {
+	  	background: url(../images/menu_open_bg.svg) no-repeat bottom center transparent;
+	  	background-size: 15px 15px;
+	  	.caret {
+	  		border-top: 0 !important;
+	  	}
+	  }
+	.navbar-nav > li > .dropdown-menu {
+		border-radius: 0 0 10px 10px;
+	}
+	.navbar-nav > li > .dropdown-menu > li > a {
+		color: @brand-text-contrast;
+	}
 }
-.gallery .gallery-item 
+
+.no-svg .navbar-inverse .navbar-nav > .dropdown {
+		background: url(../images/menu_close_bg.png) no-repeat bottom center transparent;
+}
+
+.no-svg .navbar-inverse .navbar-nav > .open {
+		background: url(../images/menu_open_bg.png) no-repeat bottom center transparent;
+}
+
+/*  GALLERY */
+.gallery
+{
+	margin: 0 auto 18px;
+}
+.gallery .gallery-item
 {
 	float: left;
 	margin-top: 0;
 	text-align: center;
 	width: 33%;
 }
-.gallery-columns-2 .gallery-item 
-{ 
-	width: 50%; 
+.gallery-columns-2 .gallery-item
+{
+	width: 50%;
 }
-.gallery-columns-4 .gallery-item 
-{ 
-	width: 25%; 
+.gallery-columns-4 .gallery-item
+{
+	width: 25%;
 }
-.gallery img 
+.gallery img
 {
 	padding: 8px;
 }
-.gallery img:hover 
+.gallery img:hover
 {
 
 }
-.gallery-columns-2 .attachment-medium 
+.gallery-columns-2 .attachment-medium
 {
 	max-width: 92%;
 	height: auto;
 }
-.gallery-columns-4 .attachment-thumbnail 
+.gallery-columns-4 .attachment-thumbnail
 {
 	max-width: 84%;
 	height: auto;
 }
-.gallery .gallery-caption 
+.gallery .gallery-caption
 {
 	font-size: 12px;
 	margin: 0 0 12px;
 }
-.gallery dl, .gallery dt 
-{ 
-	margin: 0; 
+.gallery dl, .gallery dt
+{
+	margin: 0;
 }
-.gallery br+br 
-{ 
-	display: none; 
+.gallery br+br
+{
+	display: none;
 }
 .gallery-well
 {
@@ -288,11 +330,11 @@ article .entry-content
 
 .img-xs, .img-sm, .img-md, .img-lg
 {
-	height: auto; 
+	height: auto;
 	max-width: none;
 }
 /* Small devices (tablets, 768px and up) */
-@media (max-width: @screen-md-min) 
+@media (max-width: @screen-md-min)
 {
 	.img-xs
 	{
@@ -313,7 +355,7 @@ article .entry-content
 }
 
 /* Medium devices (desktops, 992px and up) */
-@media (min-width: @screen-md-min) 
+@media (min-width: @screen-md-min)
 {
 	.img-xs
 	{

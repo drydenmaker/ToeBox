@@ -11,6 +11,8 @@ define('TOEBOX_HIDE_SMALL_SIDEBARS', 'toebox_hide_small_sidebars');
 define('TOEBOX_FEATURED_IMG_CLASS', 'toebox_featured_img_class');
 define('TOEBOX_CONTENT_BACKGROUND_COLOR', 'toebox_background_collor');
 
+define('TOEBOX_USE_WIDGET_FOR_HEADER', 'toebox_header_widget');
+
 define('TOEBOX_404_MESSAGE', 'toebox_404_message');
 define('TOEBOX_ENABLE_404_SEARCH', 'toebox_404_search');
 define('TOEBOX_ENABLE_LIST_PAGING', 'toebox_list_paging');
@@ -23,6 +25,8 @@ define('TOEBOX_TEMPLATE_SINGLE', 'single');
 define('TOEBOX_TEMPLATE_LIST', 'list');
 
 define('TOEBOX_LINK_PAGES_ARGS', 'toebox_link_pages_args');
+
+define('TOEBOX_SETUP', 'toebox_setup');
 
 
 $pageLayoutOptions = array(
@@ -50,6 +54,7 @@ class ToeBox
      */
     public static $Settings = array(
         'ver' => '0.0.1',
+        TOEBOX_SETUP => false,
         TOEBOX_MORE_TEXT => 'More...',
         TOEBOX_PAGE_LAYOUT => 'right_column',
         TOEBOX_FEATURED_STORY_LAYOUT => 'featured_story',
@@ -61,11 +66,12 @@ class ToeBox
         TOEBOX_404_MESSAGE => '<p>Sorry, no content was found.</p>',
         TOEBOX_ENABLE_404_SEARCH => true,
         TOEBOX_ENABLE_LIST_PAGING => false,
-       
+        TOEBOX_USE_WIDGET_FOR_HEADER => true,
+
         TOEBOX_MENU_SUBTITLES => true,
-        
+
         TOEBOX_TITLE_SEO => true,
-        
+
         TOEBOX_LINK_PAGES_ARGS => array(
             'before'      => '<nav><ul class="page-links pagination"><li>',
             'after'       => '</li></ul></nav>',
@@ -74,7 +80,7 @@ class ToeBox
             'pagelink'    => '%',
             'separator'   => '</li><li>',
             )
-        
+
     );
     /**
      * prepare settings with defaults
@@ -84,8 +90,8 @@ class ToeBox
     {
 
         $themeMods = get_theme_mods();
-        $themeMods = (!empty($themeMods) && is_array($themeMods)) ? $themeMods : array() ; 
-        
+        $themeMods = (!empty($themeMods) && is_array($themeMods)) ? $themeMods : array() ;
+
         self::$Settings = array_merge(self::$Settings, $themeMods, $otherSettings);
     }
     /**
@@ -116,20 +122,20 @@ class ToeBox
         global $wp_the_query, $toebox_link_pages_args, $toeboxSlug;
 
         $postType = $wp_the_query->query_vars['post_type'];
-                
+
         $settings = self::$Settings;
         $hideSideBarsOnSmallScreens = $settings[TOEBOX_HIDE_SMALL_SIDEBARS];
         $ifHideOnSmallCss = ($hideSideBarsOnSmallScreens) ? 'hidden-xs hidden-sm' : '' ;
-                
+
         if (($postType) && in_array($postType, self::$CustomLayoutTemplates))
         {
             $templatePath = get_template_directory().self::$LaoutPrefix . $settings[TOEBOX_FEATURED_STORY_LAYOUT] . '.php';
         }
-        else 
+        else
         {
             $templatePath = get_template_directory().self::$LaoutPrefix . $settings[TOEBOX_PAGE_LAYOUT] . '.php';
         }
-        
+
         require $templatePath;
     }
     /**
@@ -154,22 +160,22 @@ class ToeBox
     {
         extract((array)$post);
         extract($settings);
-        
+
         // set template
         if (is_single() || is_sticky())
         {
             $templateType = TOEBOX_TEMPLATE_SINGLE;
             wp_enqueue_script( "comment-reply" );
         }
-        else 
+        else
         {
             $templateType = TOEBOX_TEMPLATE_LIST;
         }
-        
+
         $body = self::GetCurrentContent();
-        
+
         $postFormat = get_post_format();
-        
+
         if (in_array($post_type, self::$CustomLayoutTemplates))
         {
             $templatePath = sprintf('%s%s_%s.php', get_template_directory().self::$LaoutContentPrefix, $post_type, $templateType);
@@ -179,7 +185,7 @@ class ToeBox
             $template = (is_single() || is_page()) ? $settings[TOEBOX_STORY_LAYOUT] : $settings[TOEBOX_LIST_LAYOUT];
             $templatePath = sprintf('%s%s.php', get_template_directory().self::$LaoutContentPrefix, $template);
         }
-        
+
         // wordpress output
         $post_title = get_the_title();
         $post_date = get_the_time(get_option('date_format'));
@@ -187,8 +193,8 @@ class ToeBox
 
 //         $arr = get_defined_vars();
 //         print 'BASE<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
-        
-        
+
+
         self::DebugFile('START', $templatePath);
         require $templatePath;
         self::DebugFile('END', $templatePath);
@@ -203,7 +209,7 @@ class ToeBox
         $body = get_the_content(__('More','toebox-basic' ));
         $body = apply_filters('the_content', $body);
         return str_replace( ']]>', ']]&gt;', $body );
-        
+
     }
     /**
      * process content from a post object
@@ -214,12 +220,12 @@ class ToeBox
     {
         if ( post_password_required( $post ) )
             return get_the_password_form( $post );
-    
+
         // process body content
         $body = $post->post_content;
         $body = apply_filters('the_content', $body);
         return str_replace( ']]>', ']]&gt;', $body );
-    
+
     }
     /**
      * Handle the wordpress loop
@@ -229,14 +235,14 @@ class ToeBox
     public static function HandleLoop($posts, $slug)
     {
         $slug = empty($slug) ? 'content' : $slug;
-        
+
         if ( have_posts() )
         {
             while ( have_posts() )
             {
                 the_post();
                 global $post;
-             
+
                 get_template_part($slug, $post->post_mime_type);
             } // end while
         } // end if
@@ -267,7 +273,7 @@ class ToeBox
     public static $TemplatePrefix = '/tpl/content/';
     /**
      * Featured Image Standard Format
-     * 
+     *
      * @param string $post_id
      * @param string $size
      * @param string $attr
@@ -290,7 +296,7 @@ class ToeBox
         if ( is_array( $size_class ) ) {
             $size_class = join( 'x', $size_class );
         }
-        
+
         $attachment_id = get_post_thumbnail_id( $post_id );
         $attachment = get_post($attachment_id);
 
@@ -302,11 +308,11 @@ class ToeBox
         $alt = trim(strip_tags( get_post_meta($attachment_id, '_wp_attachment_image_alt', true) ));
 
         $title = get_the_title();
-        
+
         $class = self::$Settings[TOEBOX_FEATURED_IMG_CLASS];
 
         $filePath = get_template_directory().self::$TemplatePrefix . $template . '.php';
-        
+
         self::DebugFile('START', $filePath);
         require $filePath;
         self::DebugFile('END', $filePath);
@@ -321,12 +327,12 @@ class ToeBox
     public static function GetImageForPost($post_id = null, $size = 'post-thumbnail')
     {
         $post_id = ( null === $post_id ) ? get_the_ID() : $post_id;
-        
+
         $attachment_id = get_post_thumbnail_id( $post_id );
         return wp_get_attachment_image_src($attachment_id, $size);
     }
     /**
-     * obtain the thumbnail url for a post id 
+     * obtain the thumbnail url for a post id
      * @param string $post_id
      * @param string $size
      * @return mixed|NULL
@@ -337,36 +343,36 @@ class ToeBox
         if (is_array($imgArray) && count($imgArray)) return array_shift($imgArray);
         return null;
     }
-    
+
     /**
-     * Featured Image with alternate template 
-     * 
+     * Featured Image with alternate template
+     *
      * @param string $template
      */
     public static function HandleFeaturedImageTemplated($template = 'featured_image_overlay', $post_id = null, $size = 'post-thumbnail', $attr = array())
     {
         self::HandleFeaturedImage($post_id, $size, $attr, $template);
     }
-    
+
     public static $Debug = false;
-    
+
     public static function DebugFile($location = 'START', $callingFileName = '')
     {
-        
-        
+
+
         if (self::$Debug)
         {
-            
+
             if (empty($callingFileName))
             {
                 $trace = debug_backtrace();
-                try 
+                try
                 {
                     $callingFileName = array_shift($trace)['file'];
                 }
                 catch(Exception $e){}
             }
-            
+
             print sprintf('%3$s<!-- %1$s %2$s -->', self::GetThemeRealtiveFileTitle($callingFileName), $location, str_repeat(' ', count($trace)) );
 
         }
@@ -398,13 +404,13 @@ class ToeBox
     public static function GetFileContents($fileName)
     {
         ob_start();
-        
+
         require get_template_directory() . '/' . self::GetThemeRelativeFileName($fileName);
-        
+
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
-    } 
+    }
 }
 
 ?>

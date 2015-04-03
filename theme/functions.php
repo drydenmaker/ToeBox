@@ -23,15 +23,19 @@ toebox\inc\Toebox::InitSettings();
 add_action( 'init', function()
 {
 	add_post_type_support('page', array('excerpt', 'revisions', 'comments', 'custom-fields', 'page-attributes'));
-	
+
 	/**
 	 * setup menu walker
 	 */
 	require_once get_template_directory().'/inc/Walker/NavMenu/Primary.php';
 	add_filter( 'wp_nav_menu_args', 'toebox\\inc\\Walker\\NavMenu\\Primary::MenuArguments');
-	
+
+	add_filter('wp_less_compiler', function($args){
+	    return 'less.php';
+	});
+
 	add_filter('wp_title', function($args){
-	    
+
 	    if (\toebox\inc\ToeBox::$Settings[TOEBOX_TITLE_SEO])
 	    {
 	        $args .= (strlen($args)) ? ' | ' : get_bloginfo( 'description') . ' | ';
@@ -48,12 +52,22 @@ add_action( 'init', function()
 add_action( 'wp_enqueue_scripts', function()
 {
     $templateDir = get_template_directory_uri();
-    
+
     wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
-    
-    wp_enqueue_style('toebox', $templateDir
-                    . (class_exists('WPLessPlugin', false) ? '/less/style.less' : '/css/bootstrap-Toebox.min.css'));
-    
+
+    if (class_exists('WPLessPlugin', false))
+    {
+        wp_enqueue_style('toebox', '/themes/toebox/less/bootstrap/bootstrap.less');
+        wp_enqueue_style('toebox', '/themes/toebox/less/bootstrap/theme.less');
+    }
+    else
+    {
+        wp_enqueue_style('toebox', $templateDir. '/css/bootstrap.min.css');
+        wp_enqueue_style('toebox', $templateDir. '/css/bootstrap-theme.min.css');
+    }
+
+    if (WP_DEBUG) WPLessPlugin::getInstance()->processStylesheets();
+
     wp_enqueue_script('jquery');
     wp_enqueue_script('bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), false, true);
     wp_enqueue_script('modernizr', $templateDir . '/js/vendor/modernizr.min.js');
@@ -77,7 +91,7 @@ add_filter('wp_link_pages_link', function($link){
     {
         $link = "<a href='#'>{$link}</a>" ;
     }
-    
+
     return $link;
 });
 
@@ -99,7 +113,7 @@ require_once get_template_directory() . '/inc/core/plugins.php';
 add_action( 'after_setup_theme', function()
 {
     load_theme_textdomain('toebox-basic', get_template_directory() . '/languages');
-    
+
     add_theme_support( "title-tag" );
     add_theme_support( "custom-header", array(
     	'default-image'          => '',
@@ -116,7 +130,7 @@ add_action( 'after_setup_theme', function()
     	'admin-preview-callback' => '',
     ));
     /*
-     * TOOD add custom header via widget 
+     * TOOD add custom header via widget
      * <img src="<?php header_image(); ?>" height="<?php echo get_custom_header()->height; ?>" width="<?php echo get_custom_header()->width; ?>" alt="" />
      */
     add_theme_support('automatic-feed-links');

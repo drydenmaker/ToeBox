@@ -1,4 +1,4 @@
-<?php 
+<?php
 // set some defaults so templates work native
 $toeboxSlug = empty($toeboxSlug) ? 'content' : $toeboxSlug;
 $toebox_link_pages_args = empty($toebox_link_pages_args) ? array() : $toebox_link_pages_args;
@@ -38,11 +38,17 @@ $toebox_link_pages_args = empty($toebox_link_pages_args) ? array() : $toebox_lin
 <!--[if lt IE 9]>
 	<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 <![endif]-->
-<?php if (!empty(get_header_image())) :?>
+<?php
+
+if (!empty(get_header_image())) :?>
 <div style="height: 39vh; margin-bottom: -39vh; overflow:hidden; background: transparent url('<?php header_image(); ?>'); background-repeat: no-repeat; background-position: center center; background-size: cover;">
 &nbsp;
 </div>
-<?php endif; ?>
+<?php endif;
+
+?>
+<?php if (!get_option('toebox_header_widget')) include get_template_directory() . '/tpl/widget/header.php';
+    ?>
 <!-- END HEADER -->
 <!-- TOEBOX HEADER -->
 <?php
