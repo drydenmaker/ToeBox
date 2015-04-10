@@ -14,9 +14,6 @@ if (!isset($content_width)) {
 
 toebox\inc\Toebox::InitSettings();
 
-//print __FUNCTION__.'<pre>'.htmlspecialchars(print_r(\toebox\inc\Toebox::$Settings, true)).'</pre>';
-
-
 /**
  * init general
  */
@@ -25,15 +22,15 @@ add_action( 'init', function()
 	add_post_type_support('page', array('excerpt', 'revisions', 'comments', 'custom-fields', 'page-attributes'));
 
 	/**
-	 * setup menu walker
+	 * setup menu walkers
 	 */
 	require_once get_template_directory().'/inc/Walker/NavMenu/Primary.php';
+	require_once get_template_directory().'/inc/Walker/NavMenu/Bare.php';
+	require_once get_template_directory().'/inc/Walker/NavMenu/Flat.php';
 	add_filter( 'wp_nav_menu_args', 'toebox\\inc\\Walker\\NavMenu\\Primary::MenuArguments');
-
-	add_filter('wp_less_compiler', function($args){
-	    return 'less.php';
-	});
-
+    /**
+     * seo the title
+     */
 	add_filter('wp_title', function($args){
 
 	    if (\toebox\inc\ToeBox::$Settings[TOEBOX_TITLE_SEO])
@@ -44,7 +41,15 @@ add_action( 'init', function()
 	    }
 	    return $args;
 	});
+		
 });
+
+/**
+ * if wp-less is installed make it use less.php for bootstrap compatibility
+ */
+add_filter('wp_less_compiler', function($args){
+    return 'less.php';
+}, 0);
 
 /**
  * Frontend styles and script
@@ -52,22 +57,20 @@ add_action( 'init', function()
 add_action( 'wp_enqueue_scripts', function()
 {
     $templateDir = get_template_directory_uri();
-
-    wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
-
-    if (class_exists('WPLessPlugin', false))
+    
+    if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_USE_LESS])
     {
-        wp_enqueue_style('toebox', '/themes/toebox/less/bootstrap/bootstrap.less');
-        wp_enqueue_style('toebox', '/themes/toebox/less/bootstrap/theme.less');
+        wp_enqueue_style('bootstrap', '/themes/toebox/less/bootstrap/bootstrap.less');
+        wp_enqueue_style('bootstrap-theme', '/themes/toebox/less/bootstrap/theme.less');
+        if (WP_DEBUG) WPLessPlugin::getInstance()->processStylesheets();
     }
     else
     {
-        wp_enqueue_style('toebox', $templateDir. '/css/bootstrap.min.css');
-        wp_enqueue_style('toebox', $templateDir. '/css/bootstrap-theme.min.css');
+        wp_enqueue_style('bootstrap', $templateDir. '/css/bootstrap/bootstrap.min.css');
+        wp_enqueue_style('bootstrap-theme', $templateDir. '/css/bootstrap/bootstrap-theme.min.css');
     }
 
-    if (WP_DEBUG) WPLessPlugin::getInstance()->processStylesheets();
-
+    wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
     wp_enqueue_script('jquery');
     wp_enqueue_script('bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), false, true);
     wp_enqueue_script('modernizr', $templateDir . '/js/vendor/modernizr.min.js');
@@ -151,5 +154,7 @@ add_action( 'after_setup_theme', function()
             )
         )
     );
+    
 
 }); // toeboxBasicSetup
+

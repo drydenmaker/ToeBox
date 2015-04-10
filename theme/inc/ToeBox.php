@@ -27,6 +27,7 @@ define('TOEBOX_TEMPLATE_LIST', 'list');
 define('TOEBOX_LINK_PAGES_ARGS', 'toebox_link_pages_args');
 
 define('TOEBOX_SETUP', 'toebox_setup');
+define('TOEBOX_USE_LESS', 'toebox_use_less');
 
 
 $pageLayoutOptions = array(
@@ -55,6 +56,7 @@ class ToeBox
     public static $Settings = array(
         'ver' => '0.0.1',
         TOEBOX_SETUP => false,
+        TOEBOX_USE_LESS => false,
         TOEBOX_MORE_TEXT => 'More...',
         TOEBOX_PAGE_LAYOUT => 'right_column',
         TOEBOX_FEATURED_STORY_LAYOUT => 'featured_story',
@@ -66,7 +68,8 @@ class ToeBox
         TOEBOX_404_MESSAGE => '<p>Sorry, no content was found.</p>',
         TOEBOX_ENABLE_404_SEARCH => true,
         TOEBOX_ENABLE_LIST_PAGING => false,
-        TOEBOX_USE_WIDGET_FOR_HEADER => true,
+        TOEBOX_USE_WIDGET_FOR_HEADER => false,
+        TOEBOX_USE_LESS => false,
 
         TOEBOX_MENU_SUBTITLES => true,
 
@@ -90,6 +93,7 @@ class ToeBox
     {
 
         $themeMods = get_theme_mods();
+        if (is_array($themeMods)) $themeMods[TOEBOX_SETUP] = true;
         $themeMods = (!empty($themeMods) && is_array($themeMods)) ? $themeMods : array() ;
 
         self::$Settings = array_merge(self::$Settings, $themeMods, $otherSettings);
@@ -410,6 +414,25 @@ class ToeBox
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
+    }
+    /**
+     * remove all widgets
+     *  !! USE ONLY WHEN ABSOLUTELY NEEDED
+     */
+    public static function RemoveAllWidgets()
+    {
+        global $wp_registered_sidebars;
+        
+        //get saved widgets
+        $widgets = get_option('sidebars_widgets');
+        //loop over the sidebars and remove all widgets
+        foreach ($wp_registered_sidebars as $sidebar => $value) 
+        {
+            unset($widgets[$sidebar]);
+        }
+        
+        //update with widgets removed
+        update_option('sidebars_widgets',$widgets);
     }
 }
 

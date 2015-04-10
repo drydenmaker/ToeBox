@@ -1,3 +1,9 @@
+<?php 
+
+//$arr = get_defined_vars();
+//print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
+
+?>
 <div class="<?php print $container_class ?> clearfix" style="background: url(<?php print $background ?>) <?php print $background_style ?>">
 
     <div class="visible-sm-inline visible-md-inline visible-lg-inline visible-xl-inline <?php print $description_class ?>">

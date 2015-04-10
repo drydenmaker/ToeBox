@@ -53,8 +53,8 @@ class BaseWidget extends \WP_Widget
     function admin_setup()
     {
         wp_enqueue_media();
-        wp_enqueue_script('toebox-admin-js', get_theme_root_uri() . '/js/toebox_admin.js', array(), false, true);
-        wp_enqueue_style('toebox-admin-js', get_theme_root_uri() . '/css/toebox_admin.css');
+        wp_enqueue_script('toebox-admin-js', get_template_directory_uri() . '/js/toebox_admin.js', array(), false, true);
+        wp_enqueue_style('toebox-admin-js', get_template_directory_uri() . '/css/toebox_admin.css');
     }
 
     public $TemplatePrefix = '/tpl/widget/';
@@ -114,6 +114,9 @@ class BaseWidget extends \WP_Widget
         $filtered = array();
         foreach ($newInstance as $key => $value) {
             $filtered[$key] = (is_string($value) && ! in_array($key, $ignore)) ? strip_tags($value) : $value;
+
+            print $key.'<pre>'.htmlspecialchars(print_r($filtered[$key], true)).'</pre>';
+            
         }
         
         return $filtered;

@@ -35,11 +35,11 @@ class HeaderLogoCornersWidget extends BaseWidget
      */
     public function setDefaults(&$args = array())
     {
-        $this->defaultValue($args, 'logo', '');
+        $this->defaultValue($args, 'logo', 'http://');
         $this->defaultValue($args, 'logo_style', '');
-        $this->defaultValue($args, 'sub_logo', '');
+        $this->defaultValue($args, 'sub_logo', 'http://');
         $this->defaultValue($args, 'sub_logo_style', '');
-        $this->defaultValue($args, 'background', '');
+        $this->defaultValue($args, 'background', 'http://');
         $this->defaultValue($args, 'container_class', 'tb-header tb-title-corners');
         $this->defaultValue($args, 'background_style', 'no-repeat top middle');
     

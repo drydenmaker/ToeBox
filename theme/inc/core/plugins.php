@@ -12,7 +12,7 @@ add_action( 'tgmpa_register', function()
         ),
         array(
             'name'      => 'WP-ToeBox',
-            'slug'      => 'Toebox_Plugin',
+            'slug'      => 'toebox_plugin',
             'required'  => true,
         ),
         array(
@@ -43,12 +43,3 @@ add_action( 'tgmpa_register', function()
     tgmpa( $plugins, $config );
 
 });
-
-add_action( 'init', function()
-{
-    if (class_exists('WPLessPlugin', false))
-    {
-        $WPLessPlugin = WPLessPlugin::getInstance();
-        if (WP_DEBUG) $WPLessPlugin->processStylesheets();
-    }
-}, 0);

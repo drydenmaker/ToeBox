@@ -46,8 +46,8 @@ if (!empty(get_header_image())) :?>
 </div>
 <?php endif;
 
-?>
-<?php if (!get_option('toebox_header_widget')) include get_template_directory() . '/tpl/widget/header.php';
+if (!toebox\inc\ToeBox::$Settings[TOEBOX_USE_WIDGET_FOR_HEADER]) include get_template_directory() . '/tpl/widget/header.php';
+
     ?>
 <!-- END HEADER -->
 <!-- TOEBOX HEADER -->
