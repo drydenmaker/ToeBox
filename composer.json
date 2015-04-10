@@ -1,0 +1,6 @@
+{
+    "require": {
+        "codegyre/robo": "*",
+        "oyejorge/less.php": "~1"
+    }
+}

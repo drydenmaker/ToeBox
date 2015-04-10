@@ -47,3 +47,4 @@ node_modules
 /php/js/vendor/modernizr.min.js
 /.buildpath
 /theme/vendor
+/dist
