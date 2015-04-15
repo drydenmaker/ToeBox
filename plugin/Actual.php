@@ -23,89 +23,28 @@
  * Domain Path:       /languages
  */
 namespace toebox\plugin;
-use toebox;
+use toebox\plugin\inc\PluginController;
+require_once  plugin_dir_path(__FILE__) . 'inc/PluginController.php';
 require_once  plugin_dir_path(__FILE__) . 'inc/BasePlugin.php';
+require_once  plugin_dir_path(__FILE__) . 'inc/Hook.php';
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-
-class PluginActual
+class Actual extends \toebox\plugin\inc\PluginController
 {
-    const TOEBOX_ENABLE_CAROUSEL = 'enable_carousel';
-    const TOEBOX_ENABLE_FEATURED = 'enable_featured';
-    
     const TOEBOX_PRIMARY_SETTINGS_TAB = 'primary';
     const TOEBOX_CAROUSEL_SETTINGS_TAB = 'carousel';
     const TOEBOX_FEATURED_SETTINGS_TAB = 'featured';
-    
-    protected static $TagSpace = 'toebox_plgin';
-    
-    protected static $Version = '1.0.1';
-    
-    protected static $Plugins = array();
-    /**
-     * primary method
-     */
-    public static function Init()
-    {
-        $instance = new self();
-        register_activation_hook( __FILE__, array($instance, 'Activate') );
-        register_deactivation_hook( __FILE__, array($instance, 'Deactivate') );
-    
-        $instance->LoadPlugins();
-    }
-    /**
-     * add a class to the registry by name
-     * class must in a file by the same name
-     * class must be in the toebox\plugin\inc namespace
-     * class must extend toebox\plugin\inc\BasePlugin
-     *
-     * @since 1.0.0
-     * @param unknown $className
-     */
-    public static function RegisterPlugin($className)
-    {
-        self::$Plugins[] = $className;
-    }
-    
-    public function LoadPlugins()
-    {
-        foreach (self::$Plugins as $className)
-        {
-            require_once sprintf('%1$s/inc/%2$s.php', plugin_dir_path(__FILE__), $className);
-            $fullClassName = 'toebox\\plugin\\inc\\' . $className;
-            $instance = new $fullClassName();
-            $this->hookinPlugin($instance);
-        }
-    }
-    /**
-     * ensure object type when executing Register
-     * 
-     * @since 1.0.0
-     * @param toebox\plugin\inc\BasePlugin $plugin
-     */
-    protected function hookinPlugin(toebox\plugin\inc\BasePlugin $plugin)
-    {
-        $plugin->Register();
-    }
-    
-    public function Activate()
-    {
-        // Activation Code Goes Here
-    }
-    
-    public function Deactivate()
-    {
-        // Deactivation Code Goes Here
-    }
-    
+        
 }
 
-PluginActual::RegisterPlugin('BootstrapShortcodes');
-PluginActual::Init();
+PluginController::RegisterPlugin('BootstrapShortcodes');
+PluginController::RegisterPlugin('FeaturedStoryPostType');
+PluginController::RegisterPlugin('CarouselPostType');
+PluginController::Init('\toebox\plugin\Actual');
 
 
 /**

@@ -44,12 +44,6 @@ add_action( 'init', function()
 		
 });
 
-/**
- * if wp-less is installed make it use less.php for bootstrap compatibility
- */
-add_filter('wp_less_compiler', function($args){
-    return 'less.php';
-}, 0);
 
 /**
  * Frontend styles and script
@@ -60,8 +54,9 @@ add_action( 'wp_enqueue_scripts', function()
     
     if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_USE_LESS])
     {
-        wp_enqueue_style('bootstrap', '/themes/toebox/less/bootstrap/bootstrap.less');
-        wp_enqueue_style('bootstrap-theme', '/themes/toebox/less/bootstrap/theme.less');
+        wp_enqueue_style('bootstrap', $templateDir . '/less/bootstrap/bootstrap.less');
+        wp_enqueue_style('bootstrap-theme', $templateDir . '/less/bootstrap/theme.less');
+        
         if (WP_DEBUG) WPLessPlugin::getInstance()->processStylesheets();
     }
     else
@@ -158,3 +153,27 @@ add_action( 'after_setup_theme', function()
 
 }); // toeboxBasicSetup
 
+if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_USE_LESS])
+{
+    /**
+     * if wp-less is installed make it use less.php for bootstrap compatibility
+     */
+    add_filter('wp_less_compiler', function($args){
+        return 'less.php';
+    }, 0);
+    
+    $lessConfig = WPLessPlugin::getInstance()->getConfiguration();
+    
+    // compiles in the active theme, in a ‘compiled-css’ subfolder
+    $lessConfig->setUploadDir(get_stylesheet_directory() . '/compiled-css');
+    $lessConfig->setUploadUrl(get_stylesheet_directory_uri() . '/compiled-css');
+    
+    $less = WPLessPlugin::getInstance();
+    $less->dispatch();
+    
+    $less->addVariable('brand-primary', '#EC7225'); //EC7225
+    $less->addVariable('brand-success', '#18987B'); //18987B
+    $less->addVariable('brand-info', '#24569B'); //24569B
+    $less->addVariable('brand-warning', '#ECA125'); //ECA125
+    $less->addVariable('brand-danger', '#EF5870'); //EF5870
+}

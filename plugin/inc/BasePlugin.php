@@ -1,6 +1,7 @@
 <?php
 namespace toebox\plugin\inc;
 
+
 abstract class BasePlugin
 {
     protected $Tag = 'base';
@@ -37,6 +38,14 @@ abstract class BasePlugin
      */
     protected $Scripts = array();
     /**
+     * unique-key => url array of scripts
+     *
+     * @since 1.0.0
+     * @access protected
+     * @var array $Scripts js urls to register with wordpress
+     */
+    protected $AdminScripts = array();
+    /**
      * unique-key => url array of styles
      * 
      * @since 1.0.0
@@ -45,19 +54,52 @@ abstract class BasePlugin
      */
     protected $Styles = array();
     /**
+     * unique-key => url array of styles
+     *
+     * @since 1.0.0
+     * @access protected
+     * @var array $Styles css urls to register with wordpress
+     */
+    protected $AdminStyles = array();
+    /**
+     * List of post types to register
+     * uique-key => post type array
+     * @see register_post_type for array format
+     * @var array
+     */
+    protected $PostTypes = array();
+    /**
      * required initialization function
      * @since 1.0.0
      * @access protected
      */
     abstract protected function Initialize();
     /**
-     * execute misc functionaltiy
+     * execute misc functionaltiy after registering everything
      * @since 1.0.0
      * @access protected
      */
     protected function Prepare()
     {
         // to be overridden
+    }
+    /**
+     * Register actions filters and shortcodes with wordpress
+     * 
+     * @since 1.0.0
+     */
+    public final function Register()
+    {
+        $this->Initialize();
+        $this->RegisterWordpressFilters();
+        $this->RegisterWordpressShortCodes();
+
+        $this->AddAction('init', 'RegisterPostTypes');
+        $this->AddAction('wp_enqueue_scripts', 'RegisterWordpressStylesAndScripts');
+        $this->AddAction('admin_init', 'AdminInitialize');
+        $this->RegisterWordpressActions();
+
+        $this->Prepare();
     }
     /**
      * Add a filter hook by name
@@ -97,19 +139,6 @@ abstract class BasePlugin
     public final function AddShortCode($shortcode, $method)
     {
         $this->Shortcodes[$shortcode] = $method;
-    }
-    /**
-     * Register actions filters and shortcodes with wordpress
-     */
-    public final function Register()
-    {
-        $this->Initialize();
-        $this->RegisterWordpressFilters();
-        $this->RegisterWordpressActions();
-        $this->RegisterWordpressShortCodes();
-        $this->RegisterWordpressStyles();
-        $this->RegisterWordpressScripts();
-        $this->Prepare();
     }
     
     /**
@@ -180,30 +209,73 @@ abstract class BasePlugin
         
     }
     /**
-     * Register styles with wordpress
+     * Register styles and scripts with wordpress
      * 
      * @since 1.0.0
      * @access protected
      */
-    protected final function RegisterWordpressStyles()
+    public final function RegisterWordpressStylesAndScripts()
     {
         foreach ($this->Styles as $uid => $uri)
         {
             wp_enqueue_style($uid, $uri);
         }
-    }
-    /**
-     * Register scripts with wordpress
-     * 
-     * @since 1.0.0
-     * @access protected
-     */
-    protected final function RegisterWordpressScripts()
-    {
         foreach ($this->Scripts as $uid => $uri)
         {
             wp_enqueue_script($uid, $uri);
         }
+    }
+    /**
+     * Register styles and scripts with wordpress
+     *
+     * @since 1.0.0
+     * @access protected
+     */
+    public final function RegisterWordpressAdminStylesAndScripts()
+    {
+        foreach ($this->AdminStyles as $uid => $uri)
+        {
+            wp_enqueue_style($uid, $uri);
+        }
+        foreach ($this->AdminScripts as $uid => $uri)
+        {
+            wp_enqueue_script($uid, $uri);
+        }
+    }
+    /**
+     * register post types with wordpress
+     * 
+     * @since 1.0.0
+     */
+    public final function RegisterPostTypes()
+    {
+        foreach($this->PostTypes as $uid => $params)
+        {
+            register_post_type($uid, $params);
+        }
+    }
+    /**
+     * admin initialize scripts styles and hooks
+     * 
+     * @since 1.0.0
+     */
+    public final function AdminInitialize()
+    {
+        add_action( 'admin_menu', array($this, 'RegisterWordpressAdminStylesAndScripts'));
+        
+        if (current_user_can('edit_posts') &&  current_user_can('edit_pages'))
+        {
+            $this->AdminEditorInit();
+        }
+    }
+    /**
+     * admin editor plugins
+     * 
+     * @since 1.0.0
+     */
+    public function AdminEditorInit() 
+    { 
+        // override and put your functionality here 
     }
     protected $defaultSetting = array(
         'title' => '',
@@ -222,6 +294,9 @@ abstract class BasePlugin
      * @var array
      */
     public $Settings = array();
+    /**
+     * Process settings array and create settings screen
+     */
     public final function ProcessSettingsScreen()
     {
         foreach ($this->Settings as $page => $settingsSection)
@@ -244,6 +319,11 @@ abstract class BasePlugin
             }
         }
     }
+    /**
+     * 
+     * 
+     * @param array $field
+     */
     public final function RenderField(array $field)
     {
         // todo handle rendering form
@@ -255,7 +335,13 @@ abstract class BasePlugin
         register_setting($field['section'], $field['id'], $validator);
         
     }
-    public final function ValidateSettings($input)
+    /**
+     * validate settings using settings definition
+     * 
+     * @param array $input
+     * @return array
+     */
+    public final function ValidateSettings(array $input)
     {
         $errors = array();
         foreach ( $input AS $key => $value ) 
@@ -300,6 +386,53 @@ abstract class BasePlugin
         
         return $input;
     }
+    /**
+     * get 
+     * @param string $templateName the plugin/theme relative path
+     * @return string
+     */
+    protected final function getTemplateOutput($templatePath, $vars)
+    {
+        extract($vars);
+         
+        $templatePaths = array(
+            PluginController::$TemplatePath . $templatePath,
+            PluginController::$IncPath . $templatePath,
+            PluginController::$PluginPath . $templatePath,
+            PluginController::$PublicPath . $templatePath
+        );
+        
+        // get a suggested template path
+        $slug = trim(str_replace('.php', null, basename($templatePath)));
+        $name = null;
+        do_action( "get_template_part_{$slug}", $slug, $name );
+        $name = (string) $name;
+        if ( '' !== $name ) $templatePaths[] = "{$slug}-{$name}.php";
+        // add a last ditch file
+        $templatePaths[] = locate_template("{$slug}.php");
+        
+        ob_start();
+        foreach($templatePaths as $fileName)
+        {
+            $cleanName = realpath($fileName);
+            if ($cleanName)
+            {
+                include $cleanName;
+                break;
+            }
+        }
+        
+        $output = ob_get_contents();
+        ob_end_clean();
+        
+        return $output;
+    }
+    /**
+     * filter a string and add lowerscores in place of spaces
+     * 
+     * @param string $stringToFilter
+     * @return mixed
+     */
     protected final function LowerScore($stringToFilter)
     {
         return preg_replace( "/[^a-z0-9_]/", "", 
