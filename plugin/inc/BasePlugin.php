@@ -428,6 +428,26 @@ abstract class BasePlugin
         return $output;
     }
     /**
+     * return a string that can be output as the attributes of markup
+     * 
+     * @param string $nodeAttributes
+     * @return string
+     */
+    protected function getNodeAttributes($nodeAttributes)
+    {
+        $returnString = '';
+        foreach ($nodeAttributes as $attribute => $value) 
+        {
+            if (! empty($value)) 
+            {
+                $value = ('href' === $attribute) ? esc_url($value) : esc_attr($value);
+                $returnString .= sprintf(' %1$s="%2$s"', $attribute, $value);
+            }
+        }
+        return $returnString;
+    }
+    
+    /**
      * filter a string and add lowerscores in place of spaces
      * 
      * @param string $stringToFilter

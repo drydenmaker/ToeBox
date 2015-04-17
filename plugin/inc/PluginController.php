@@ -1,5 +1,7 @@
 <?php
 namespace toebox\plugin\inc;
+require_once  plugin_dir_path(__FILE__) . '/BasePlugin.php';
+require_once  plugin_dir_path(__FILE__) . '/Hook.php';
 
 class PluginController
 {
@@ -8,6 +10,8 @@ class PluginController
     protected static $Version = '1.0.1';
     
     protected static $Plugins = array();
+    
+    public static $PluginInstancess = array();
     
     public static $TemplatePath;
     
@@ -57,9 +61,22 @@ class PluginController
         {
             require_once sprintf('%1$s\%2$s.php', plugin_dir_path(__FILE__), $className);
             $fullClassName = '\\toebox\\plugin\\inc\\' . $className;
-            $instance = new $fullClassName();
-            $this->hookinPlugin($instance);
+            self::$PluginInstancess[$className] = new $fullClassName();
+            $this->hookinPlugin(self::$PluginInstancess[$className]);
         }
+    }
+    /**
+     * get an instance of a plugin
+     * @param string $name
+     * @return multitype:|boolean
+     */
+    public static function GetPluginInstance($name)
+    {
+        if (array_key_exists($name, self::$PluginInstancess))
+        {
+            return self::$PluginInstancess[$name];
+        }
+        return false;
     }
     /**
      * ensure object type when executing Register

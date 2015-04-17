@@ -25,14 +25,16 @@
 namespace toebox\plugin;
 use toebox\plugin\inc\PluginController;
 require_once  plugin_dir_path(__FILE__) . 'inc/PluginController.php';
-require_once  plugin_dir_path(__FILE__) . 'inc/BasePlugin.php';
-require_once  plugin_dir_path(__FILE__) . 'inc/Hook.php';
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-
+/**
+ * class used to specify settings for this plugin
+ * @author alton.crossley
+ *
+ */
 class Actual extends \toebox\plugin\inc\PluginController
 {
     const TOEBOX_PRIMARY_SETTINGS_TAB = 'primary';

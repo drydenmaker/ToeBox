@@ -4,6 +4,14 @@ use toebox\plugin\inc\BasePlugin;
 
 class BootstrapShortcodes extends BasePlugin
 {
+    /**
+     * plugin constructor saves this latest instance to $Instance
+     */
+    function __construct()
+    {
+        self::$Instance = $this;
+    }
+    
     public function Initialize()
     {
         // do setup here
@@ -27,6 +35,7 @@ class BootstrapShortcodes extends BasePlugin
         'tb-badge' => 'ExpandBadge',
         'tb-jumbotron' => 'ExpandJumbotron',
         'tb-thumbnail-content' => 'ExpandThumbnailContent',
+        'tb-hr-link' => 'ExpandHrLink',
     );
 
     protected $ShorCodeNamespace = '';
@@ -39,6 +48,29 @@ class BootstrapShortcodes extends BasePlugin
     function ExpandJumbotron($attirbutes, $content = '&nbsp;')
     {
         return sprintf('<div  class="jumbotron">%s</div >', $content);
+    }
+    
+    function ExpandHrLink($attirbutes, $content = '')
+    {
+        $class = 'tb-hr-link clearfix';
+        static $defaults = array(
+            'url' => '#',
+            'class' => 'bg-primary',
+        );
+        
+        // combine and filter attributes
+        $attirbutes = shortcode_atts($defaults, $attirbutes, 'tb_hr_link');
+        
+        $link = (array_key_exists('href', $attirbutes)) ? $attirbutes['href'] : $attirbutes['url'];
+                
+        $attirbutes['class'] = $class . ' ' . $attirbutes['class'];
+        
+        $filteredAttributes = array_diff_key($attirbutes, array_flip(array(
+            'url',
+            'href'
+        )));
+    
+        return sprintf('<div %2$s> <a href="%1$s"> %3$s </a> </div>', $link, $this->getNodeAttributes($filteredAttributes), $content);
     }
 
     /**
@@ -108,16 +140,12 @@ class BootstrapShortcodes extends BasePlugin
         )));
         
         $tag = "<a class='$class'";
-        foreach ($filteredAttributes as $attribute => $value) {
-            if (! empty($value)) {
-                $value = ('href' === $attribute) ? esc_url($value) : esc_attr($value);
-                $tag .= sprintf(' %1$s="%2$s"', $attribute, $value);
-            }
-        }
+        $tag .= $this->getNodeAttributes($filteredAttributes);
         $tag .= ">$content</a>";
         
         return $tag;
     }
+    
 
     /**
      * expands to a media block
@@ -241,5 +269,22 @@ class BootstrapShortcodes extends BasePlugin
                                 $content
                             </div>
                         </div>", $content);
+    }
+    
+    /**
+     * latest instance of self
+     * @var self
+     */
+    public static $Instance;
+    /**
+     * allow the rendering of a carousel programatically
+     * @param unknown $attirbutes
+     * @param string $content
+     * @return string
+     */
+    public static function RenderHrLink($attirbutes, $content = '')
+    {
+        if (self::$Instance && self::$Instance instanceof self)
+            return self::$Instance->ExpandHrLink($attirbutes, $content);
     }
 }

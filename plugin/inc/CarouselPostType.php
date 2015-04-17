@@ -6,6 +6,13 @@ class CarouselPostType extends BasePlugin
 {
     const ENABLE = 'enable_carousel';
     const POST_TYPE = 'carousel_link_post';
+    /**
+     * plugin constructor saves this latest instance to $Instance
+     */
+    function __construct()
+    {
+        self::$Instance = $this;
+    }
     
     /* (non-PHPdoc)
      * @see \toebox\plugin\inc\BasePlugin::Initialize()
@@ -55,7 +62,10 @@ class CarouselPostType extends BasePlugin
         $this->AddAction('save_post', 'SavePost');
 
     }
-    
+    /**
+     * (non-PHPdoc)
+     * @see \toebox\plugin\inc\BasePlugin::AdminEditorInit()
+     */
     public function AdminEditorInit()
     {        
         // TODO: check settings to see if this should be enabled
@@ -109,7 +119,12 @@ class CarouselPostType extends BasePlugin
             update_post_meta( $post_id, $postField, $Url );
         }
     }
-    
+    /**
+     * render form field on the edit page for the crousel content type
+     * 
+     * @param WP_Post $post
+     * @param unknown $self
+     */
     public function RenderUrlMetaBox($post, $self)
     {
         // Add an nonce field so we can check for it later.
@@ -130,6 +145,7 @@ class CarouselPostType extends BasePlugin
     }
     
     /**
+     *  renders a carousel based on the attributes
      *
      * @param array $attirbutes
      * @param string $content
@@ -183,21 +199,38 @@ class CarouselPostType extends BasePlugin
         if (!$carouselQuery->have_posts()) return '<!-- no posts carousel posts -->';
     
         $attirbutes = array_diff_key($attirbutes, array_flip(array('category', 'style')));
-        extract($attirbutes);
-        
+                
         $templatePath = get_template_directory() . "/tpl/carousel/$templateName.php";
         if (!file_exists($templatePath)) // check to see if the theme supports the plugin
         {
             $templatePath = PluginController::$PublicPath . "/tpl/carousel/$templateName.php";
         }
         
-        $queryArguments['carouselQuery'] = $carouselQuery;
-        $queryArguments['post_count'] = $carouselQuery->post_count;
+        $vars = array_merge($queryArguments, $attirbutes);
+        $vars['carouselQuery'] = $carouselQuery;
+        $vars['post_count'] = $carouselQuery->post_count;
+        $vars['carousel_count'] = $carouselCount;
         
-        $output = $this->getTemplateOutput("tpl/carousel/$templateName.php", $queryArguments);
-            
+        $output = $this->getTemplateOutput("tpl/carousel/$templateName.php", $vars);
+           
         return $output;
     
+    }
+    /**
+     * latest instance of self
+     * @var self
+     */
+    public static $Instance;
+    /**
+     * allow the rendering of a carousel programatically
+     * @param unknown $attirbutes
+     * @param string $content
+     * @return string
+     */
+    public static function Render($attirbutes, $content = '')
+    {
+        if (self::$Instance && self::$Instance instanceof self)
+            return self::$Instance->ExpandCarousel($attirbutes, $content);
     }
 
     
