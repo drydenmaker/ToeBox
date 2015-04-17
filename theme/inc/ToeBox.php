@@ -106,7 +106,9 @@ class ToeBox
     {
         if ( is_active_sidebar( $sidebarName ) )
         {
-            sprintf('<div id="%1$s" class="container" role="complementary">%2$s</div><!-- #%1$s -->', $sidebarName, dynamic_sidebar( $sidebarName ));
+            print sprintf('<div id="sidebar-%1$s" class="%1$s sidebar" role="complementary">', esc_attr($sidebarName));
+            dynamic_sidebar( $sidebarName );
+            print sprintf('</div><!-- #%1$s -->', $sidebarName);
         }
     }
     /**

@@ -8,13 +8,13 @@ add_action( 'tgmpa_register', function()
         array(
             'name'      => 'WP-Less',
             'slug'      => 'wp-less',
-            'required'  => true,
+            'required'  => false,
         ),
-        array(
-            'name'      => 'WP-ToeBox',
-            'slug'      => 'toebox_plugin',
-            'required'  => true,
-        ),
+//         array(
+//             'name'      => 'WP-ToeBox',
+//             'slug'      => 'toebox_plugin',
+//             'required'  => true,
+//         ),
         array(
             'name' => 'Amazon S3 and Cloudfront',
             'slug' => 'amazon-s3-and-cloudfront',   

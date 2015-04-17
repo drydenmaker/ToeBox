@@ -275,7 +275,7 @@ class Primary extends \Walker_Nav_Menu
         $args['container'] = 'nav';
         if (empty($args['walker'])) 
         {
-            $args['container_class'] = 'navbar navbar-inverse';
+            $args['container_class'] = 'tb-nav navbar navbar-inverse';
             $args['menu_class'] = 'nav navbar-nav';
             $args['fallback_cb'] = 'toebox\\inc\\Walker\\NavMenu\\Primary::Fallback';
             $args['walker'] = new self();

@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-	<div class="navbar-form navbar-right hidden-xs">
+	<div class="tb-nav navbar-form navbar-right hidden-xs">
 	<!-- SEARCH -->
 	</div>
 	
