@@ -49,6 +49,7 @@ toebox\inc\ToeBox::HandleDynamicSidebar('featured_header');
 		<!-- START MAINBODY ROW -->
 <?php
 global $posts;
+print $the_nav_header;
 toebox\inc\ToeBox::HandleDynamicSidebar('featured_content_top');
 toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
 

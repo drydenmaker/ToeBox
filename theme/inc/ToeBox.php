@@ -12,6 +12,7 @@ define('TOEBOX_FEATURED_IMG_CLASS', 'toebox_featured_img_class');
 define('TOEBOX_CONTENT_BACKGROUND_COLOR', 'toebox_background_collor');
 
 define('TOEBOX_USE_WIDGET_FOR_HEADER', 'toebox_header_widget');
+define('TOEBOX_USE_WIDGET_FOR_NAV_MENU', 'toebox_nav_widget');
 
 define('TOEBOX_404_MESSAGE', 'toebox_404_message');
 define('TOEBOX_ENABLE_404_SEARCH', 'toebox_404_search');
@@ -69,6 +70,7 @@ class ToeBox
         TOEBOX_ENABLE_404_SEARCH => true,
         TOEBOX_ENABLE_LIST_PAGING => false,
         TOEBOX_USE_WIDGET_FOR_HEADER => false,
+        TOEBOX_USE_WIDGET_FOR_NAV_MENU => false,
         TOEBOX_USE_LESS => false,
 
         TOEBOX_MENU_SUBTITLES => true,
@@ -91,7 +93,8 @@ class ToeBox
      */
     public static function InitSettings(array $otherSettings = array())
     {
-
+        self::$Debug = WP_DEBUG;
+        
         $themeMods = get_theme_mods();
         if (is_array($themeMods)) $themeMods[TOEBOX_SETUP] = true;
         $themeMods = (!empty($themeMods) && is_array($themeMods)) ? $themeMods : array() ;
@@ -132,6 +135,11 @@ class ToeBox
         $settings = self::$Settings;
         $hideSideBarsOnSmallScreens = $settings[TOEBOX_HIDE_SMALL_SIDEBARS];
         $ifHideOnSmallCss = ($hideSideBarsOnSmallScreens) ? 'hidden-xs hidden-sm' : '' ;
+        
+
+        $the_nav_header = (self::$Settings[TOEBOX_USE_WIDGET_FOR_NAV_MENU]) ? null : self::GetOutput(function(){
+            wp_nav_menu( array( 'theme_location' => 'header-menu' ));
+        });
 
         if (($postType) && in_array($postType, self::$CustomLayoutTemplates))
         {
@@ -196,11 +204,7 @@ class ToeBox
         $post_title = get_the_title();
         $post_date = get_the_time(get_option('date_format'));
         $the_post_thumbnail = get_the_post_thumbnail( $post->ID, 'full');
-
-//         $arr = get_defined_vars();
-//         print 'BASE<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
-
-
+        
         self::DebugFile('START', $templatePath);
         require $templatePath;
         self::DebugFile('END', $templatePath);
@@ -362,7 +366,7 @@ class ToeBox
 
     public static $Debug = false;
 
-    public static function DebugFile($location = 'START', $callingFileName = '')
+    public static function DebugFile($location = 'START', $callingFileName = '', $depth = 0)
     {
 
 
@@ -375,11 +379,12 @@ class ToeBox
                 try
                 {
                     $callingFileName = array_shift($trace)['file'];
+                    $depth = count($trace);
                 }
                 catch(Exception $e){}
             }
 
-            print sprintf('%3$s<!-- %1$s %2$s -->', self::GetThemeRealtiveFileTitle($callingFileName), $location, str_repeat(' ', count($trace)) );
+            print sprintf('%3$s<!-- %1$s %2$s -->', self::GetThemeRealtiveFileTitle($callingFileName), $location, str_repeat(' ', $depth) );
 
         }
     }
@@ -413,6 +418,23 @@ class ToeBox
 
         require get_template_directory() . '/' . self::GetThemeRelativeFileName($fileName);
 
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+    /**
+     * capture the output of a lamda function
+     * 
+     * @param callable $callback
+     * @param array $parameters
+     * @return string
+     */
+    public static function GetOutput(callable $callback, array $parameters = array())
+    {
+        ob_start();
+        
+        call_user_func_array($callback, $parameters);
+        
         $output = ob_get_contents();
         ob_end_clean();
         return $output;

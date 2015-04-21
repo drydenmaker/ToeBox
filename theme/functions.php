@@ -20,6 +20,11 @@ toebox\inc\Toebox::InitSettings();
 add_action( 'init', function()
 {
 	add_post_type_support('page', array('excerpt', 'revisions', 'comments', 'custom-fields', 'page-attributes'));
+	
+	register_nav_menus(
+    	array(
+    	   'header-menu' => __( 'Header Menu', 'toebox-basic' )
+    	));
 
 	/**
 	 * setup menu walkers
@@ -77,7 +82,9 @@ add_action( 'wp_enqueue_scripts', function()
  */
 add_filter( 'embed_oembed_html', function ( $html, $data, $url )
 {
-    return '<div class="embed-responsive embed-responsive-16by9">' . $html . '</div>';
+    return (stripos($html, 'youtube.com') === false) ? $html :
+                '<div class="embed-responsive embed-responsive-16by9">' . $html . '</div>';
+    
 }, 10, 3 );
 
 /**
@@ -177,3 +184,5 @@ if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_U
     $less->addVariable('brand-warning', '#ECA125'); //ECA125
     $less->addVariable('brand-danger', '#EF5870'); //EF5870
 }
+
+

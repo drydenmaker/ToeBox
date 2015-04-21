@@ -6941,7 +6941,7 @@ article {
 }
 article header h3 {
   padding: 8px 8px 4px 16px;
-  margin-top: -4px;
+  margin-top: 1px;
 }
 article header h3,
 article header h3 a {
@@ -7160,6 +7160,18 @@ article .entry-content {
 .img-lg {
   max-width: none;
   height: auto;
+}
+.sidebar .tb_widget {
+  display: inline;
+}
+.sidebar .tb_widget > ul {
+  float: left;
+  width: 16vw;
+  padding: .4vw;
+  margin: .4vw;
+}
+.sidebar .tb_widget li {
+  list-style: none;
 }
 /* Small devices (tablets, 768px and up) */
 @media (max-width: 992px) {

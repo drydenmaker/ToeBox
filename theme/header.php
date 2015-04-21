@@ -1,5 +1,6 @@
 <?php
 // set some defaults so templates work native
+global $the_nav_header;
 $toeboxSlug = empty($toeboxSlug) ? 'content' : $toeboxSlug;
 $toebox_link_pages_args = empty($toebox_link_pages_args) ? array() : $toebox_link_pages_args;
 ?><!doctype html>
@@ -53,6 +54,7 @@ if (!toebox\inc\ToeBox::$Settings[TOEBOX_USE_WIDGET_FOR_HEADER]) include get_tem
 <!-- TOEBOX HEADER -->
 <?php
 toebox\inc\ToeBox::HandleDynamicSidebar('toebox-header');
+print $the_nav_header;
 ?>
 <!-- END TOEBOX HEADER -->
 

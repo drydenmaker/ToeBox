@@ -42,6 +42,11 @@ $SettingsControls = array(
                             'section' => 'title_tagline',
                             'type' => 'checkbox'
     ),
+    TOEBOX_USE_WIDGET_FOR_NAV_MENU =>  array(
+                            'label' => __( 'Use Nav Menu Widget (instead of default menu)', 'toebox-basic' ),
+                            'section' => 'title_tagline',
+                            'type' => 'checkbox'
+    ),
     TOEBOX_LIST_LAYOUT => array(
                             'label' => __( 'Post List Layout', 'toebox-basic' ),
                             'section' => 'toebox_content_layout_section',
@@ -243,7 +248,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         );
 
         /**
-         * TOEBOX_PAGE_LAYOUT
+         * TOEBOX_USE_WIDGET_FOR_HEADER
          */
         $wp_customize->add_setting(
             TOEBOX_USE_WIDGET_FOR_HEADER,
@@ -256,6 +261,22 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_control(
             TOEBOX_USE_WIDGET_FOR_HEADER,
             $SettingsControls[TOEBOX_USE_WIDGET_FOR_HEADER]
+        );
+        
+        /**
+         * TOEBOX_USE_WIDGET_FOR_NAV_MENU
+         */
+        $wp_customize->add_setting(
+                        TOEBOX_USE_WIDGET_FOR_NAV_MENU,
+                        array(
+                            'default' => toebox\inc\ToeBox::$Settings[TOEBOX_USE_WIDGET_FOR_NAV_MENU],
+                            'sanitize_callback' => 'sanitize_text_field'
+                        )
+        );
+        
+        $wp_customize->add_control(
+                        TOEBOX_USE_WIDGET_FOR_NAV_MENU,
+                        $SettingsControls[TOEBOX_USE_WIDGET_FOR_NAV_MENU]
         );
         
         /**
