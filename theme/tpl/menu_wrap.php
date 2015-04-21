@@ -15,14 +15,8 @@
 	
 	<div class="collapse navbar-collapse" id="tb-navbar-collapse">
 		<ul class="nav navbar-nav">
+            <li class="visible-xs-block"><!-- SEARCH --></li>
 			%3$s
-		</ul>
-		
-		<ul>
-			<div class="navbar-form navbar hidden-xs visible-xs-block">
-			<!-- SEARCH -->
-			</div>
-		
 		</ul>
 		
 	</div>
