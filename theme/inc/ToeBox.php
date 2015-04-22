@@ -405,8 +405,8 @@ class ToeBox
     public static function GetThemeRelativeFileName($fileName)
     {
         return str_replace(
-                            str_replace('/', '\\', get_template_directory()), null,
-                            str_replace('/', '\\', $fileName));
+                            str_replace('\\', '/', get_template_directory()), null,
+                            str_replace('\\', '/', $fileName));
     }
     /**
      * includes a theme php file

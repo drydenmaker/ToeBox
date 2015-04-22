@@ -7010,12 +7010,16 @@ article .entry-content {
 #comments ol {
   list-style: none;
 }
+.navbar-menu {
+  padding-right: 0;
+}
+.navbar-form {
+  float: right;
+  padding-left: 0;
+}
 .navbar-form .search-form-container {
-  position: absolute;
   right: 0;
-  z-index: 10;
   margin-top: 8px;
-  margin-right: 16px;
 }
 .navbar-form .search-form input {
   float: right;
@@ -7086,9 +7090,6 @@ article .entry-content {
 }
 .navbar-inverse .navbar-nav > li > .dropdown-menu > li > a {
   color: #fff;
-}
-.sidebar .tb-nav ul.nav {
-  margin-right: 150px;
 }
 #sidebar-toebox-header > nav {
   margin-bottom: 1px !important;
