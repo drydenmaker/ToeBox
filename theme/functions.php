@@ -30,6 +30,7 @@ add_action( 'init', function()
 	 * setup menu walkers
 	 */
 	require_once get_template_directory().'/inc/Walker/NavMenu/Primary.php';
+	require_once get_template_directory().'/inc/Walker/NavMenu/Hover.php';
 	require_once get_template_directory().'/inc/Walker/NavMenu/Bare.php';
 	require_once get_template_directory().'/inc/Walker/NavMenu/Flat.php';
 	add_filter( 'wp_nav_menu_args', 'toebox\\inc\\Walker\\NavMenu\\Primary::MenuArguments');
@@ -74,6 +75,7 @@ add_action( 'wp_enqueue_scripts', function()
     wp_enqueue_script('jquery');
     wp_enqueue_script('bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), false, true);
     wp_enqueue_script('modernizr', $templateDir . '/js/vendor/modernizr.min.js');
+    wp_enqueue_script('modernizr', $templateDir . '/js/toebox.js');
 
 });// toeboxBasicEnqueueScripts
 

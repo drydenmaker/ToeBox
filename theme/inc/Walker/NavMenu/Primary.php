@@ -5,6 +5,11 @@ class Primary extends \Walker_Nav_Menu
 {
     /** -------------------------------------------------------  TO EXTEND */
     /**
+     * switch weather or not to allow hover
+     * @var bool
+     */
+    public $openOnHover = false;
+    /**
      * supply the markup that wraps the menu
      * must contain %3$s for the menu itself
      *
@@ -29,7 +34,7 @@ class Primary extends \Walker_Nav_Menu
      */
     public function HandleElCssClasses($classes, $item, $args = array(), $depth = 0)
     {
-        if (@$args->has_children) array_unshift($classes, 'dropdown');
+        if (@$args->has_children) array_unshift($classes, $this->openOnHover ? 'dropdown-hover' : 'dropdown');
         return $classes;
     }
     /**
@@ -209,10 +214,12 @@ class Primary extends \Walker_Nav_Menu
 
         if (@$args->has_children)
         {
-
-            $atts['class'] = 'dropdown-toggle';
-            $atts['data-toggle'] = 'dropdown';
-            $atts['aria-expanded'] = 'false';
+            if (!$this->openOnHover)
+            {
+                $atts['class'] = 'dropdown-toggle';
+                $atts['data-toggle'] = 'dropdown';
+                $atts['aria-expanded'] = 'false';
+            }
 
         }
 

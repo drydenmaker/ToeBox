@@ -138,7 +138,12 @@ class ToeBox
         
 
         $the_nav_header = (self::$Settings[TOEBOX_USE_WIDGET_FOR_NAV_MENU]) ? null : self::GetOutput(function(){
-            wp_nav_menu( array( 'theme_location' => 'header-menu' ));
+            echo '<div class="tb-hover-nav">';
+            wp_nav_menu( array( 
+                'theme_location' => 'header-menu', 
+                'wrap' => 'menu_wrap',
+                'walker' => new \toebox\inc\Walker\NavMenu\Hover() ));
+            echo '<div>';
         });
 
         if (($postType) && in_array($postType, self::$CustomLayoutTemplates))
