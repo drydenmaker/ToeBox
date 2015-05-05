@@ -391,11 +391,11 @@
           box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 }
 .panel-default > .panel-heading {
-  background-image: -webkit-linear-gradient(top, #090909 0%, #000 100%);
-  background-image:      -o-linear-gradient(top, #090909 0%, #000 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#090909), to(#000));
-  background-image:         linear-gradient(to bottom, #090909 0%, #000 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff090909', endColorstr='#ff000000', GradientType=0);
+  background-image: -webkit-linear-gradient(top, #4d4d4d 0%, #404040 100%);
+  background-image:      -o-linear-gradient(top, #4d4d4d 0%, #404040 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#4d4d4d), to(#404040));
+  background-image:         linear-gradient(to bottom, #4d4d4d 0%, #404040 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4d4d4d', endColorstr='#ff404040', GradientType=0);
   background-repeat: repeat-x;
 }
 .panel-primary > .panel-heading {

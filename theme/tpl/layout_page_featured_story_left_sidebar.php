@@ -41,6 +41,7 @@ wp_enqueue_script('toebox-script', get_theme_root_uri() . '/js/featured_story.js
 <!-- TOEBOX HEADER -->
 <?php
 toebox\inc\ToeBox::HandleDynamicSidebar('featured_header');
+print $the_nav_header;
 ?>
 <!-- END TOEBOX HEADER -->
 
@@ -50,7 +51,6 @@ toebox\inc\ToeBox::HandleDynamicSidebar('featured_header');
 	<div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <?php 
-            print $the_nav_header;
             toebox\inc\ToeBox::HandleDynamicSidebar('featured_left_sidebar'); 
             ?>
         </div>

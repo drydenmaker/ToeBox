@@ -25,6 +25,7 @@ __('Search', 'toebox-basic')) // %3$s button caption
     return $form;
 });
 
+// Add search to a navigation wrapper markup if it is requested
 add_filter('nav_menu_walker_arguments', function ($arguments) {
 
     $searchForm = sprintf('<!-- SEARCH -->%s<!-- SEARCH -->', get_search_form(false));

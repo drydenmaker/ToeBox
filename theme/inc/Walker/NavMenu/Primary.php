@@ -92,21 +92,32 @@ class Primary extends \Walker_Nav_Menu
      */
     public function FormatElement($element, $args, $attributes = array())
     {
-    
         $subTitle = $this->GetSubTitle($attributes);
     
         // convert attributes to a string
         $attributes = $this->GetAttributeString($attributes);
     
-    
-        $item_output = $args->before;
+        $item_output = $this->getArgument($args, 'before');
         $item_output .= '<a' . $attributes . '>';
     
-        $item_output .= $args->link_before . apply_filters('the_title', $element->title, $element->ID) . $args->link_after;
+        $item_output .= $this->getArgument($args, 'link_before') . apply_filters('the_title', $element->title, $element->ID) . $this->getArgument($args, 'link_after');
         $item_output .= $subTitle . '</a>';
-        $item_output .= $args->after;
+        $item_output .= $this->getArgument($args, 'after');
     
         return $item_output;
+    }
+    
+    public function getArgument($args, $argname)
+    {
+        if (is_array($args) && array_key_exists($argname, $args))
+        {
+            return $args[$argname];
+        }
+        else if (is_object($args))
+        {
+            return $args->$argname;
+        }
+        return null;
     }
     /**
      * format a subtitle when settings mandate
@@ -231,6 +242,46 @@ class Primary extends \Walker_Nav_Menu
 
     }
     /**
+     * Menu Fallback
+     * =============
+     * If this function is assigned to the wp_nav_menu's fallback_cb variable
+     * and a manu has not been assigned to the theme location in the WordPress
+     * menu manager the function with display nothing to a non-logged in user,
+     * and will add a link to the WordPress menu manager if logged in as an admin.
+     *
+     * @param array $args passed from the wp_nav_menu function.
+     *
+     */
+    public static function Fallback( $args )
+    {
+        if ( current_user_can( 'manage_options' ) )
+    	{
+            
+            $item = new \stdClass();
+            $item->title = __( 'Add a menu', 'toebox-basic' );
+            $item->ID = 0;
+            $item->url = admin_url( 'nav-menus.php' );
+            $item->menu_item_parent = 0;
+            
+            $elements = array($item);
+            $walker = new self();
+            
+            $id_field = $walker->db_fields['id'];
+            $item->$id_field = 'ID';
+
+            
+            $walkerArgs = array( $elements, 1, $args );
+            $menu = call_user_func_array( array($walker, 'walk'), $walkerArgs );
+            
+            print sprintf($walker->GetItemWrap($args), null, null, $menu);
+                
+        }
+        else
+        {
+            echo '<!-- no menu -->';
+        }
+    }
+    /**
      * Ends the element output, if needed.
      *
      * @see Walker::end_el()
@@ -293,42 +344,7 @@ class Primary extends \Walker_Nav_Menu
         return apply_filters('nav_menu_walker_arguments', $args);
     }
 
-    /**
-     * Menu Fallback
-     * =============
-     * If this function is assigned to the wp_nav_menu's fallback_cb variable
-     * and a manu has not been assigned to the theme location in the WordPress
-     * menu manager the function with display nothing to a non-logged in user,
-     * and will add a link to the WordPress menu manager if logged in as an admin.
-     *
-     * @param array $args passed from the wp_nav_menu function.
-     *
-     */
-    public static function Fallback( $args ) {
-        if ( current_user_can( 'manage_options' ) ) {
-            extract( $args );
-            $fb_output = null;
-            if ( $container ) {
-                $fb_output = '<' . $container;
-                if ( $container_id )
-                    $fb_output .= ' id="' . $container_id . '"';
-                if ( $container_class )
-                    $fb_output .= ' class="' . $container_class . '"';
-                $fb_output .= '>';
-            }
-            $fb_output .= '<ul';
-            if ( $menu_id )
-                $fb_output .= ' id="' . $menu_id . '"';
-            if ( $menu_class )
-                $fb_output .= ' class="' . $menu_class . '"';
-            $fb_output .= '>';
-            $fb_output .= '<li><a href="' . admin_url( 'nav-menus.php' ) . '">Add a menu</a></li>';
-            $fb_output .= '</ul>';
-            if ( $container )
-                $fb_output .= '</' . $container . '>';
-            echo $fb_output;
-        }
-    }
+    
     /**
      * extract class string from element
      * 

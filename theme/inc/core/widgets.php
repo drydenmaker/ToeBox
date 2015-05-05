@@ -13,6 +13,7 @@ add_action( 'widgets_init', function()
     require_once get_template_directory().'/inc/widget/HeaderLogoWidget.php';
     require_once get_template_directory().'/inc/widget/HeaderWidget.php';
     require_once get_template_directory().'/inc/widget/SearchRowWidget.php';
+    require_once get_template_directory().'/inc/widget/AccordionMenu.php';
 
     register_widget( 'toebox\inc\widget\BareMenu' );
     register_widget( 'toebox\inc\widget\FlatMenu' );
@@ -20,6 +21,7 @@ add_action( 'widgets_init', function()
     register_widget( 'toebox\inc\widget\HeaderLogoCornersWidget' );
     register_widget( 'toebox\inc\widget\HeaderWidget' );
     register_widget( 'toebox\inc\widget\SearchRowWidget' );
+    register_widget( 'toebox\inc\widget\AccordionMenu' );
 
     // --------------  WIDGET AREAS -------------------------------------------
 

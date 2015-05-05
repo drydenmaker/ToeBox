@@ -136,16 +136,6 @@ class ToeBox
         $hideSideBarsOnSmallScreens = $settings[TOEBOX_HIDE_SMALL_SIDEBARS];
         $ifHideOnSmallCss = ($hideSideBarsOnSmallScreens) ? 'hidden-xs hidden-sm' : '' ;
         
-
-        $the_nav_header = (self::$Settings[TOEBOX_USE_WIDGET_FOR_NAV_MENU]) ? null : self::GetOutput(function(){
-            echo '<div class="tb-hover-nav">';
-            wp_nav_menu( array( 
-                'theme_location' => 'header-menu', 
-                'wrap' => 'menu_wrap',
-                'walker' => new \toebox\inc\Walker\NavMenu\Hover() ));
-            echo '<div>';
-        });
-
         if (($postType) && in_array($postType, self::$CustomLayoutTemplates))
         {
             $templatePath = get_template_directory().self::$LaoutPrefix . $settings[TOEBOX_FEATURED_STORY_LAYOUT] . '.php';
@@ -257,7 +247,7 @@ class ToeBox
             {
                 the_post();
                 global $post;
-
+                
                 get_template_part($slug, $post->post_mime_type);
             } // end while
         } // end if

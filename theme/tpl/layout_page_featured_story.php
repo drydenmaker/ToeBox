@@ -39,6 +39,7 @@ wp_enqueue_script('toebox-script', get_theme_root_uri() . '/js/featured_story.js
 <!-- TOEBOX HEADER -->
 <?php
 toebox\inc\ToeBox::HandleDynamicSidebar('featured_header');
+print $the_nav_header;
 ?>
 <!-- END TOEBOX HEADER -->
 
@@ -49,7 +50,6 @@ toebox\inc\ToeBox::HandleDynamicSidebar('featured_header');
 		<!-- START MAINBODY ROW -->
 <?php
 global $posts;
-print $the_nav_header;
 toebox\inc\ToeBox::HandleDynamicSidebar('featured_content_top');
 toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
 

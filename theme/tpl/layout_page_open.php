@@ -11,7 +11,6 @@ get_header();
     <div class="tb-main">
 <?php
 global $posts;
-print $the_nav_header;
 toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_top');
 toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
 
