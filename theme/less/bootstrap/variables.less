@@ -1,6 +1,8 @@
 //
 // Variables
 // --------------------------------------------------
+
+
 //== Colors
 @import "addons/colors.less";
 @import "addons/scaffolding_dark.less";
@@ -180,12 +182,12 @@
 
 @legend-color:                   @gray-light;
 @legend-border-color:            lighten(@legend-color, 7%);
-
 //** `.form-group` margin
 @form-group-margin-bottom:       15px;
 
 @legend-color:                   @gray-dark;
 @legend-border-color:            #e5e5e5;
+
 //** Background color for textual input addons
 @input-group-addon-bg:           @gray-lighter;
 //** Border color for textual input addons
@@ -332,66 +334,70 @@
 @navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
 @navbar-collapse-max-height:       340px;
 
-@navbar-default-color:             @gray-darker;
-@navbar-default-bg:                @gray-lighter;
-@navbar-default-color:             contrast(@navbar-default-bg);
-@navbar-default-border:            darken(@navbar-default-bg, 6.5%);
-@navbar-default-hover-bg:          darken(@navbar-default-bg, 10%);
+
+
+
+@navbar-default-bg:                         @gray-darker;
+@navbar-default-color:                      @brand-primary;
+@navbar-default-border:                     darken(@navbar-default-bg, 10%);
+@navbar-default-hover-bg:                   transparent;
 
 // Navbar links
-@navbar-default-link-color:                @gray-light;
-@navbar-default-link-hover-color:          @navbar-default-link-color;
-@navbar-default-link-hover-bg:             transparent;
-@navbar-default-link-active-color:         @brand-primary;
-@navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
-@navbar-default-link-disabled-color:       #ccc;
-@navbar-default-link-disabled-bg:          transparent;
+@navbar-default-link-color:                 @navbar-default-color;
+@navbar-default-link-hover-color:           @brand-lighter;
+@navbar-default-link-hover-bg:              transparent;
+@navbar-default-link-active-color:          @navbar-default-link-hover-color;
+@navbar-default-link-active-bg:             transparent;
+@navbar-default-link-disabled-color:        #444;
+@navbar-default-link-disabled-bg:           transparent;
+
+@navbar-default-link-active-color:          @gray-lighter;
+
+@navbar-default-link-disabled-color:        @gray;
+@navbar-default-link-disabled-bg:           @gray-light;
+
+@navbar-default-sublink-color:				@gray-light;
+@navbar-default-sublink-bg:					transparent;
 
 // Navbar brand label
-@navbar-default-brand-color:               @brand-primary;
-@navbar-default-brand-hover-color:         darken(@navbar-default-brand-color, 10%);
-@navbar-default-brand-hover-bg:            transparent;
+@navbar-default-brand-color:                @brand-primary;
+@navbar-default-brand-hover-color:          @gray-darker;
+@navbar-default-brand-hover-bg:             @brand-primary;
 
 // Navbar toggle
-@navbar-default-toggle-hover-bg:           #ddd;
-@navbar-default-toggle-icon-bar-bg:        #888;
-@navbar-default-toggle-border-color:       #ddd;
-
+@navbar-default-toggle-hover-bg:            #333;
+@navbar-default-toggle-icon-bar-bg:         #fff;
+@navbar-default-toggle-border-color:        #333;
 
 // Inverted navbar
 // Reset inverted navbar basics
-@navbar-inverse-bg:                         @gray-darker;
-@navbar-inverse-color:                      @brand-primary;
-@navbar-inverse-border:                     darken(@navbar-inverse-bg, 10%);
-@navbar-inverse-hover-bg:                   transparent;
+@navbar-inverse-color:             @gray-darker;
+@navbar-inverse-bg:                @gray-lighter;
+@navbar-inverse-color:             contrast(@navbar-inverse-bg);
+@navbar-inverse-border:            darken(@navbar-inverse-bg, 6.5%);
+@navbar-inverse-hover-bg:          darken(@navbar-inverse-bg, 10%);
 
 // Inverted navbar links
-@navbar-inverse-link-color:                 @navbar-inverse-color;
-@navbar-inverse-link-hover-color:           @brand-lighter;
-@navbar-inverse-link-hover-bg:              transparent;
-@navbar-inverse-link-active-color:          @navbar-inverse-link-hover-color;
-@navbar-inverse-link-active-bg:             darken(@navbar-inverse-bg, 10%);
-@navbar-inverse-link-disabled-color:        #444;
-@navbar-inverse-link-disabled-bg:           transparent;
+@navbar-inverse-link-color:                @gray-light;
+@navbar-inverse-link-hover-color:          @navbar-inverse-link-color;
+@navbar-inverse-link-hover-bg:             transparent;
+@navbar-inverse-link-active-color:         @brand-primary;
+@navbar-inverse-link-active-bg:            darken(@navbar-inverse-bg, 6.5%);
+@navbar-inverse-link-disabled-color:       #ccc;
+@navbar-inverse-link-disabled-bg:          transparent;
 
-@navbar-inverse-link-active-bg:             transparent;
-@navbar-inverse-link-active-color:          @gray-lighter;
-
-@navbar-inverse-link-disabled-color:        @gray;
-@navbar-inverse-link-disabled-bg:           @gray-light;
-
-@navbar-inverse-sublink-color:				@gray-light;
+@navbar-inverse-sublink-color:				@gray-dark;
 @navbar-inverse-sublink-bg:					transparent;
 
 // Inverted navbar brand label
-@navbar-inverse-brand-color:                @brand-primary;
-@navbar-inverse-brand-hover-color:          @gray-darker;
-@navbar-inverse-brand-hover-bg:             @brand-primary;
+@navbar-inverse-brand-color:               @brand-primary;
+@navbar-inverse-brand-hover-color:         darken(@navbar-inverse-brand-color, 10%);
+@navbar-inverse-brand-hover-bg:            transparent;
 
 // Inverted navbar toggle
-@navbar-inverse-toggle-hover-bg:            #333;
-@navbar-inverse-toggle-icon-bar-bg:         #fff;
-@navbar-inverse-toggle-border-color:        #333;
+@navbar-inverse-toggle-hover-bg:           #ddd;
+@navbar-inverse-toggle-icon-bar-bg:        #888;
+@navbar-inverse-toggle-border-color:       #ddd;
 
 
 //== Navs
@@ -400,7 +406,7 @@
 
 //=== Shared nav styles
 @nav-link-padding:                          10px 15px;
-@nav-link-hover-bg:                         @gray-dark;
+@nav-link-hover-bg:                         @brand-primary;
 
 @nav-disabled-link-color:                   @gray-light;
 @nav-disabled-link-hover-color:             @gray-light;
