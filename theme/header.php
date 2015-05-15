@@ -59,9 +59,9 @@ print '<!-- NAV HEADER -->';
 if (!array_key_exists(TOEBOX_USE_WIDGET_FOR_NAV_MENU, toebox\inc\ToeBox::$Settings) ||
                 !toebox\inc\ToeBox::$Settings[TOEBOX_USE_WIDGET_FOR_NAV_MENU])
 {
-    echo '<div class="tb-hover-nav">';
+    echo '<div class="tb-default-nav">';
     
-    toebox\inc\Walker\NavMenu\Hover::HandleMenu(array(
+    toebox\inc\Walker\NavMenu\Primary::HandleMenu(array(
             'theme_location' => 'header-menu',
             'wrap' => 'menu_wrap'));
 

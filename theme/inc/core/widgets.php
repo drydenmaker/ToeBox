@@ -14,6 +14,7 @@ add_action( 'widgets_init', function()
     require_once get_template_directory().'/inc/widget/HeaderWidget.php';
     require_once get_template_directory().'/inc/widget/SearchRowWidget.php';
     require_once get_template_directory().'/inc/widget/AccordionMenu.php';
+    require_once get_template_directory().'/inc/widget/TouchMenu.php';
 
     register_widget( 'toebox\inc\widget\BareMenu' );
     register_widget( 'toebox\inc\widget\FlatMenu' );
@@ -22,6 +23,7 @@ add_action( 'widgets_init', function()
     register_widget( 'toebox\inc\widget\HeaderWidget' );
     register_widget( 'toebox\inc\widget\SearchRowWidget' );
     register_widget( 'toebox\inc\widget\AccordionMenu' );
+    register_widget( 'toebox\inc\widget\TouchMenu' );
 
     // --------------  WIDGET AREAS -------------------------------------------
 
@@ -30,7 +32,7 @@ add_action( 'widgets_init', function()
     'name'          => __('Right Sidebar', 'toebox-basic'),
     'description'   => __('Appears on all pages that have a right sidebar.', 'toebox-basic'),
     'id'            => 'toebox_right_sidebar',
-    'before_widget' => '<div class="tb_widget">',
+    'before_widget' => '<div id="%1$s" class="tb_widget %2$s clearfix">',
     'after_widget'  => '</div>',
     'before_title'  => '<h4>',
     'after_title'   => '</h4>',
@@ -40,7 +42,7 @@ add_action( 'widgets_init', function()
     'name'          => __('Left Sidebar', 'toebox-basic'),
     'description'   => __('Appears on all pages that have a left sidebar.', 'toebox-basic'),
     'id'            => 'toebox_left_sidebar',
-    'before_widget' => '<div class="tb_widget">',
+    'before_widget' => '<div id="%1$s" class="tb_widget %2$s clearfix">',
     'after_widget'  => '</div>',
     'before_title'  => '<h4>',
     'after_title'   => '</h4>',
@@ -50,7 +52,7 @@ add_action( 'widgets_init', function()
     'name'          => __('Global Header', 'toebox-basic'),
     'description'   => __('Appears on all pages before all content.', 'toebox-basic'),
     'id'            => 'toebox-header',
-    'before_widget' => '<div class="tb_widget">',
+    'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
     'after_widget'  => '</div>',
     'before_title'  => '<!--',
     'after_title'   => '-->',
@@ -60,7 +62,7 @@ add_action( 'widgets_init', function()
     'name'          => __('Global Footer', 'toebox-basic'),
     'description'   => __('Appears on all pages after all content.', 'toebox-basic'),
     'id'            => 'toebox-footer',
-    'before_widget' => '<div class="tb_widget">',
+    'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
     'after_widget'  => '</div>',
     'before_title'  => '<!--',
     'after_title'   => '-->',
@@ -70,7 +72,7 @@ add_action( 'widgets_init', function()
     'name'          => __('Content Top', 'toebox-basic'),
     'description'   => __('Appears on all pages before content between sidebars.', 'toebox-basic'),
     'id'            => 'toebox_content_top',
-    'before_widget' => '<div class="tb_widget">',
+    'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
     'after_widget'  => '</div>',
     'before_title'  => '<h4>',
     'after_title'   => '</h4>',
@@ -80,7 +82,7 @@ add_action( 'widgets_init', function()
     'name'          => __('Content Bottom', 'toebox-basic'),
     'description'   => __('Appears on all pages after content between sidebars.', 'toebox-basic'),
     'id'            => 'toebox_content_bottom',
-    'before_widget' => '<div class="tb_widget">',
+    'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
     'after_widget'  => '</div>',
     'before_title'  => '<h4>',
     'after_title'   => '</h4>',

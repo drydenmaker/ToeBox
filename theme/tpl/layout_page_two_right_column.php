@@ -3,6 +3,7 @@
 Template Name: Three Column - Content Left
 Description: A page template with two columns to the right of the content.
 */
+global $toeboxSlug, $toebox_link_pages_args;
 get_header();
 ?>
 <!-- START two right CONTENT -->

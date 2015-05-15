@@ -17,8 +17,36 @@ $SettingsControls = array(
     TOEBOX_USE_LESS =>  array(
                             'label' => __( 'Use Less CSS (requires WP-Less)', 'toebox-basic' ),
                             'section' => 'colors',
-                            'type' => 'checkbox'
+                            'type' => 'checkbox',
+                            'settings' => TOEBOX_USE_LESS
     ),
+    
+    TOEBOX_LESS_COLOR_PRIMARY => array(
+        'label' => __( 'Bootstrap primary color.', 'toebox-basic' ),
+        'section' => 'colors',
+        'settings' => TOEBOX_LESS_COLOR_PRIMARY,
+    ),
+    TOEBOX_LESS_COLOR_SUCCESS => array(
+        'label' => __( 'Bootstrap success color.', 'toebox-basic' ),
+        'section' => 'colors',
+        'settings' => TOEBOX_LESS_COLOR_SUCCESS,
+    ),
+    TOEBOX_LESS_COLOR_INFO => array(
+        'label' => __( 'Bootstrap info color.', 'toebox-basic' ),
+        'section' => 'colors',
+        'settings' => TOEBOX_LESS_COLOR_INFO,
+    ),
+    TOEBOX_LESS_COLOR_WARNING => array(
+        'label' => __( 'Bootstrap warning color.', 'toebox-basic' ),
+        'section' => 'colors',
+        'settings' => TOEBOX_LESS_COLOR_WARNING,
+    ),
+    TOEBOX_LESS_COLOR_DANGER => array(
+        'label' => __( 'Bootstrap danger color.', 'toebox-basic' ),
+        'section' => 'colors',
+        'settings' => TOEBOX_LESS_COLOR_DANGER,
+    ),
+    
     /* ----- LAYOUT ----- */
     TOEBOX_PAGE_LAYOUT => array(
                             'label' => __( 'Page Layout', 'toebox-basic' ),
@@ -38,14 +66,22 @@ $SettingsControls = array(
                             'type' => 'checkbox'
     ),
     TOEBOX_USE_WIDGET_FOR_HEADER =>  array(
-                            'label' => __( 'Use Header Widget (instead of default header)', 'toebox-basic' ),
+                            'label' => __( 'Site Title', 'toebox-basic' ),
                             'section' => 'title_tagline',
-                            'type' => 'checkbox'
+                            'type' => 'radio',
+                            'choices' => array(
+                                0 => 'On',
+                                1 => 'Off (you can use a widget)'
+                            )
     ),
     TOEBOX_USE_WIDGET_FOR_NAV_MENU =>  array(
-                            'label' => __( 'Use Nav Menu Widget (instead of default menu)', 'toebox-basic' ),
+                            'label' => __( 'Site Menu', 'toebox-basic' ),
                             'section' => 'title_tagline',
-                            'type' => 'checkbox'
+                            'type' => 'radio',
+                            'choices' => array(
+                                0 => 'On',
+                                1 => 'Off (you use a widget)'
+                            )
     ),
     TOEBOX_LIST_LAYOUT => array(
                             'label' => __( 'Post List Layout', 'toebox-basic' ),
@@ -208,6 +244,17 @@ add_action( 'admin_enqueue_scripts', function ( $hook )
 
 });
 
+add_action( 'customize_preview_init', function()
+{
+	wp_enqueue_script( 
+		  'toebox-themecustomizer',			//Give the script an ID
+		  get_template_directory_uri().'/js/theme-customizer.js',//Point to file
+		  array( 'jquery','customize-preview' ),	//Define dependencies
+		  null,						//Define a version (optional) 
+		  true						//Put script in footer?
+	);
+} );
+
 add_action( 'admin_menu', function (  ) {
     // This is unnecessary
     // add_theme_page( 'ToeBox Settings', 'ToeBox Settings', 'manage_options', 'toebox', 'toebox_options_page' );
@@ -253,7 +300,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_setting(
             TOEBOX_USE_WIDGET_FOR_HEADER,
             array(
-                'default' => toebox\inc\ToeBox::$Settings[TOEBOX_USE_WIDGET_FOR_HEADER],
+                'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_USE_WIDGET_FOR_HEADER],
                 'sanitize_callback' => 'sanitize_text_field'
             )
         );
@@ -269,7 +316,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_setting(
                         TOEBOX_USE_WIDGET_FOR_NAV_MENU,
                         array(
-                            'default' => toebox\inc\ToeBox::$Settings[TOEBOX_USE_WIDGET_FOR_NAV_MENU],
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_USE_WIDGET_FOR_NAV_MENU],
                             'sanitize_callback' => 'sanitize_text_field'
                         )
         );
@@ -285,7 +332,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_setting(
                 TOEBOX_SETUP,
                 array(
-                    'default' => toebox\inc\ToeBox::$Settings[TOEBOX_SETUP],
+                    'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_SETUP],
                     'sanitize_callback' => 'sanitize_text_field'
                 )
         );
@@ -301,7 +348,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_setting(
                         TOEBOX_PAGE_LAYOUT,
                         array(
-                            'default' => toebox\inc\ToeBox::$Settings[TOEBOX_PAGE_LAYOUT],
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_PAGE_LAYOUT],
                             'sanitize_callback' => 'sanitize_text_field'
                         )
         );
@@ -317,7 +364,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_setting(
                         TOEBOX_FEATURED_STORY_LAYOUT,
                         array(
-                            'default' => toebox\inc\ToeBox::$Settings[TOEBOX_FEATURED_STORY_LAYOUT],
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_FEATURED_STORY_LAYOUT],
                             'sanitize_callback' => 'sanitize_text_field'
                         )
         );
@@ -332,7 +379,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_setting(
                         TOEBOX_CONTENT_BACKGROUND_COLOR,
                         array(
-                            'default' => toebox\inc\ToeBox::$Settings[TOEBOX_CONTENT_BACKGROUND_COLOR],
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_CONTENT_BACKGROUND_COLOR],
                             'sanitize_callback' => 'sanitize_hex_color'
                         )
         );
@@ -350,14 +397,104 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_setting(
                         TOEBOX_USE_LESS,
                         array(
-                            'default' => toebox\inc\ToeBox::$Settings[TOEBOX_USE_LESS],
-                            'sanitize_callback' => 'sanitize_text_field'
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_USE_LESS],
+                            'sanitize_callback' => 'sanitize_text_field',
+                            'transport' => 'postMessage'
                         )
         );
         
         $wp_customize->add_control(
                         TOEBOX_USE_LESS,
                         $SettingsControls[TOEBOX_USE_LESS]
+        );
+        /* -------------------------- LESS --------------------------- */
+        /**
+         * TOEBOX_LESS
+         */
+        // primary
+        $wp_customize->add_setting(
+                        TOEBOX_LESS_COLOR_PRIMARY,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_LESS_COLOR_PRIMARY],
+                            'sanitize_callback' => 'sanitize_hex_color',
+                            'transport'    => 'postMessage'
+                        )
+        );
+        
+        $wp_customize->add_control(
+                        new WP_Customize_Color_Control(
+                                        $wp_customize,
+                                        TOEBOX_LESS_COLOR_PRIMARY,
+                                        $SettingsControls[TOEBOX_LESS_COLOR_PRIMARY]
+                        )
+        );
+        // success
+        $wp_customize->add_setting(
+                        TOEBOX_LESS_COLOR_SUCCESS,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_LESS_COLOR_SUCCESS],
+                            'sanitize_callback' => 'sanitize_hex_color',
+                            'transport'    => 'postMessage'
+                        )
+        );
+        
+        $wp_customize->add_control(
+                        new WP_Customize_Color_Control(
+                                        $wp_customize,
+                                        TOEBOX_LESS_COLOR_SUCCESS,
+                                        $SettingsControls[TOEBOX_LESS_COLOR_SUCCESS]
+                        )
+        );
+        // info
+        $wp_customize->add_setting(
+                        TOEBOX_LESS_COLOR_INFO,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_LESS_COLOR_INFO],
+                            'sanitize_callback' => 'sanitize_hex_color',
+                            'transport'    => 'postMessage'
+                        )
+        );
+        
+        $wp_customize->add_control(
+                        new WP_Customize_Color_Control(
+                                        $wp_customize,
+                                        TOEBOX_LESS_COLOR_INFO,
+                                        $SettingsControls[TOEBOX_LESS_COLOR_INFO]
+                        )
+        );
+        // warning
+        $wp_customize->add_setting(
+                        TOEBOX_LESS_COLOR_WARNING,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_LESS_COLOR_WARNING],
+                            'sanitize_callback' => 'sanitize_hex_color',
+                            'transport'    => 'postMessage'
+                        )
+        );
+        
+        $wp_customize->add_control(
+                        new WP_Customize_Color_Control(
+                                        $wp_customize,
+                                        TOEBOX_LESS_COLOR_WARNING,
+                                        $SettingsControls[TOEBOX_LESS_COLOR_WARNING]
+                        )
+        );
+        // danger
+        $wp_customize->add_setting(
+                        TOEBOX_LESS_COLOR_DANGER,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_LESS_COLOR_DANGER],
+                            'sanitize_callback' => 'sanitize_hex_color',
+                            'transport'    => 'postMessage'
+                        )
+        );
+        
+        $wp_customize->add_control(
+                        new WP_Customize_Color_Control(
+                                        $wp_customize,
+                                        TOEBOX_LESS_COLOR_DANGER,
+                                        $SettingsControls[TOEBOX_LESS_COLOR_DANGER]
+                        )
         );
         
         /**
@@ -366,7 +503,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_setting(
                         TOEBOX_LIST_LAYOUT,
                         array(
-                            'default' => toebox\inc\ToeBox::$Settings[TOEBOX_LIST_LAYOUT],
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_LIST_LAYOUT],
                             'sanitize_callback' => 'sanitize_text_field'
                         )
         );
@@ -382,7 +519,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_setting(
                         TOEBOX_STORY_LAYOUT,
                         array(
-                            'default' => toebox\inc\ToeBox::$Settings[TOEBOX_STORY_LAYOUT],
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_STORY_LAYOUT],
                             'sanitize_callback' => 'sanitize_text_field'
                         )
         );
@@ -398,7 +535,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
         $wp_customize->add_setting(
                         TOEBOX_HIDE_SMALL_SIDEBARS,
                         array(
-                            'default' => toebox\inc\ToeBox::$Settings[TOEBOX_HIDE_SMALL_SIDEBARS],
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_HIDE_SMALL_SIDEBARS],
                             'sanitize_callback' => 'sanitize_text_field'
                         )
         );

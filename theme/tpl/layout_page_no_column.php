@@ -3,6 +3,7 @@
 Template Name: Without Sidebars
 Description: A Page with a sinle container constraining it to a max width.
 */
+global $toeboxSlug, $toebox_link_pages_args;
 get_header();
 ?>
 <!-- START INDEX CONTENT -->

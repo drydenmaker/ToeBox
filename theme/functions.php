@@ -29,11 +29,12 @@ add_action( 'init', function()
 	/**
 	 * setup menu walkers
 	 */
+	require_once get_template_directory().'/inc/Walker/NavMenu/AbstractMenu.php';
 	require_once get_template_directory().'/inc/Walker/NavMenu/Primary.php';
 	require_once get_template_directory().'/inc/Walker/NavMenu/Hover.php';
 	require_once get_template_directory().'/inc/Walker/NavMenu/Bare.php';
 	require_once get_template_directory().'/inc/Walker/NavMenu/Flat.php';
-	add_filter( 'wp_nav_menu_args', 'toebox\\inc\\Walker\\NavMenu\\Primary::MenuArguments');
+	add_filter( 'wp_nav_menu_args', 'toebox\\inc\\Walker\\NavMenu\\Touch::MenuArguments');
     /**
      * seo the title
      */
@@ -60,8 +61,8 @@ add_action( 'wp_enqueue_scripts', function()
 
     if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_USE_LESS])
     {
-        wp_enqueue_style('bootstrap', $templateDir . '/less/bootstrap/bootstrap.less');
-        wp_enqueue_style('bootstrap-theme', $templateDir . '/less/bootstrap/theme.less');
+        wp_enqueue_style('bootstrap', $templateDir . '/less/bootstrap/bootstrap-wp.less');
+        wp_enqueue_style('bootstrap-theme', $templateDir . '/less/bootstrap/theme-wp.less');
 
         if (WP_DEBUG) WPLessPlugin::getInstance()->processStylesheets();
     }
@@ -72,10 +73,10 @@ add_action( 'wp_enqueue_scripts', function()
     }
 
     wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), false, true);
-    wp_enqueue_script('modernizr', $templateDir . '/js/vendor/modernizr.min.js');
-    wp_enqueue_script('modernizr', $templateDir . '/js/toebox.js');
+    //wp_enqueue_script('jquery');
+    wp_enqueue_script('bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), null, true);
+    wp_enqueue_script('modernizr', $templateDir . '/js/vendor/modernizr.min.js', array('jquery'), null, true);
+    wp_enqueue_script('toebox', $templateDir . '/js/toebox.js', array('jquery', 'bootstrap'), null, true);
 
 });// toeboxBasicEnqueueScripts
 
@@ -152,7 +153,7 @@ add_action( 'after_setup_theme', function()
             'toebox_basic_custom_background_args',
             array(
                 'default-color'          => '333',
-                'default-image'          => '%1$s/images/background.jpg',
+                'default-image'          => '%1$s/images/background.png',
                 'default-repeat'         => '%1$s/images/repeat_background.jpg',
                 'default-position-x'     => 'center',
             )
@@ -180,11 +181,11 @@ if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_U
     $less = WPLessPlugin::getInstance();
     $less->dispatch();
 
-    $less->addVariable('brand-primary', '#EC7225'); //EC7225
-    $less->addVariable('brand-success', '#18987B'); //18987B
-    $less->addVariable('brand-info', '#24569B'); //24569B
-    $less->addVariable('brand-warning', '#ECA125'); //ECA125
-    $less->addVariable('brand-danger', '#EF5870'); //EF5870
+    $less->addVariable('brand-primary', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_PRIMARY]); //EC7225
+    $less->addVariable('brand-success', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_SUCCESS]); //18987B
+    $less->addVariable('brand-info', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_INFO]); //24569B
+    $less->addVariable('brand-warning', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_WARNING]); //ECA125
+    $less->addVariable('brand-danger', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_DANGER]); //EF5870
 }
 
 

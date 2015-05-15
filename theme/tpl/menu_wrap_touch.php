@@ -1,12 +1,12 @@
 <div class="container-fluid">
     <div class="navbar-header">
-    		 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tb-navbar-collapse">
+    		 <button type="button" class="navbar-toggle pull-left collapsed" data-toggle="collapse" data-target="#tb-navbar-collapse">
     		   <span class="sr-only">Toggle navigation</span>
     		   <span class="icon-bar"></span>
     		   <span class="icon-bar"></span>
     		   <span class="icon-bar"></span>
     		 </button>
-    	</div>
+    </div>
     	
   <div class="row">	
     <div class="col-xs-3 tb-nav navbar-form hidden-xs">

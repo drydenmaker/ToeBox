@@ -1,7 +1,9 @@
 <?php
 namespace toebox\inc\Walker\NavMenu;
+require_once get_template_directory().'/inc/Walker/NavMenu/AbstractMenu.php';
 
-class Primary extends \Walker_Nav_Menu
+
+class Touch extends AbstractMenu
 {
     /** -------------------------------------------------------  TO EXTEND */
     /**
@@ -22,7 +24,7 @@ class Primary extends \Walker_Nav_Menu
     
         return str_replace('tb-navbar-collapse', 'tb-navbar-collapse-' . $term_id,
                         str_replace('<!-- Search -->', get_search_form(false),
-                                        \toebox\inc\ToeBox::GetFileContents('/tpl/menu_wrap.php')));
+                                        \toebox\inc\ToeBox::GetFileContents('/tpl/menu_wrap_touch.php')));
     }
     /**
      * 
@@ -56,7 +58,7 @@ class Primary extends \Walker_Nav_Menu
      */
     public function StartLevel($depth = 0, $args = array())
     {
-        return '<ul class="dropdown-menu" lvl>';
+        return '<ul class="dropdown-menu'.(($depth) ? ' sub-dropdown': '').'" lvl>';
     }
     /**
      * end a level element
@@ -82,30 +84,89 @@ class Primary extends \Walker_Nav_Menu
                         $id ? 'id="' . esc_attr($id) . '"' : '',
                         $class_names ? 'class="' . esc_attr($class_names) . '"' : '');
     }
-    /**
-     * Format an elements body
-     *
-     * @param object $element
-     * @param stgObject $args
-     * @param array $attributes
-     * @return string
-     */
-    public function FormatElement($element, $args, $attributes = array())
+    
+    public function StartLeafElement($item, $depth = 0, $args = array(), $id = 0)
     {
-        $subTitle = $this->GetSubTitle($attributes);
     
-        // convert attributes to a string
-        $attributes = $this->GetAttributeString($attributes);
+        $class_names = $this->GetClass($item, $depth, $args);
     
-        $item_output = $this->getArgument($args, 'before');
-        $item_output .= '<a' . $attributes . '>';
+        // create id
+        $id = apply_filters('nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth);
     
-        $item_output .= $this->getArgument($args, 'link_before') . apply_filters('the_title', $element->title, $element->ID) . $this->getArgument($args, 'link_after');
-        $item_output .= $subTitle . '</a>';
-        $item_output .= $this->getArgument($args, 'after');
+        $atts = array();
+        $atts['title'] = ! empty($item->attr_title) ? $item->attr_title : '';
+        $atts['target'] = ! empty($item->target) ? $item->target : '';
+        $atts['rel'] = ! empty($item->xfn) ? $item->xfn : '';
+        $atts['href'] = ! empty($item->url) ? $item->url : '';
     
-        return $item_output;
+        $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);
+    
+        $item_output = $this->FormatElement($item, $args, $atts);
+    
+        return $this->StartElement($id, $class_names) . apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
     }
+    
+    public static $ChevronTop = '<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>';
+    
+    public function StartBranchElement($item, $depth = 0, $args = array(), $id = 0)
+    {
+        
+        
+        $class_names = $this->GetClass($item, $depth, $args);
+    
+        // create id
+        $id = apply_filters('nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth);
+    
+        $atts = array();
+        $atts['title'] = ! empty($item->attr_title) ? $item->attr_title : '';
+        $atts['target'] = ! empty($item->target) ? $item->target : '';
+        $atts['rel'] = ! empty($item->xfn) ? $item->xfn : '';
+        $atts['href'] = ! empty($item->url) ? $item->url : '$item->href';
+        
+        $toggle = 'dropdown dropdown-toggle';
+        $baseclass = '';
+        
+        if ($depth)
+        {
+            $toggle = 'dropdown tb-dropdown-toggle';
+        }
+               
+        
+        
+        $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);  
+        
+        // TODO: account for second level menu
+        // and side chevron on click
+        // make sure click event flows down
+        // test collapsed secondary menu
+
+        // decide if the link should be split
+        if ($atts['href'] != '#')
+        {
+            $title = apply_filters('the_title', $item->title, $item->ID) .
+                        '<a href="#" class="'. $toggle .'" '.
+                        'data-toggle="dropdown" aria-expanded="false">'.
+                        self::$ChevronTop.
+                        '</a>';
+            
+            $item_output = $this->FormatElementRaw($title, $args, $atts);
+            
+        }
+        else 
+        {
+            $atts['data-toggle'] = "dropdown" ;
+            $atts['aria-expanded'] = "false";
+            $atts['class'] = $toggle;
+                
+            $item_output = $this->FormatElementRaw(
+                                    apply_filters('the_title', $item->title . ' &nbsp; ' . self::$ChevronTop, $item->ID), 
+                                    $args, 
+                                    $atts);
+        }
+    
+        return $this->StartElement($id, $class_names) . apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
+    }
+    
     
     public function getArgument($args, $argname)
     {
@@ -119,23 +180,7 @@ class Primary extends \Walker_Nav_Menu
         }
         return null;
     }
-    /**
-     * format a subtitle when settings mandate
-     *
-     * @param array $attributes
-     * @return string
-     */
-    private function GetSubTitle($attributes)
-    {
-        $subTitle = '';
-        if (\toebox\inc\Toebox::$Settings[TOEBOX_MENU_SUBTITLES]) {
-            if (array_key_exists('title', $attributes)) {
-                $subTitle .= $this->FormatSubTitle($attributes['title']);
-                $attributes['title'] = null;
-            }
-        }
-        return $subTitle;
-    }
+    
     /**
      * close an element
      * 
@@ -144,7 +189,20 @@ class Primary extends \Walker_Nav_Menu
      * @param array $args
      * @return string
      */
-    private function EndElement($element, $depth = 0, $args = array() )
+    public function EndElement($element, $depth = 0, $args = array() )
+    {
+        return "</li>";
+    }
+    
+    /**
+     * close an element
+     *
+     * @param object $element
+     * @param int $depth
+     * @param array $args
+     * @return string
+     */
+    public function EndBranchElement($element, $depth = 0, $args = array() )
     {
         return "</li>";
     }
@@ -211,36 +269,19 @@ class Primary extends \Walker_Nav_Menu
      */
     public function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0)
     {
-        $class_names = $this->GetClass($item, $depth, $args);
-        
-        // create id
-        $id = apply_filters('nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth);
-        
-        $atts = array();
-        $atts['title'] = ! empty($item->attr_title) ? $item->attr_title : '';
-        $atts['target'] = ! empty($item->target) ? $item->target : '';
-        $atts['rel'] = ! empty($item->xfn) ? $item->xfn : '';
-        $atts['href'] = ! empty($item->url) ? $item->url : '';
-        
 
-        if (@$args->has_children)
+        if ($args->has_children)
         {
-            if (!$this->openOnHover)
-            {
-                $atts['class'] = 'dropdown-toggle';
-                $atts['data-toggle'] = 'dropdown';
-                $atts['aria-expanded'] = 'false';
-            }
-
+            $this->elements[] = 'item-branch-' . $item->ID;
+            $output .= $this->StartBranchElement($item, $depth, $args, $id);
         }
-
-        $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);
-        
-        $item_output = $this->FormatElement($item, $args, $atts);        
-
-        $output .= $this->StartElement($id, $class_names) . apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
-
+        else
+        {
+            $this->elements[] = 'item-leaf-' . $item->ID;
+            $output .= $this->StartLeafElement($item, $depth, $args, $id);
+        }
     }
+    
     /**
      * Menu Fallback
      * =============
@@ -365,6 +406,9 @@ class Primary extends \Walker_Nav_Menu
     {
         $classes = empty($element->classes) ? array() : (array) $element->classes;
         $classes[] = 'menu-item-' . $element->ID;
+        $classes[] = 'menu-level-' . $depth;
+        
+        if ($element->has_children) $classes[] = 'dropdopwn';
     
         $classes = $this->HandleElCssClasses($classes, $element, $args, $depth);
         return join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $element, $args, $depth));

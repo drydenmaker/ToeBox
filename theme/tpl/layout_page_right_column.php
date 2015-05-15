@@ -3,6 +3,7 @@
 Template Name: Right Column
 Description: A page template with a single column 1/3 of the page width on the right side of the content.
 */
+global $toeboxSlug, $toebox_link_pages_args;
 get_header();
 ?>
 <!-- START INDEX CONTENT -->

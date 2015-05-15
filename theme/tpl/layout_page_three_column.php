@@ -3,6 +3,7 @@
 Template Name: Three Column - Content Center
 Description: A page template with a column on both sides of the content. Each column is half the width of the content.
 */
+global $toeboxSlug, $toebox_link_pages_args;
 get_header();
 ?>
 <!-- START three column CONTENT -->

@@ -30,6 +30,12 @@ define('TOEBOX_LINK_PAGES_ARGS', 'toebox_link_pages_args');
 define('TOEBOX_SETUP', 'toebox_setup');
 define('TOEBOX_USE_LESS', 'toebox_use_less');
 
+define('TOEBOX_LESS_COLOR_PRIMARY', 'toebox_less_primary');
+define('TOEBOX_LESS_COLOR_SUCCESS', 'toebox_less_success');
+define('TOEBOX_LESS_COLOR_INFO', 'toebox_less_info');
+define('TOEBOX_LESS_COLOR_WARNING', 'toebox_less_warning');
+define('TOEBOX_LESS_COLOR_DANGER', 'toebox_less_danger');
+
 
 $pageLayoutOptions = array(
     'open' => __( 'Open','toebox-basic' ),
@@ -54,7 +60,12 @@ class ToeBox
      * settings registry
      * @var Array
      */
-    public static $Settings = array(
+    public static $Settings = array();
+    /**
+     * settings registry
+     * @var Array
+     */
+    public static $SettingsDefaults = array(
         'ver' => '0.0.1',
         TOEBOX_SETUP => false,
         TOEBOX_USE_LESS => false,
@@ -68,10 +79,16 @@ class ToeBox
         TOEBOX_CONTENT_BACKGROUND_COLOR => '#222',
         TOEBOX_404_MESSAGE => '<p>Sorry, no content was found.</p>',
         TOEBOX_ENABLE_404_SEARCH => true,
-        TOEBOX_ENABLE_LIST_PAGING => false,
+        TOEBOX_ENABLE_LIST_PAGING => true,
         TOEBOX_USE_WIDGET_FOR_HEADER => false,
         TOEBOX_USE_WIDGET_FOR_NAV_MENU => false,
         TOEBOX_USE_LESS => false,
+        
+        TOEBOX_LESS_COLOR_PRIMARY => '#EC7225',
+        TOEBOX_LESS_COLOR_SUCCESS => '#18987B',
+        TOEBOX_LESS_COLOR_INFO => '#24569B',
+        TOEBOX_LESS_COLOR_WARNING => '#ECA125',
+        TOEBOX_LESS_COLOR_DANGER => '#EF5870',
 
         TOEBOX_MENU_SUBTITLES => true,
 
@@ -99,7 +116,7 @@ class ToeBox
         if (is_array($themeMods)) $themeMods[TOEBOX_SETUP] = true;
         $themeMods = (!empty($themeMods) && is_array($themeMods)) ? $themeMods : array() ;
 
-        self::$Settings = array_merge(self::$Settings, $themeMods, $otherSettings);
+        self::$Settings = array_merge(self::$SettingsDefaults, $themeMods, $otherSettings);
     }
     /**
      * output dynamic sidebar contnet
@@ -122,23 +139,42 @@ class ToeBox
     public static $CustomLayoutTemplates = array(
         'featured_story'
     );
+    public static $CustomCategoryLayoutTemplates = array(
+        'catch-of-the-day'
+    );
     /**
      * Load page layout which contains content loop
      * @param array $settings
      */
     public static function Layout($toeboxSlug = 'content')
     {
-        global $wp_the_query, $toebox_link_pages_args, $toeboxSlug;
+        global $wp_the_query, $toebox_link_pages_args;
 
         $postType = $wp_the_query->query_vars['post_type'];
 
         $settings = self::$Settings;
         $hideSideBarsOnSmallScreens = $settings[TOEBOX_HIDE_SMALL_SIDEBARS];
-        $ifHideOnSmallCss = ($hideSideBarsOnSmallScreens) ? 'hidden-xs hidden-sm' : '' ;
+        $ifHideOnSmallCss = ($hideSideBarsOnSmallScreens) ? 'hidden-xs hidden-sm' : 'alwaysshow' ;
+        
+        if (is_single())
+        {
+            global $post;
+            $category = self::ArrayFirstMatch(self::GetSlugArray(get_the_category($post->ID)), self::$CustomCategoryLayoutTemplates);
+        }
         
         if (($postType) && in_array($postType, self::$CustomLayoutTemplates))
         {
             $templatePath = get_template_directory().self::$LaoutPrefix . $settings[TOEBOX_FEATURED_STORY_LAYOUT] . '.php';
+        }
+        else if (!empty($category))
+        {
+            $templatePath = get_template_directory().self::$LaoutPrefix . $category . '.php';
+        }
+        else if(array_key_exists('category_name', $wp_the_query->query_vars) && 
+                        !empty($wp_the_query->query_vars['category_name']) &&
+                        in_array($wp_the_query->query_vars['category_name'], self::$CustomCategoryLayoutTemplates))
+        {
+            $templatePath = get_template_directory().self::$LaoutPrefix . $wp_the_query->query_vars['category_name'] . '.php';
         }
         else
         {
@@ -184,7 +220,9 @@ class ToeBox
         $body = self::GetCurrentContent();
 
         $postFormat = get_post_format();
-
+        
+        
+        
         if (in_array($post_type, self::$CustomLayoutTemplates))
         {
             $templatePath = sprintf('%s%s_%s.php', get_template_directory().self::$LaoutContentPrefix, $post_type, $templateType);
@@ -197,12 +235,30 @@ class ToeBox
 
         // wordpress output
         $post_title = get_the_title();
+        $post_title = (empty($post_title)) ? do_shortcode('[tb-icon glyph="link" ]') : $post_title;
+
         $post_date = get_the_time(get_option('date_format'));
         $the_post_thumbnail = get_the_post_thumbnail( $post->ID, 'full');
         
         self::DebugFile('START', $templatePath);
         require $templatePath;
         self::DebugFile('END', $templatePath);
+    }
+    public static function ArrayFirstMatch(array $needle, array $haystack)
+    {
+        foreach ($needle as $value)
+        {
+            if (in_array($value, $haystack)) return $value;
+        }
+        return null;
+    }
+    public static function GetSlugArray($categories)
+    {
+        return array_reduce($categories, function($slugs, $input)
+        {
+            $slugs[] = $input->slug;
+            return $slugs;
+        }, array()) ;
     }
     /**
      * get the content from the current clobal post
@@ -263,13 +319,18 @@ class ToeBox
     }
     public static function HandleListNavigation()
     {
-        print self::$Settings[TOEBOX_ENABLE_LIST_PAGING];
+
         if (self::$Settings[TOEBOX_ENABLE_LIST_PAGING])
-            print sprintf("<div class='postlinks clearfix'>
-                        <div class='new-posts-link pull-right'>%2\$s </div>
-                        <div class='old-posts-link'>%1\$s </div>
-                        </div>",
-                        get_next_posts_link('<< Older Posts'), get_previous_posts_link('Newer Posts >>'));
+        {
+            $previous = get_previous_posts_link('Newer Posts >>');
+            $next = get_next_posts_link('<< Older Posts');
+            
+            print sprintf("<div class='postlinks clearfix'>".
+                        (($previous) ? '<div class="btn btn-default new-posts-link pull-right">%2$s </div>' : '%2$s') .
+                        (($next) ? '<div class="btn btn-default old-posts-link">%1$s </div>' : '%1$s') .
+                        '</div>',
+                        $next, $previous);
+        }
     }
     /**
      * relative file path of template files
@@ -454,5 +515,3 @@ class ToeBox
         update_option('sidebars_widgets',$widgets);
     }
 }
-
-?>

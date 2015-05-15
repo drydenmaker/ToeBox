@@ -71,8 +71,9 @@ class BaseWidget extends \WP_Widget
         extract($args);
         extract($instance);
         
+        $templateDir = get_template_directory() . $this->TemplatePrefix;
         // outputs the content of the widget
-        include get_template_directory() . $this->TemplatePrefix . $this->TemplateName . '.php';
+        include $templateDir . $this->TemplateName . '.php';
     }
 
     /**
