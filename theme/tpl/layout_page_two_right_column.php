@@ -16,13 +16,7 @@ get_header();
 		<div class="col-sm-9 col-md-5 tb-main">
 
 <?php
-global $posts;
-toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_top');
-toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
-
-toebox\inc\ToeBox::HandleLinkPages();
-
-toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_bottom');
+include get_template_directory() . '/tpl/content/loop.php';
 ?>
 
         </div>
@@ -35,9 +29,6 @@ toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_bottom');
 <?php toebox\inc\ToeBox::HandleDynamicSidebar('toebox_right_sidebar') ?>
         </div>
 
-<?php 
-toebox\inc\ToeBox::HandleListNavigation();
-?>
 
 		<!-- END MAINBODY ROW -->
 	</div>

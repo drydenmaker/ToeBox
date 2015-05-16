@@ -20,15 +20,7 @@ get_header();
 		<div class="col-md-9 col-lg-8 tb-main">
 
 <?php
-global $posts;
-toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_top');
-toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
-
-toebox\inc\ToeBox::HandleLinkPages();
-
-toebox\inc\ToeBox::HandleDynamicSidebar('toebox_content_bottom');
-
-toebox\inc\ToeBox::HandleListNavigation();
+include get_template_directory() . '/tpl/content/loop.php';
 ?>
 
         </div>

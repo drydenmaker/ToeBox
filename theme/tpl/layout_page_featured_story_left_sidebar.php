@@ -61,11 +61,10 @@ global $posts;
 toebox\inc\ToeBox::HandleDynamicSidebar('featured_content_top');
 toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
 
-wp_link_pages( $toebox_link_pages_args );
-
-toebox\inc\ToeBox::HandleDynamicSidebar('featured_content_bottom');
+toebox\inc\ToeBox::HandleLinkPages();
 
 toebox\inc\ToeBox::HandleListNavigation();
+toebox\inc\ToeBox::HandleDynamicSidebar('featured_content_bottom');
 ?>
 		<!-- END MAINBODY ROW -->
 		</div>

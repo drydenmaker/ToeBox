@@ -49,15 +49,7 @@ print $the_nav_header;
 	<div class="row">
 		<!-- START MAINBODY ROW -->
 <?php
-global $posts;
-toebox\inc\ToeBox::HandleDynamicSidebar('featured_content_top');
-toebox\inc\ToeBox::HandleLoop($posts, $toeboxSlug);
-
-wp_link_pages( $toebox_link_pages_args );
-
-toebox\inc\ToeBox::HandleDynamicSidebar('featured_content_bottom');
-
-toebox\inc\ToeBox::HandleListNavigation();
+include get_template_directory() . '/tpl/content/loop.php';
 ?>
 		<!-- END MAINBODY ROW -->
 	</div><!-- /.row -->
