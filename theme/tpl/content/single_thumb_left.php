@@ -8,7 +8,7 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     </div>
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>    
         <header class="entry-header">
-            <h3><?php the_title(); ?></h3>
+            <h3><a href="<?php the_permalink(); ?>"><?php print $post_title; ?></a></h3>
         </header>
         
         <?php if (!is_page()) : ?>
@@ -26,6 +26,9 @@ toebox\inc\ToeBox::HandleFeaturedImage();
     
         <div class="entry-content">
             <?php print $body; ?>
+        </div>
+        <div class="entry-paging">
+        <?php  toebox\inc\ToeBox::HandleLinkPages(); ?>
         </div>
     </article>    
     
