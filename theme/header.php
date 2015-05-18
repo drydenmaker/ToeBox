@@ -61,7 +61,7 @@ if (!array_key_exists(TOEBOX_USE_WIDGET_FOR_NAV_MENU, toebox\inc\ToeBox::$Settin
 {
     echo '<div class="tb-default-nav">';
     
-    toebox\inc\Walker\NavMenu\Primary::HandleMenu(array(
+    toebox\inc\Walker\NavMenu\Touch::HandleMenu(array(
             'theme_location' => 'header-menu',
             'wrap' => 'menu_wrap'));
 
