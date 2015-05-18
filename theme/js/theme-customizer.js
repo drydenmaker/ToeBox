@@ -23,27 +23,36 @@
 		
 		value.bind( function( newval ) {
 
-			if ( newval ) 
-			{
-				$( '#customize-control-toebox_less_primary', window.parent.document ).css( 'display', 'list-item' );
-
-				$( '#customize-control-toebox_less_success', window.parent.document ).css( 'display', 'list-item' );
-				$( '#customize-control-toebox_less_info', window.parent.document ).css( 'display', 'list-item' );
-				$( '#customize-control-toebox_less_warning', window.parent.document ).css( 'display', 'list-item' );
-				$( '#customize-control-toebox_less_danger', window.parent.document ).css( 'display', 'list-item' );
-			} 
-			else 
-			{
-				$( '#customize-control-toebox_less_primary', window.parent.document ).hide() // css( 'display', 'none' );
-				$( '#customize-control-toebox_less_success', window.parent.document ).css( 'display', 'none' );
-				$( '#customize-control-toebox_less_info', window.parent.document ).css( 'display', 'none' );
-				$( '#customize-control-toebox_less_warning', window.parent.document ).css( 'display', 'none' );
-				$( '#customize-control-toebox_less_danger', window.parent.document ).css( 'display', 'none' );
-			}
+			ToggleCustomColorEditor(newval);
 	 
 		});
 		
 	});
+	// set the initial state of the color boxes
+	ToggleCustomColorEditor($('#customize-control-toebox_use_less>[type="checkbox"]', window.parent.document).attr('checked'));
 	
 	
 } )( jQuery );
+
+function ToggleCustomColorEditor(checked)
+{
+	console.log('CHECKED ' + checked);
+	
+	if ( checked ) 
+	{
+		$( '#customize-control-toebox_less_primary', window.parent.document ).css( 'display', 'list-item' );
+
+		$( '#customize-control-toebox_less_success', window.parent.document ).css( 'display', 'list-item' );
+		$( '#customize-control-toebox_less_info', window.parent.document ).css( 'display', 'list-item' );
+		$( '#customize-control-toebox_less_warning', window.parent.document ).css( 'display', 'list-item' );
+		$( '#customize-control-toebox_less_danger', window.parent.document ).css( 'display', 'list-item' );
+	} 
+	else 
+	{
+		$( '#customize-control-toebox_less_primary', window.parent.document ).hide() // css( 'display', 'none' );
+		$( '#customize-control-toebox_less_success', window.parent.document ).css( 'display', 'none' );
+		$( '#customize-control-toebox_less_info', window.parent.document ).css( 'display', 'none' );
+		$( '#customize-control-toebox_less_warning', window.parent.document ).css( 'display', 'none' );
+		$( '#customize-control-toebox_less_danger', window.parent.document ).css( 'display', 'none' );
+	}
+}
