@@ -4,10 +4,6 @@ namespace toebox\inc\Walker\NavMenu;
 abstract class AbstractMenu extends \Walker_Nav_Menu
 {
     /** -------------------------------------------------------  TO EXTEND */
-    /**
-     * switch weather or not to allow hover
-     * @var bool
-     */
     
     public $WrapTemplate = 'accordion_wrap';
 
@@ -83,7 +79,7 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
         $item_output = $this->getArgument($args, 'before');
         $item_output .= '<a' . $attributes . '>';
     
-        $item_output .= $this->getArgument($args, 'link_before') . $text . $this->getArgument($args, 'link_after');
+        $item_output .= $this->getArgument($args, 'link_before') . do_shortcode($text) . $this->getArgument($args, 'link_after');
         $item_output .= '</a>';
         $item_output .= $this->getArgument($args, 'after');
     
@@ -135,7 +131,7 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
     
     /** -------------------------------------------------------  INTERNALS */
     
-
+    protected static $foeMenuId = 0;
     /**
      * supply the markup that wraps the menu
      * must contain %3$s for the menu itself
@@ -145,8 +141,8 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
      */
     function GetItemWrap($args)
     {
-        static $foeMenuId = 0;
-        $term_id = (array_key_exists('menu', $args) && $args['menu']) ? $args['menu'] : ++$foeMenuId;
+        
+        $term_id = (array_key_exists('menu', $args) && $args['menu']) ? $args['menu'] : ++self::$foeMenuId;
     
         return str_replace('accordion_id', 'tb-accordian-' . $term_id,
                         \toebox\inc\ToeBox::GetFileContents('/tpl/'.$this->WrapTemplate.'.php'));

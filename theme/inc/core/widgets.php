@@ -5,6 +5,10 @@
  */
 add_action( 'widgets_init', function()
 {
+    // add shortcode support
+    add_filter( 'widget_text', 'shortcode_unautop' );
+    add_filter( 'widget_text', 'do_shortcode' );
+    
     // --------------  WIDGETS ---------------------------------------------
     require_once get_template_directory().'/inc/widget/HeaderLogoCornersWidget.php';
 

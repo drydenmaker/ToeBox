@@ -11,6 +11,7 @@ class Touch extends AbstractMenu
      * @var bool
      */
     public $openOnHover = false;
+    public $WrapTemplate = 'menu_wrap_touch';
     /**
      * supply the markup that wraps the menu
      * must contain %3$s for the menu itself
@@ -20,11 +21,12 @@ class Touch extends AbstractMenu
      */
     function GetItemWrap($args)
     {
-        $term_id = (array_key_exists('menu', $args) && $args['menu'] && property_exists($args['menu'], 'term_id')) ? $args['menu']->term_id : '';
-    
-        return str_replace('tb-navbar-collapse', 'tb-navbar-collapse-' . $term_id,
+        //print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($args, true)).'</pre>';
+        
+        $wrap = parent::GetItemWrap($args);
+        return str_replace('tb-navbar-collapse', 'tb-navbar-collapse-' . self::$foeMenuId,
                         str_replace('<!-- Search -->', get_search_form(false),
-                                        \toebox\inc\ToeBox::GetFileContents('/tpl/menu_wrap_touch.php')));
+                                        $wrap));
     }
     
     /**
