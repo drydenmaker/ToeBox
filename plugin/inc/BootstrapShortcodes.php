@@ -17,6 +17,28 @@ class BootstrapShortcodes extends BasePlugin
         // do setup here
     }
     /**
+     * (non-PHPdoc)
+     * @see \toebox\plugin\inc\BasePlugin::AdminEditorInit()
+     */
+    public function AdminEditorInit()
+    {    
+        add_filter('mce_buttons', function($buttons)
+        {
+            array_push($buttons, 'separator', "tb_icon", 'separator', "tb_button", 'separator', "tb_nav",'separator', 
+                            "tb_nav_link", 'separator', "tb_nav_dropdown", 'separator', "tb_show_xs", 'separator', "tb_hide_xs");
+            return $buttons;
+        });
+    
+        add_filter('mce_external_plugins', function($plugin_array)
+        {
+            $plugin_array['tb_icon'] = plugin_dir_url( __FILE__ ) . '../admin/js/toebox_icon_tmce.js';
+            $plugin_array['tb_button'] = plugin_dir_url( __FILE__ ) . '../admin/js/toebox_button_tmce.js';
+            $plugin_array['tb_nav'] = plugin_dir_url( __FILE__ ) . '../admin/js/toebox_nav_tmce.js';
+            $plugin_array['tb_show_hide_xs'] = plugin_dir_url( __FILE__ ) . '../admin/js/toebox_show_hide_xs_tmce.js';
+            return $plugin_array;
+        });
+    }
+    /**
      * filter => toebox\plugin\inc\Hook array of filters
      *
      * @since 1.0.0
@@ -36,22 +58,48 @@ class BootstrapShortcodes extends BasePlugin
         'tb-jumbotron' => 'ExpandJumbotron',
         'tb-thumbnail-content' => 'ExpandThumbnailContent',
         'tb-hr-link' => 'ExpandHrLink',
+        'tb-icon' => 'ExpandIcon',
+        'tb-hide-xs' => 'ExpandHideXSmall',
+        'tb-show-xs' => 'ExpandShowXSmall',
+        'tb-nav' => 'ExpandNav',
+        'tb-nav-link' => 'ExpandNavLink',
+        'tb-nav-dropdown' => 'ExpandNavDropdown',
     );
 
     protected $ShorCodeNamespace = '';
+    
+    function ExpandHideXSmall($attirbutes, $content = '&nbsp;')
+    {
+        return sprintf('<span  class="hidden-xs">%s</span>', do_shortcode(trim($content)));
+    }
+    function ExpandShowXSmall($attirbutes, $content = '&nbsp;')
+    {
+        $class = 'tb-hr-link clearfix';
+        static $defaults = array(
+            'display' => 'inline',
+        );
+        
+        // combine and filter attributes
+        $attirbutes = array_map('strtolower', shortcode_atts($defaults, $attirbutes, 'tb_show_xs'));
+        
+        return sprintf('<span  class="visible-xs-inline">%2$s</span>', $attirbutes['display'], do_shortcode(trim($content)));
+    }
 
     function ExpandBadge($attirbutes, $content = '&nbsp;')
     {
-        return sprintf('<span class="badge">%s</span>', $content);
+        return sprintf('<span class="badge">%s</span>', trim($content));
     }
 
     function ExpandJumbotron($attirbutes, $content = '&nbsp;')
     {
-        return sprintf('<div  class="jumbotron">%s</div >', $content);
+        return sprintf('<div  class="jumbotron">%s</div >', do_shortcode(trim($content)));
     }
     
     function ExpandHrLink($attirbutes, $content = '')
     {
+
+        $content = 	do_shortcode($this->removeBreakParagraph(trim($content)));
+                
         $class = 'tb-hr-link clearfix';
         static $defaults = array(
             'url' => '#',
@@ -59,7 +107,7 @@ class BootstrapShortcodes extends BasePlugin
         );
         
         // combine and filter attributes
-        $attirbutes = shortcode_atts($defaults, $attirbutes, 'tb_hr_link');
+        $attirbutes = array_map('strtolower', shortcode_atts($defaults, $attirbutes, 'tb_hr_link'));
         
         $link = (array_key_exists('href', $attirbutes)) ? $attirbutes['href'] : $attirbutes['url'];
                 
@@ -69,8 +117,111 @@ class BootstrapShortcodes extends BasePlugin
             'url',
             'href'
         )));
+        
+        return sprintf('<div %2$s> <a href="%1$s"> %3$s </a> </div>', $link, $this->getNodeAttributes($filteredAttributes), do_shortcode($content));
+    }
     
-        return sprintf('<div %2$s> <a href="%1$s"> %3$s </a> </div>', $link, $this->getNodeAttributes($filteredAttributes), $content);
+    function ExpandIcon($attirbutes)
+    {
+        static $defaults = array(
+            'glyph' => 'asterisk',
+        );
+        $attirbutes = array_map('strtolower', shortcode_atts($defaults, $attirbutes, 'tb_icon'));
+        $icon = $attirbutes['glyph'];
+        
+        $return = sprintf('<span aria-hidden="true" class="glyphicon glyphicon-%s"></span>', trim(str_replace('"', '', $icon) ));
+
+        return $return;
+    }
+    
+
+    function ExpandNav($attirbutes, $content = '')
+    {
+        static $defaults = array(
+            'collapse' => false,
+            'justified' => false,
+            'invert' => 'false',
+            'style' => '',
+            'class' => ''
+        );
+        $class = "navbar navbar-";
+        
+        $attirbutes = array_map('strtolower', shortcode_atts($defaults, $attirbutes, 'tb_nav'));
+        
+        // SETUP CLASS
+        $class .= ($attirbutes['invert'] == 'false' ) ? 'default' : 'inverse';
+        if (!empty($attirbutes['style']) ) $class .=  ' nav-'.$attirbutes['style'];
+        if ($attirbutes['justified']) $class .=  ' nav-justified';
+        if (!empty($attirbutes['class']) ) $class .=  ' '.$attirbutes['class'];
+        
+        
+        $filteredAttributes = array_diff_key($attirbutes, array_flip(array(
+            'style',
+            'justified',
+            'class',
+            'invert',
+        )));
+        
+        $attrs = $this->getNodeAttributes($filteredAttributes);
+        
+        $return = sprintf('<nav class="%1$s" %2$s>%3$s</nav>', $class, $attrs, do_shortcode($this->removeBreakParagraph($content)));
+    
+        print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($attirbutes, true)).'</pre>';
+        print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($return, true)).'</pre>';
+    
+        return $return;
+    }
+
+    function ExpandNavLink($attirbutes, $content = '')
+    {
+        static $defaults = array(
+            'collapse' => false,
+            'justified' => false,
+            'invert' => 'false',
+            'style' => '',
+            'class' => ''
+        );
+        $class = "navbar navbar-";
+        
+        $attirbutes = array_map('strtolower', shortcode_atts($defaults, $attirbutes, 'tb_nav'));
+        
+        // SETUP CLASS
+        $class .= ($attirbutes['invert'] == 'false' ) ? 'default' : 'inverse';
+        if (!empty($attirbutes['style']) ) $class .=  ' nav-'.$attirbutes['style'];
+        if ($attirbutes['justified']) $class .=  ' nav-justified';
+        if (!empty($attirbutes['class']) ) $class .=  ' '.$attirbutes['class'];
+        
+        
+        $filteredAttributes = array_diff_key($attirbutes, array_flip(array(
+            'style',
+            'justified',
+            'class',
+            'invert',
+        )));
+        
+        $attrs = $this->getNodeAttributes($filteredAttributes);
+        
+        $return = sprintf('<nav class="%1$s" %2$s>%3$s</nav>', $class, $attrs, do_shortcode($this->removeBreakParagraph($content)));
+    
+        print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($attirbutes, true)).'</pre>';
+        print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($return, true)).'</pre>';
+    
+        return $return;
+    }
+
+    function ExpandNavDropDown($attirbutes, $content = '')
+    {
+        static $defaults = array(
+            'glyph' => 'asterisk',
+        );
+        $attirbutes = array_map('strtolower', shortcode_atts($defaults, $attirbutes, 'tb_nav_dropdown'));
+        $icon = $attirbutes['glyph'];
+    
+        $return = sprintf('<span aria-hidden="true" class="glyphicon glyphicon-%s"></span>', trim(str_replace('"', '', $icon) ));
+    
+        //print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($icon, true)).'</pre>';
+    
+        return $return;
     }
 
     /**
@@ -83,12 +234,17 @@ class BootstrapShortcodes extends BasePlugin
      */
     function ExpandButton($attirbutes, $content = 'Button')
     {
+        //print __FUNCTION__.' Before<pre>'.htmlspecialchars(print_r($attirbutes, true)).'</pre>';
+        
+        $content = do_shortcode(trim($content));
+        
         $class = 'btn';
         static $defaults = array(
             'url' => '#',
+            'href' => '#',
             'style' => 'primary', // deafult, primary, success, info, warning, danger, link
             'size' => 3, // 1-4 (xsmall - large)
-            'onclick' => 'void(0)',
+            'onclick' => '',
             'title' => '',
             'type' => 'button',
             'block' => false,
@@ -98,31 +254,37 @@ class BootstrapShortcodes extends BasePlugin
         );
         
         // combine and filter attributes
-        $attirbutes = shortcode_atts($defaults, $attirbutes, 'bootstrap_button');
+        $attirbutes = $yourArray = array_map('strtolower', shortcode_atts($defaults, $attirbutes, 'bootstrap_button'));
         
         // prefer href but allow url
-        if (! array_key_exists('href', $attirbutes)) {
+        if (! array_key_exists('href', $attirbutes)) 
+        {
             $attirbutes['href'] = $attirbutes['url'];
         }
         
         // setup classes
         $class .= ' btn-' . $attirbutes['style'];
-        switch ($defaults['size']) {
+        switch ($attirbutes['size']) {
             case 1:
+            case '1':
                 $class .= ' btn-xs';
                 break;
             case 2:
+            case '2':
                 $class .= ' btn-sm';
                 break;
-            case 3:
+            case 4:
+            case '4':
                 $class .= ' btn-lg';
+                break;
+            default:
                 break;
         }
         
-        if (array_key_exists('block', $attirbutes) && $attirbutes['block']) {
+        if (array_key_exists('block', $attirbutes) && $attirbutes['block'] == 'true') {
             $class .= ' btn-block';
         }
-        if (array_key_exists('active', $attirbutes) && $attirbutes['active']) {
+        if (array_key_exists('active', $attirbutes) && $attirbutes['active'] == 'true') {
             $class .= ' active';
         }
         
@@ -170,7 +332,7 @@ class BootstrapShortcodes extends BasePlugin
         );
         
         // combine and filter attributes
-        $attirbutes = shortcode_atts($defaults, $attirbutes, 'bootstrap_media_object');
+        $attirbutes = array_map('strtolower', shortcode_atts($defaults, $attirbutes, 'bootstrap_media_object'));
         
         // prefer href but allow url
         if (! array_key_exists('href', $attirbutes)) {
@@ -270,6 +432,13 @@ class BootstrapShortcodes extends BasePlugin
                             </div>
                         </div>", $content);
     }
+    
+
+    function removeBreakParagraph($subject)
+    {
+        return str_ireplace('<br />', null, str_ireplace('<p>', null, str_ireplace('</p>', null, $subject)));
+    }
+    
     
     /**
      * latest instance of self

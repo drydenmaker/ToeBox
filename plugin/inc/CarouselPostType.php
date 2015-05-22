@@ -40,7 +40,7 @@ class CarouselPostType extends BasePlugin
                     'label'               => self::POST_TYPE,
                     'description'         => __( 'Links that have a body of content used in a carousel.', 'toebox-basic' ),
                     'labels'              => $labels,
-                    'supports'            => array( 'title', 'editor', 'thumbnail', 'page-attributes', 'revisions', 'excerpt'),
+                    'supports'            => array( 'title', 'editor', 'thumbnail', 'page-attributes', 'revisions', 'excerpt', 'sticky'),
                     'taxonomies'          => array( 'category', 'post_tag', 'link_category', 'post_format'),
                     'hierarchical'        => false,
                     'public'              => true,
@@ -173,8 +173,8 @@ class CarouselPostType extends BasePlugin
             'post_type' => self::POST_TYPE,
             'post_status' => 'publish',
             'posts_per_page' => $attirbutes['post_count'],
-            'order' => 'ASC',
-            'orderby' => 'menu_order',
+            'order' => array( 'ASC', 'DESC' ),
+            'orderby' => array('menu_order', 'date'),
         );
     
         if (!empty($attirbutes['category']) && $attirbutes['category'] != 'all')

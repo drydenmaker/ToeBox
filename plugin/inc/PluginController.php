@@ -5,7 +5,7 @@ require_once  plugin_dir_path(__FILE__) . '/Hook.php';
 
 class PluginController
 {
-    protected static $TagSpace = 'toebox_plgin';
+    protected static $TagSpace = 'toebox_plugin';
     
     protected static $Version = '1.0.1';
     
@@ -22,6 +22,8 @@ class PluginController
     public static $PublicPath;
     
     public static $AdminPath;
+    
+    public static $Instance;
     /**
      * primary method
     */
@@ -36,9 +38,12 @@ class PluginController
         self::$AdminPath = self::$PluginPath . 'admin/';
     
         $instance = new $pluginClass();
+        if (!($instance instanceof PluginController)) throw new \Exception("$pluginClass does not extend PluginController");
         register_activation_hook( __FILE__, array($instance, 'Activate') );
         register_deactivation_hook( __FILE__, array($instance, 'Deactivate') );
-    
+        
+        add_action('admin_menu', array($instance, 'RegisterSettingsPage'));
+        
         $instance->LoadPlugins();
     }
     /**
@@ -54,17 +59,6 @@ class PluginController
     {
         self::$Plugins[] = $className;
     }
-    
-    public function LoadPlugins()
-    {
-        foreach (self::$Plugins as $className)
-        {
-            require_once sprintf('%1$s\%2$s.php', plugin_dir_path(__FILE__), $className);
-            $fullClassName = '\\toebox\\plugin\\inc\\' . $className;
-            self::$PluginInstancess[$className] = new $fullClassName();
-            $this->hookinPlugin(self::$PluginInstancess[$className]);
-        }
-    }
     /**
      * get an instance of a plugin
      * @param string $name
@@ -78,6 +72,25 @@ class PluginController
         }
         return false;
     }
+// ---------------------------------------------------------------------------- local vars and methods    
+
+    public $PluginSlug = "toebox-plugin";
+    public $PluginTitle = "Toebox Plugin";
+    public $SettingsPageTitle = "Tobox Plugin Settings";
+    public $SettingsDashIcon = "dashicons-admin-tools";
+    public $SettingsCapability = 'manage_options';
+    
+    public function LoadPlugins()
+    {
+        foreach (self::$Plugins as $className)
+        {
+            require_once sprintf('%1$s/%2$s.php', plugin_dir_path(__FILE__), $className);
+            $fullClassName = '\\toebox\\plugin\\inc\\' . $className;
+            self::$PluginInstancess[$className] = new $fullClassName();
+            $this->hookinPlugin(self::$PluginInstancess[$className]);
+        }
+    }
+    
     /**
      * ensure object type when executing Register
      *
@@ -98,4 +111,101 @@ class PluginController
     {
         // Deactivation Code Goes Here
     }
+    /**
+     * register the settings page with the wordpress admin bar
+     */
+    public function RegisterSettingsPage()
+    {
+        $this->initPrimarySettings();
+        $this->initPluginSettings();
+        
+        add_menu_page($this->SettingsPageTitle,
+            $this->PluginTitle,
+            $this->SettingsCapability,
+            $this->PluginSlug,
+            array($this, 'RenderSettingsPage'));
+    }
+    /**
+     * initialize primary settings
+     */
+    public function initPrimarySettings()
+    {
+        // OVERWRITE for your plugin    
+    }
+    public function initPluginSettings()
+    {
+        //TODO: cycle through plugins and get their settings
+    }
+    /**
+     * capture the output of a lamda function
+     *
+     * @param callable $callback
+     * @param array $parameters
+     * @return string
+     */
+    public static function GetOutput(callable $callback, array $parameters = array())
+    {
+        ob_start();
+    
+        call_user_func_array($callback, $parameters);
+    
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+    //---------------------------------------------------------------------------- local settings
+    /**
+     * multi-level array
+     * page
+     *   section
+     *     Setting
+     * @var array
+     */
+    protected $settings = array('main' => array('primary' => array()));
+    /**
+     * display the actual settings page
+     */
+    public function RenderSettingsPage()
+    {
+        include self::$AdminPath . 'tpl/settings.php';
+    }
+    
+    public function RenderSettingsSection($key)
+    {
+    
+    }
+    
+    public function addPrimarySetting(Setting $setting)
+    {
+        $this->settings['main']['primary'][$setting->Id] = $setting;        
+    }
+    
+    public function addSetting(Setting $setting, $page = 'main', $section = 'primary')
+    {
+        $this->GetSettingSection($section, $page);
+        $this->settings[$page][$section][$setting->Id] = $setting;
+    }
+    
+    public function GetSettingPage($key)
+    {
+        if (!array_key_exists($key, $this->settings))
+        {
+            $this->settings[$key] = array();
+        }
+        
+        return $this->settings[$key];
+    }
+    
+    public function GetSettingSection($section, $page = 'main')
+    {
+        $pageArray = $this->GetSettingPage($page);
+        
+        if (!array_key_exists($section, $pageArray))
+        {
+            $this->settings[$page][$section] = array();
+        }
+        
+        return $pageArray[$section];
+    }
+    
 }

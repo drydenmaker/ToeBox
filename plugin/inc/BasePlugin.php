@@ -277,6 +277,7 @@ abstract class BasePlugin
     { 
         // override and put your functionality here 
     }
+    
     protected $defaultSetting = array(
         'title' => '',
         'label' => '',
@@ -284,41 +285,46 @@ abstract class BasePlugin
         'sanitize_callback' => 'sanitize_text_field',
         'choices' => array(),
     );
+    
     /**
-     * Page Title => 
-     *   Section Title => 
-     *       id => {title, description, placeholder default, type, sanitize_callback}
-     *       
-     * settings 
+     * multi-level array
      * 
+     * page
+     *   section
+     *     Setting
+     *     
      * @var array
      */
     public $Settings = array();
-    /**
-     * Process settings array and create settings screen
-     */
-    public final function ProcessSettingsScreen()
+
+    public function addSetting(Setting $setting, $page = 'main', $section = 'primary')
     {
-        foreach ($this->Settings as $page => $settingsSection)
-        {
-            $pageSlug = $this->LowerScore($page);
-            add_theme_page($page, $page, 'edit_theme_options', $pageSlug);
-            
-            foreach ($settingsSection as $sectionTitle => $options)
-            {
-                $sectionSlug = $this->LowerScore($sectionTitle);
-                add_settings_section($sectionSlug, $sectionTitle, function(){ print "<h4>$sectionTitle</h4>"; }, $pageSlug);
-                
-                foreach ($options as $id => $field)
-                {
-                    $id = $this->LowerScore($id);
-                    $filteredField = array_merge($this->defaultSetting, $field, array('id' => $id, 'section' => $sectionSlug));
-                    
-                    add_settings_field($id, $filteredField['title'], array($this, 'RenderField'), $pageSlug, $sectionSlug, $filteredField);
-                }
-            }
-        }
+        $this->GetSettingSection($section, $page);
+        $this->Settings[$page][$section][$setting->Id] = $setting;
     }
+    
+    public function GetSettingPage($key)
+    {
+        if (!array_key_exists($key, $this->Settings))
+        {
+            $this->Settings[$key] = array();
+        }
+    
+        return $this->Settings[$key];
+    }
+    
+    public function GetSettingSection($section, $page = 'main')
+    {
+        $pageArray = $this->GetSettingPage($page);
+    
+        if (!array_key_exists($section, $pageArray))
+        {
+            $this->Settings[$page][$section] = array();
+        }
+    
+        return $pageArray[$section];
+    }
+
     /**
      * 
      * 
