@@ -32,20 +32,26 @@ $toebox_link_pages_args = empty($toebox_link_pages_args) ? array() : $toebox_lin
         {
         	background-color: <?php print toebox\inc\Toebox::$Settings[TOEBOX_CONTENT_BACKGROUND_COLOR]; ?>;
         }
+        <?php
+
+if (!empty(get_header_image())) :?>
+        header{
+            background: transparent url('<?php header_image(); ?>');
+            background-repeat: no-repeat; 
+        	background-position: center center; 
+        	background-size: cover;
+        }
+  
+<?php endif; ?>
     </style>
 
 </head>
 <body <?php body_class(); ?>>
+<header class="clearfix">
 <!--[if lt IE 9]>
 	<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 <![endif]-->
-<?php
-
-if (!empty(get_header_image())) :?>
-<div style="height: 39vh; margin-bottom: -39vh; overflow:hidden; background: transparent url('<?php header_image(); ?>'); background-repeat: no-repeat; background-position: center center; background-size: cover;">
-&nbsp;
-</div>
-<?php endif;
+<?php 
 
 if (!toebox\inc\ToeBox::$Settings[TOEBOX_USE_WIDGET_FOR_HEADER]) include get_template_directory() . '/tpl/widget/header.php';
 
@@ -70,5 +76,6 @@ if (!array_key_exists(TOEBOX_USE_WIDGET_FOR_NAV_MENU, toebox\inc\ToeBox::$Settin
 
 
 ?>
+</header>
 <!-- END TOEBOX HEADER -->
 
