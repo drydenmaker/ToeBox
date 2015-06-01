@@ -306,7 +306,21 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
         
         return apply_filters('nav_menu_walker_arguments', $args);
     }
-
+    /**
+     * list of sluggs to hide on small screens
+     * @var unknown
+     */
+    public $HideOnSmall = array();
+    /**
+     * list of sluggs to only show on small screens
+     * @var unknown
+     */
+    public $SowOnlyOnSmall = array();
+    /**
+     * list of sluggs to defalut to open on small screens
+     * @var unknown
+     */ 
+    public $OpenOnSmall = array();
     /**
      * extract class string from element
      * 
@@ -314,13 +328,44 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
      * @param depth
      * @param args
      */
-    private function GetClass($element, $depth, $args)
+    protected function GetClass($element, $depth, $args)
     {
         $classes = empty($element->classes) ? array() : (array) $element->classes;
         $classes[] = 'menu-item-' . $element->ID;
+        
+        $classes = $this->processSmallClasses($element, $classes, $args);
+        
+        //print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($classes, true)).'</pre>';
     
         $classes = $this->HandleElCssClasses($classes, $element, $args, $depth);
         return join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $element, $args, $depth));
+    }
+    
+
+    protected function processSmallClasses($element, $classes, $args)
+    {
+       //print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($args, true)).'</pre>';
+        
+        
+        if (empty($this->SowOnlyOnSmall) && !empty($args->show_only_on_small))
+            $this->SowOnlyOnSmall = array_map('trim',explode(',', strtolower($args->show_only_on_small)));
+    
+        if (empty($this->HideOnSmall) && !empty($args->hide_on_small))
+            $this->HideOnSmall = array_map('trim',explode(',', strtolower($args->hide_on_small)));
+    
+        if (empty($this->OpenOnSmall) && !empty($args->open_on_small))
+            $this->OpenOnSmall = array_map('trim',explode(',', strtolower($args->open_on_small)));
+    
+        // hide on md and lg
+        $onlyOnSmall = array_diff($this->SowOnlyOnSmall, $this->HideOnSmall);
+        if (in_array(strtolower($element->post_name), $onlyOnSmall)) $classes[] = 'hidden-md hidden-lg';
+        // hide on small
+        if (in_array(strtolower($element->post_name), $this->HideOnSmall)) $classes[] = 'hidden-sm hidden-xs';
+        // open on small
+        if (in_array(strtolower($element->post_name), $this->OpenOnSmall)) $classes[] = 'sm-open';
+    
+    
+        return $classes;
     }
     /**
      * convert associative array to attribute string

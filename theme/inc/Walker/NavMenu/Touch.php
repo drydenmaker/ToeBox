@@ -26,19 +26,7 @@ class Touch extends AbstractMenu
                         str_replace('<!-- Search -->', get_search_form(false),
                                         \toebox\inc\ToeBox::GetFileContents('/tpl/menu_wrap_touch.php')));
     }
-    /**
-     * 
-     * @param array $classes
-     * @param object $item
-     * @param \stdClass $args
-     * @param int $depth
-     * @return unknown
-     */
-    public function HandleElCssClasses($classes, $item, $args = array(), $depth = 0)
-    {
-        if (@$args->has_children) array_unshift($classes, $this->openOnHover ? 'dropdown-hover' : 'dropdown');
-        return $classes;
-    }
+    
     /**
      * format subtitle for display if enabled
      * 
@@ -402,17 +390,21 @@ class Touch extends AbstractMenu
      * @param depth
      * @param args
      */
-    private function GetClass($element, $depth, $args)
+    protected function GetClass($element, $depth, $args)
     {
         $classes = empty($element->classes) ? array() : (array) $element->classes;
         $classes[] = 'menu-item-' . $element->ID;
         $classes[] = 'menu-level-' . $depth;
+        $classes[] = 'menu-' . $element->post_name;
         
         if ($element->has_children) $classes[] = 'dropdopwn';
-    
+        
+        $classes = $this->processSmallClasses($element, $classes, $args);
+            
         $classes = $this->HandleElCssClasses($classes, $element, $args, $depth);
         return join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $element, $args, $depth));
     }
+        
     /**
      * convert associative array to attribute string
      * 
@@ -432,45 +424,3 @@ class Touch extends AbstractMenu
         return $attributesString;
     }
 }
-
-
-
-// add_filter('nav_menu_link_attributes', function($atts = array()){
-
-//     $arr = get_defined_vars();
-//     print 'link_attributes<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
-
-
-//     // alter links
-//     return $atts;
-// });
-
-// add_filter('nav_menu_attr_title', function($atts = array()){
-
-//     $arr = get_defined_vars();
-//     print 'titl<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
-
-
-//     // alter links
-//     return $atts;
-// });
-
-// add_filter('nav_menu_description', function($atts = array()){
-
-//     $arr = get_defined_vars();
-//     print 'description<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
-
-
-//     // alter links
-//     return $atts;
-// });
-
-// add_filter('nav_menu_meta_box_object', function($atts = array()){
-
-//     $arr = get_defined_vars();
-//     print 'box_object<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
-
-
-//     // alter links
-//     return $atts;
-// });

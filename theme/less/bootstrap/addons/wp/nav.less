@@ -146,6 +146,40 @@
     }
 }
 
+/* Small devices (tablets, 768px and up) */
+@media (max-width: @screen-xs-max)
+{
+    .tb-nav .sm-open
+    {
+        > a > .glyphicon-chevron-down
+        {
+            display: none;
+        }
+        .dropdown-menu {
+            display: inherit;
+            position: static;
+            float: none;
+            width: auto;
+            margin-top: 0;
+            background-color: transparent;
+            border: 0;
+            box-shadow: none;
+            > li > a,
+            .dropdown-header {
+            padding: 5px 15px 5px 25px;
+            }
+            > li > a {
+            line-height: @line-height-computed;
+            color:  @navbar-default-link-color !important;
+            &:hover,
+            &:focus {
+                background-image: none;
+            }
+            }
+        }
+    }
+}
+
 .tb-hover-nav
 {
 	background-color: @component-bg;

@@ -7275,6 +7275,34 @@ article .pagination {
     background-size: 15px 15px;
   }
 }
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 767px) {
+  .tb-nav .sm-open > a > .glyphicon-chevron-down {
+    display: none;
+  }
+  .tb-nav .sm-open .dropdown-menu {
+    display: inherit;
+    position: static;
+    float: none;
+    width: auto;
+    margin-top: 0;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+  .tb-nav .sm-open .dropdown-menu > li > a,
+  .tb-nav .sm-open .dropdown-menu .dropdown-header {
+    padding: 5px 15px 5px 25px;
+  }
+  .tb-nav .sm-open .dropdown-menu > li > a {
+    line-height: 20px;
+    color: #ec7225 !important;
+  }
+  .tb-nav .sm-open .dropdown-menu > li > a:hover,
+  .tb-nav .sm-open .dropdown-menu > li > a:focus {
+    background-image: none;
+  }
+}
 .tb-hover-nav {
   background-color: #222222;
 }

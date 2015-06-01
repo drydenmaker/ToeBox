@@ -16,12 +16,9 @@ add_action( 'widgets_init', function()
     require_once get_template_directory().'/inc/widget/AccordionMenu.php';
     require_once get_template_directory().'/inc/widget/TouchMenu.php';
 
-    register_widget( 'toebox\inc\widget\BareMenu' );
-    register_widget( 'toebox\inc\widget\FlatMenu' );
     register_widget( 'toebox\inc\widget\HeaderLogoWidget' );
     register_widget( 'toebox\inc\widget\HeaderLogoCornersWidget' );
     register_widget( 'toebox\inc\widget\HeaderWidget' );
-    register_widget( 'toebox\inc\widget\SearchRowWidget' );
     register_widget( 'toebox\inc\widget\AccordionMenu' );
     register_widget( 'toebox\inc\widget\TouchMenu' );
 
