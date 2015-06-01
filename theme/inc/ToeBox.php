@@ -235,7 +235,7 @@ class ToeBox
 
         // wordpress output
         $post_title = get_the_title();
-        $post_title = (empty($post_title)) ? do_shortcode('[tb-icon glyph="link" ]') : $post_title;
+        $post_title = (empty($post_title)) ? '(no title)' : $post_title;
 
         $post_date = get_the_time(get_option('date_format'));
         $the_post_thumbnail = get_the_post_thumbnail( $post->ID, 'full');

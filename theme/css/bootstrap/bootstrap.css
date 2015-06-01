@@ -6491,7 +6491,9 @@ button.close {
 .panel-body:before,
 .panel-body:after,
 .modal-footer:before,
-.modal-footer:after {
+.modal-footer:after,
+.entry-paging:before,
+.entry-paging:after {
   content: " ";
   display: table;
 }
@@ -6509,7 +6511,8 @@ button.close {
 .navbar-collapse:after,
 .pager:after,
 .panel-body:after,
-.modal-footer:after {
+.modal-footer:after,
+.entry-paging:after {
   clear: both;
 }
 .center-block {
@@ -7087,6 +7090,68 @@ article .entry-metadata {
 article .entry-content {
   padding: 2vw;
 }
+.entry-paging {
+  margin: 7.5px -15px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.entry-paging > li > a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 20px;
+}
+@media (max-width: 767px) {
+  .entry-paging .open .dropdown-menu {
+    position: static;
+    float: none;
+    width: auto;
+    margin-top: 0;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+  .entry-paging .open .dropdown-menu > li > a,
+  .entry-paging .open .dropdown-menu .dropdown-header {
+    padding: 5px 15px 5px 25px;
+  }
+  .entry-paging .open .dropdown-menu > li > a {
+    line-height: 20px;
+  }
+  .entry-paging .open .dropdown-menu > li > a:hover,
+  .entry-paging .open .dropdown-menu > li > a:focus {
+    background-image: none;
+  }
+}
+@media (min-width: 768px) {
+  .entry-paging {
+    float: left;
+    margin: 0;
+  }
+  .entry-paging > li {
+    float: left;
+  }
+  .entry-paging > li > a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
+.entry-paging > .navbar-header,
+.entry-paging > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .entry-paging > .navbar-header,
+  .entry-paging > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+article .pagination {
+  margin: 0 !important;
+}
 /* NAV */
 .navbar-header .navbar-toggle {
   margin-left: 15px !important;
@@ -7285,7 +7350,11 @@ article .entry-content {
   list-style: none;
 }
 .sidebar .widget_recent_entries li,
-.sidebar .widget_rss li {
+.sidebar .widget_rss li,
+.sidebar .widget_recent_comments li,
+.sidebar .widget_archive li,
+.sidebar .widget_categories li,
+.sidebar .widget_meta li {
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: thin dotted #222222;
@@ -7355,6 +7424,9 @@ img {
   display: inline-block;
   height: auto;
   max-width: 100%;
+}
+img.alignnone {
+  margin: 0;
 }
 img[src$=".svg"] {
   width: 100% !important;
