@@ -30,18 +30,50 @@
 
 
 }
+.tb-search.search-form
+{
+	margin: 8px;
+	float: right;
+	.search-field
+	{
+		-webkit-transition: all 0.3s ease;
+		-moz-transition: all 0.3s ease;
+		-o-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+		background-color: @brand-light;
+		.border-left-radius(3px);
+		border-color: @brand-dark;
+		.placeholder(@brand-text-contrast);
+		width: 45%;
+		float: right;
+		position: absolute;
+		right: 63px;
+		top: 8px;
+	}
+	.search-field:focus
+	{
+		width: 90%;
+	}
+}
 .navbar-form
 {
 	float: right;
 	padding-left: 0;
 	.search-form-container
 	{
-	  right: 0;
+        text-align: right;
+        position: absolute;
+	    right: 8px;
+        width: 250px;
+            
 	}
 	.search-form
 	{
 		input
 		{
+			-webkit-transition: all 0.3s ease;
+			-moz-transition: all 0.3s ease;
+			-o-transition: all 0.3s ease;
 			transition: all 0.3s ease;
 			background-color: @brand-light;
 			.border-left-radius(3px);

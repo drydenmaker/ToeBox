@@ -14,7 +14,7 @@ get_header();
 		<div class="col-sm-12 tb-main">
 
 <?php
-include get_template_directory() . 'tpl/content/loop.php';
+include get_template_directory() . '/tpl/content/loop.php';
 ?>
 
         </div>

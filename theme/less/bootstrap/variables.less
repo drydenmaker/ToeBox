@@ -117,9 +117,9 @@
 
 @btn-font-weight:                normal;
 
-@btn-default-color:              #333;
-@btn-default-bg:                 #fff;
-@btn-default-border:             #ccc;
+@btn-default-color:              #E4E4E4;
+@btn-default-bg:                 #222;
+@btn-default-border:             @btn-default-bg; // lighten(, 5%); // #E4E4E4;
 
 @btn-primary-color:              #fff;
 @btn-primary-bg:                 @brand-primary;
@@ -141,7 +141,7 @@
 @btn-danger-bg:                  @brand-danger;
 @btn-danger-border:              darken(@btn-danger-bg, 5%);
 
-@btn-link-disabled-color:        @gray-light;
+@btn-link-disabled-color:        @gray-darker;
 
 
 //== Forms

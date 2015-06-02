@@ -96,10 +96,10 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
     {
         $subTitle = '';
         if (\toebox\inc\Toebox::$Settings[TOEBOX_MENU_SUBTITLES]) {
-	        if (array_key_exists('title', $attributes)) {
-	            $subTitle .= $this->FormatSubTitle($attributes['title']);
-	            $attributes['title'] = null;
-	        }
+        if (array_key_exists('title', $attributes)) {
+            $subTitle .= $this->FormatSubTitle($attributes['title']);
+            $attributes['title'] = null;
+        }
         }
         return $subTitle;
     }

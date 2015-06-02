@@ -38,6 +38,7 @@ class TouchMenu extends BaseWidget
         $this->defaultValue($args, 'hide_on_small', '');
         $this->defaultValue($args, 'show_only_on_small', '');
         $this->defaultValue($args, 'open_on_small', '');
+        $this->defaultValue($args, 'sub_text', false);
 
     }
     
