@@ -4,10 +4,6 @@ namespace toebox\inc\Walker\NavMenu;
 abstract class AbstractMenu extends \Walker_Nav_Menu
 {
     /** -------------------------------------------------------  TO EXTEND */
-    /**
-     * switch weather or not to allow hover
-     * @var bool
-     */
     
     public $WrapTemplate = 'accordion_wrap';
 
@@ -83,7 +79,7 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
         $item_output = $this->getArgument($args, 'before');
         $item_output .= '<a' . $attributes . '>';
     
-        $item_output .= $this->getArgument($args, 'link_before') . $text . $this->getArgument($args, 'link_after');
+        $item_output .= $this->getArgument($args, 'link_before') . do_shortcode($text) . $this->getArgument($args, 'link_after');
         $item_output .= '</a>';
         $item_output .= $this->getArgument($args, 'after');
     
@@ -96,16 +92,26 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
      * @param array $attributes
      * @return string
      */
-    private function GetSubTitle($attributes)
+    protected function GetSubTitle($attributes)
     {
         $subTitle = '';
         if (\toebox\inc\Toebox::$Settings[TOEBOX_MENU_SUBTITLES]) {
-            if (array_key_exists('title', $attributes)) {
-                $subTitle .= $this->FormatSubTitle($attributes['title']);
-                $attributes['title'] = null;
-            }
+	        if (array_key_exists('title', $attributes)) {
+	            $subTitle .= $this->FormatSubTitle($attributes['title']);
+	            $attributes['title'] = null;
+	        }
         }
         return $subTitle;
+    }
+    /**
+     * format subtitle for display if enabled
+     *
+     * @param string $title
+     * @return string
+     */
+    public function FormatSubTitle($title)
+    {
+        return  "<div class='subtitle'>{$title}</div>";
     }
     
     public $openOnHover = false;
@@ -125,7 +131,7 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
     
     /** -------------------------------------------------------  INTERNALS */
     
-
+    protected static $foeMenuId = 0;
     /**
      * supply the markup that wraps the menu
      * must contain %3$s for the menu itself
@@ -135,8 +141,8 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
      */
     function GetItemWrap($args)
     {
-        static $foeMenuId = 0;
-        $term_id = (array_key_exists('menu', $args) && $args['menu']) ? $args['menu'] : ++$foeMenuId;
+        
+        $term_id = (array_key_exists('menu', $args) && $args['menu']) ? $args['menu'] : ++self::$foeMenuId;
     
         return str_replace('accordion_id', 'tb-accordian-' . $term_id,
                         \toebox\inc\ToeBox::GetFileContents('/tpl/'.$this->WrapTemplate.'.php'));
@@ -335,7 +341,7 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
         
         $classes = $this->processSmallClasses($element, $classes, $args);
         
-        //print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($classes, true)).'</pre>';
+        print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($classes, true)).'</pre>';
     
         $classes = $this->HandleElCssClasses($classes, $element, $args, $depth);
         return join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $element, $args, $depth));
@@ -358,9 +364,9 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
     
         // hide on md and lg
         $onlyOnSmall = array_diff($this->SowOnlyOnSmall, $this->HideOnSmall);
-        if (in_array(strtolower($element->post_name), $onlyOnSmall)) $classes[] = 'hidden-md hidden-lg';
+        if (in_array(strtolower($element->post_name), $onlyOnSmall)) $classes[] = 'visible-xs-block';
         // hide on small
-        if (in_array(strtolower($element->post_name), $this->HideOnSmall)) $classes[] = 'hidden-sm hidden-xs';
+        if (in_array(strtolower($element->post_name), $this->HideOnSmall)) $classes[] = 'hidden-xs';
         // open on small
         if (in_array(strtolower($element->post_name), $this->OpenOnSmall)) $classes[] = 'sm-open';
     
@@ -393,5 +399,15 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
     protected function getPadding($depth)
     {
         return "\n".str_repeat('  ', $depth);
+    }
+    /**
+     * meant to check if an array key is present and the stored value is equal
+     * @param string $key key
+     * @param array $array list
+     * @param string $value value
+     */
+    protected function isArraValue($key, $array = array(), $value = true, $strict = false)
+    {
+        return (array_key_exists($key, $array) && ($array[$key] === $value || (!$strict && $array[$key] === $value)));
     }
 }

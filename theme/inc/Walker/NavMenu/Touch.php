@@ -11,6 +11,7 @@ class Touch extends AbstractMenu
      * @var bool
      */
     public $openOnHover = false;
+    public $WrapTemplate = 'menu_wrap_touch';
     /**
      * supply the markup that wraps the menu
      * must contain %3$s for the menu itself
@@ -20,23 +21,12 @@ class Touch extends AbstractMenu
      */
     function GetItemWrap($args)
     {
-        $term_id = (array_key_exists('menu', $args) && $args['menu'] && property_exists($args['menu'], 'term_id')) ? $args['menu']->term_id : '';
-    
-        return str_replace('tb-navbar-collapse', 'tb-navbar-collapse-' . $term_id,
+        $wrap = parent::GetItemWrap($args);
+        return str_replace('tb-navbar-collapse', 'tb-navbar-collapse-' . self::$foeMenuId,
                         str_replace('<!-- Search -->', get_search_form(false),
-                                        \toebox\inc\ToeBox::GetFileContents('/tpl/menu_wrap_touch.php')));
+                                        $wrap));
     }
     
-    /**
-     * format subtitle for display if enabled
-     * 
-     * @param string $title
-     * @return string
-     */
-    public function FormatSubTitle($title)
-    {
-        return  "<div class='subtitle'>{$title}</div>";
-    }
     /**
      * Open a level element
      * 
@@ -136,6 +126,8 @@ class Touch extends AbstractMenu
                         'data-toggle="dropdown" aria-expanded="false">'.
                         self::$ChevronTop.
                         '</a>';
+            
+            if ($this->isArraValue('sub_text', $args)) $subTitle = $this->GetSubTitle($attributes);
             
             $item_output = $this->FormatElementRaw($title, $args, $atts);
             
