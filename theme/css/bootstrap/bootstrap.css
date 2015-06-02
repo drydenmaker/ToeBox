@@ -3003,7 +3003,7 @@ select[multiple].form-group-lg .form-control {
 .btn:hover,
 .btn:focus,
 .btn.focus {
-  color: #333333;
+  color: #e4e4e4;
   text-decoration: none;
 }
 .btn:active,
@@ -3024,9 +3024,9 @@ fieldset[disabled] .btn {
   box-shadow: none;
 }
 .btn-default {
-  color: #333333;
-  background-color: #ffffff;
-  border-color: #cccccc;
+  color: #e4e4e4;
+  background-color: #222222;
+  border-color: #222222;
 }
 .btn-default:hover,
 .btn-default:focus,
@@ -3034,9 +3034,9 @@ fieldset[disabled] .btn {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: #333333;
-  background-color: #e6e6e6;
-  border-color: #adadad;
+  color: #e4e4e4;
+  background-color: #080808;
+  border-color: #030303;
 }
 .btn-default:active,
 .btn-default.active,
@@ -3061,12 +3061,15 @@ fieldset[disabled] .btn-default:active,
 .btn-default.disabled.active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
-  background-color: #ffffff;
-  border-color: #cccccc;
+  background-color: #222222;
+  border-color: #222222;
 }
 .btn-default .badge {
-  color: #ffffff;
-  background-color: #333333;
+  color: #222222;
+  background-color: #e4e4e4;
+}
+.olejunk {
+  color: #222222;
 }
 .btn-primary {
   color: #ffffff;
@@ -3323,7 +3326,7 @@ fieldset[disabled] .btn-link {
 fieldset[disabled] .btn-link:hover,
 .btn-link[disabled]:focus,
 fieldset[disabled] .btn-link:focus {
-  color: #999999;
+  color: #222222;
   text-decoration: none;
 }
 .btn-lg,
@@ -6344,7 +6347,6 @@ button.close {
   color: #ffffff;
   text-align: left;
   text-transform: uppercase;
-  font-size: 2vw;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 .carousel-caption-left .tagline {
@@ -6353,7 +6355,6 @@ button.close {
   font-size: 3em;
   font-size: 4vw;
   line-height: 0.6em;
-  line-height: 3.4vw;
   text-transform: uppercase;
   font-family: 'Oswald', sans-serif;
   margin: 3px;
@@ -6363,14 +6364,10 @@ button.close {
   font-size: 4em;
   font-size: 5vw;
   line-height: 0.7em;
-  line-height: 4.7vw;
   text-transform: uppercase;
   font-family: 'Oswald', sans-serif;
   font-weight: bolder;
   margin: 3px;
-}
-.carousel-short {
-  font-size: 0.6vw;
 }
 .carousel-short .item-section {
   float: left;
@@ -6832,6 +6829,10 @@ pad-4 {
   padding-left: 8px;
   padding-right: 8px;
 }
+.h-pad-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .v-pad-2 {
   padding-top: 2px;
   padding-bottom: 2px;
@@ -6847,6 +6848,10 @@ pad-4 {
 .v-pad-8 {
   padding-top: 8px;
   padding-bottom: 8px;
+}
+.v-pad-10 {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 /* =WordPress Core
 -------------------------------------------------------------- */
@@ -6987,7 +6992,7 @@ table .table {
 }
 .tb-header {
   padding: 8px;
-  padding-top: 2vw;
+  padding-top: 1vw;
 }
 .tb-header h1 {
   margin: 8px;
@@ -7159,6 +7164,38 @@ article .pagination {
   left: -100%;
   margin-left: 10px;
 }
+.tb-search.search-form {
+  margin: 8px;
+  float: right;
+}
+.tb-search.search-form .search-field {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: #f09054;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+  border-color: #cc5a12;
+  width: 45%;
+  float: right;
+  position: absolute;
+  right: 63px;
+  top: 8px;
+}
+.tb-search.search-form .search-field::-moz-placeholder {
+  color: #ffffff;
+  opacity: 1;
+}
+.tb-search.search-form .search-field:-ms-input-placeholder {
+  color: #ffffff;
+}
+.tb-search.search-form .search-field::-webkit-input-placeholder {
+  color: #ffffff;
+}
+.tb-search.search-form .search-field:focus {
+  width: 90%;
+}
 .navbar-form {
   float: right;
   padding-left: 0;
@@ -7170,7 +7207,10 @@ article .pagination {
   width: 250px;
 }
 .navbar-form .search-form input {
-  transition: width 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
   background-color: #f09054;
   border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
