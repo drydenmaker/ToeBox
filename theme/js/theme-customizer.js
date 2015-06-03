@@ -29,7 +29,7 @@
 		
 	});
 	// set the initial state of the color boxes
-	ToggleCustomColorEditor($('#customize-control-toebox_use_less>[type="checkbox"]', window.parent.document).attr('checked'));
+	ToggleCustomColorEditor($('#customize-control-toebox_use_less>label>[type="checkbox"]', window.parent.document).attr('checked'));
 	
 	
 } )( jQuery );
