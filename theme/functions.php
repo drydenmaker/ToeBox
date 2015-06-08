@@ -61,8 +61,8 @@ add_action( 'wp_enqueue_scripts', function()
 
     if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_USE_LESS])
     {
-        wp_enqueue_style('bootstrap', $templateDir . '/less/bootstrap/bootstrap-wp.less');
-        wp_enqueue_style('bootstrap-theme', $templateDir . '/less/bootstrap/theme-wp.less');
+        wp_enqueue_style('bootstrap', $templateDir . '/less/bootstrap/customization/wp/bootstrap.less');
+        wp_enqueue_style('bootstrap-theme', $templateDir . '/less/bootstrap/customization/wp/theme.less');
 
         if (WP_DEBUG) WPLessPlugin::getInstance()->processStylesheets();
     }
@@ -73,6 +73,8 @@ add_action( 'wp_enqueue_scripts', function()
     }
 
     wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+    
+    wp_enqueue_style('tb-google-fonts', 'https://fonts.googleapis.com/css?family=' . \toebox\inc\ToeBox::$Settings[TOEBOX_GOOGLE_FONTS]);
 
     wp_enqueue_script('bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), null, true);
     wp_enqueue_script('modernizr', $templateDir . '/js/vendor/modernizr.min.js', array('jquery'), null, true);
@@ -174,10 +176,6 @@ if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_U
 
     $lessConfig = WPLessPlugin::getInstance()->getConfiguration();
 
-    // compiles in the active theme, in a ‘compiled-css’ subfolder
-    $lessConfig->setUploadDir(get_stylesheet_directory() . '/compiled-css');
-    $lessConfig->setUploadUrl(get_stylesheet_directory_uri() . '/compiled-css');
-
     $less = WPLessPlugin::getInstance();
     $less->dispatch();
 
@@ -186,6 +184,11 @@ if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_U
     $less->addVariable('brand-info', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_INFO]); //24569B
     $less->addVariable('brand-warning', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_WARNING]); //ECA125
     $less->addVariable('brand-danger', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_DANGER]); //EF5870
+    
+    $less->addVariable('font-size-base', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_SIZE_BASE]); //14px;
+    $less->addVariable('font-family-monospace', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_MONOSPACE]); //14px;
+    $less->addVariable('font-family-serif', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_SERIF]); //14px;
+    $less->addVariable('font-family-sans-serif', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_SANS_SERIF]); //14px;
 }
 
 

@@ -59,8 +59,12 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
      * @return string
      */
     public function FormatElement($element, $args, $attributes = array())
-    {
-        return $this->FormatElementRaw(apply_filters('the_title', $element->title, $element->ID), $args, $attributes);
+    {        
+        $title = apply_filters('the_title', $element->title, $element->ID);
+        
+        if (isset($args->sub_text) && $args->sub_text) $title .= $this->GetSubTitle($element);
+        
+        return $this->FormatElementRaw($title, $args, $attributes);
     }
     
     /**
@@ -92,15 +96,14 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
      * @param array $attributes
      * @return string
      */
-    protected function GetSubTitle($attributes)
+    protected function GetSubTitle(\WP_Post $element)
     {
         $subTitle = '';
-        if (\toebox\inc\Toebox::$Settings[TOEBOX_MENU_SUBTITLES]) {
-        if (array_key_exists('title', $attributes)) {
-            $subTitle .= $this->FormatSubTitle($attributes['title']);
-            $attributes['title'] = null;
+        
+        if (isset($element->attr_title) && !empty($element->attr_title)) {
+            $subTitle = $this->FormatSubTitle($element->attr_title);
         }
-        }
+        
         return $subTitle;
     }
     /**

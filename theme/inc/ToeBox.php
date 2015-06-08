@@ -36,6 +36,12 @@ define('TOEBOX_LESS_COLOR_INFO', 'toebox_less_info');
 define('TOEBOX_LESS_COLOR_WARNING', 'toebox_less_warning');
 define('TOEBOX_LESS_COLOR_DANGER', 'toebox_less_danger');
 
+define('TOEBOX_LESS_FONT_SIZE_BASE', 'font_size_base');
+define('TOEBOX_LESS_FONT_FAMILY_MONOSPACE', 'font_family_monospace');
+define('TOEBOX_LESS_FONT_FAMILY_SERIF', 'font_family_serif');
+define('TOEBOX_LESS_FONT_FAMILY_SANS_SERIF', 'font_family_sans_serif');
+
+define('TOEBOX_GOOGLE_FONTS', 'google_fonts');
 
 $pageLayoutOptions = array(
     'open' => __( 'Open','toebox-basic' ),
@@ -89,6 +95,14 @@ class ToeBox
         TOEBOX_LESS_COLOR_INFO => '#24569B',
         TOEBOX_LESS_COLOR_WARNING => '#ECA125',
         TOEBOX_LESS_COLOR_DANGER => '#EF5870',
+        
+
+        TOEBOX_LESS_FONT_SIZE_BASE => '14px',
+        TOEBOX_LESS_FONT_FAMILY_MONOSPACE => 'Inconsolata, Menlo, Monaco, Consolas, "Courier New", monospace',
+        TOEBOX_LESS_FONT_FAMILY_SERIF => 'Playfair, Georgia, "Times New Roman", Times, serif',
+        TOEBOX_LESS_FONT_FAMILY_SANS_SERIF => 'Arimo, "Helvetica Neue", Helvetica, Arial, sans-serif',
+        
+        TOEBOX_GOOGLE_FONTS => 'Arimo|Playfair|Inconsolata',
 
         TOEBOX_MENU_SUBTITLES => true,
 

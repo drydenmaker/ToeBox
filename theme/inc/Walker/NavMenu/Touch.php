@@ -113,6 +113,8 @@ class Touch extends AbstractMenu
         
         $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);  
         
+        $title = apply_filters('the_title', $item->title, $item->ID);
+        
         // TODO: account for second level menu
         // and side chevron on click
         // make sure click event flows down
@@ -121,25 +123,28 @@ class Touch extends AbstractMenu
         // decide if the link should be split
         if ($atts['href'] != '#')
         {
-            $title = apply_filters('the_title', $item->title, $item->ID) .
-                        '<a href="#" class="'. $toggle .'" '.
+            $title .= '<a href="#" class="'. $toggle .'" '.
                         'data-toggle="dropdown" aria-expanded="false">'.
                         self::$ChevronTop.
                         '</a>';
             
-            if ($this->isArraValue('sub_text', $args)) $subTitle = $this->GetSubTitle($attributes);
+            if (isset($args->sub_text) && $args->sub_text) $title .= $this->GetSubTitle($item);
             
             $item_output = $this->FormatElementRaw($title, $args, $atts);
             
         }
         else 
         {
+            $title .= ' &nbsp; ' . self::$ChevronTop;
+            
+            if (isset($args->sub_text) && $args->sub_text) $title .= $this->GetSubTitle($item);
+            
             $atts['data-toggle'] = "dropdown" ;
             $atts['aria-expanded'] = "false";
             $atts['class'] = $toggle;
                 
             $item_output = $this->FormatElementRaw(
-                                    apply_filters('the_title', $item->title . ' &nbsp; ' . self::$ChevronTop, $item->ID), 
+                                    $title, 
                                     $args, 
                                     $atts);
         }

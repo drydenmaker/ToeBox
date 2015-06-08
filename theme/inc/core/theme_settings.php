@@ -47,6 +47,40 @@ $SettingsControls = array(
         'settings' => TOEBOX_LESS_COLOR_DANGER,
     ),
     
+    /* ----- FONTS ----- */
+    TOEBOX_GOOGLE_FONTS =>  array(
+        'label' => __( 'Google Fonts (pipe delimited)', 'toebox-basic' ),
+        'section' => 'toebox_font_section',
+        'type' => 'text',
+        'settings' => TOEBOX_GOOGLE_FONTS
+    ),
+    
+    TOEBOX_LESS_FONT_SIZE_BASE =>  array(
+        'label' => __( 'Base Font Size', 'toebox-basic' ),
+        'section' => 'toebox_font_section',
+        'type' => 'text',
+        'settings' => TOEBOX_LESS_FONT_SIZE_BASE
+    ),
+    TOEBOX_LESS_FONT_FAMILY_MONOSPACE =>  array(
+        'label' => __( 'Monospace Font Family', 'toebox-basic' ),
+        'section' => 'toebox_font_section',
+        'type' => 'text',
+        'settings' => TOEBOX_LESS_FONT_FAMILY_MONOSPACE
+    ),
+    TOEBOX_LESS_FONT_FAMILY_SERIF =>  array(
+        'label' => __( 'Serif Font Family', 'toebox-basic' ),
+        'section' => 'toebox_font_section',
+        'type' => 'text',
+        'settings' => TOEBOX_LESS_FONT_FAMILY_SERIF
+    ),
+    TOEBOX_LESS_FONT_FAMILY_SANS_SERIF =>  array(
+        'label' => __( 'Sans-Serif Font Family', 'toebox-basic' ),
+        'section' => 'toebox_font_section',
+        'type' => 'text',
+        'settings' => TOEBOX_LESS_FONT_FAMILY_SANS_SERIF
+    ),
+    
+    
     /* ----- LAYOUT ----- */
     TOEBOX_PAGE_LAYOUT => array(
                             'label' => __( 'Page Layout', 'toebox-basic' ),
@@ -271,26 +305,28 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         'toebox_page_layout_section',
                         array(
                             'title' => __( 'Page Layout', 'toebox-basic' ),
-                            'description' => __( 'These settings are specific to ToeBox.', 'toebox-basic' ),
+                            'description' => __( 'Page Layout for ToeBox.', 'toebox-basic' ),
                             'priority' => 90,
                         )
         );
 
-        $wp_customize->add_section(
-                        'toebox_content_layout_section',
-                        array(
-                            'title' => __( 'Content Layout', 'toebox-basic' ),
-                            'description' => __( 'These settings are specific to ToeBox.', 'toebox-basic' ),
-                            'priority' => 91,
-                        )
-        );
+        
         
         $wp_customize->add_section(
                         'toebox_content_layout_section',
                         array(
                             'title' => __( 'Content Layout', 'toebox-basic' ),
-                            'description' => __( 'These settings are specific to ToeBox.', 'toebox-basic' ),
-                            'priority' => 89,
+                            'description' => __( 'Content Layout for ToeBox.', 'toebox-basic' ),
+                            'priority' => 92,
+                        )
+        );
+        
+        $wp_customize->add_section(
+                        'toebox_font_section',
+                        array(
+                            'title' => __( 'Fonts', 'toebox-basic' ),
+                            'description' => __( 'Fonts used in ToeBox.', 'toebox-basic' ),
+                            'priority' => 93,
                         )
         );
 
@@ -496,6 +532,76 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                                         $SettingsControls[TOEBOX_LESS_COLOR_DANGER]
                         )
         );
+        
+        /**
+         * TOEBOX_FONTS
+         */
+        
+        $wp_customize->add_setting(
+                        TOEBOX_GOOGLE_FONTS,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_GOOGLE_FONTS],
+                            'sanitize_callback' => 'sanitize_text_field'
+                        )
+        );
+        $wp_customize->add_control(
+                        TOEBOX_GOOGLE_FONTS,
+                        $SettingsControls[TOEBOX_GOOGLE_FONTS]
+        );
+        
+        
+        
+        $wp_customize->add_setting(
+                        TOEBOX_LESS_FONT_SIZE_BASE,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_LESS_FONT_SIZE_BASE],
+                            'sanitize_callback' => 'sanitize_text_field'
+                        )
+        );
+        $wp_customize->add_control(
+                        TOEBOX_LESS_FONT_SIZE_BASE,
+                        $SettingsControls[TOEBOX_LESS_FONT_SIZE_BASE]
+        );
+        
+        
+        $wp_customize->add_setting(
+                        TOEBOX_LESS_FONT_FAMILY_MONOSPACE,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_LESS_FONT_FAMILY_MONOSPACE],
+                            'sanitize_callback' => 'sanitize_text_field'
+                        )
+        );
+        $wp_customize->add_control(
+                        TOEBOX_LESS_FONT_FAMILY_MONOSPACE,
+                        $SettingsControls[TOEBOX_LESS_FONT_FAMILY_MONOSPACE]
+        );
+        
+        
+        $wp_customize->add_setting(
+                        TOEBOX_LESS_FONT_FAMILY_SERIF,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_LESS_FONT_FAMILY_SERIF],
+                            'sanitize_callback' => 'sanitize_text_field'
+                        )
+        );
+        $wp_customize->add_control(
+                        TOEBOX_LESS_FONT_FAMILY_SERIF,
+                        $SettingsControls[TOEBOX_LESS_FONT_FAMILY_SERIF]
+        );
+        
+        
+        $wp_customize->add_setting(
+                        TOEBOX_LESS_FONT_FAMILY_SANS_SERIF,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_LESS_FONT_FAMILY_SANS_SERIF],
+                            'sanitize_callback' => 'sanitize_text_field'
+                        )
+        );
+        $wp_customize->add_control(
+                        TOEBOX_LESS_FONT_FAMILY_SANS_SERIF,
+                        $SettingsControls[TOEBOX_LESS_FONT_FAMILY_SANS_SERIF]
+        );
+        
         
         /**
          * TOEBOX_LIST_LAYOUT
