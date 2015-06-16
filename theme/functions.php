@@ -133,7 +133,7 @@ add_action( 'after_setup_theme', function()
     	'flex-width'             => false,
     	'uploads'                => true,
     	'random-default'         => false,
-    	'header-text'            => true,
+    	'header-text'            => false,
     	'default-text-color'     => '',
     	'wp-head-callback'       => '',
     	'admin-head-callback'    => '',

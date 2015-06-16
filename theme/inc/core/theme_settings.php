@@ -7,7 +7,7 @@
 
 
 $SettingsControls = array(
-
+    
     /* ----- COLORS ----- */
     TOEBOX_CONTENT_BACKGROUND_COLOR => array(
                             'label' => __( 'Content background color.', 'toebox-basic' ),
@@ -20,7 +20,7 @@ $SettingsControls = array(
                             'type' => 'checkbox',
                             'settings' => TOEBOX_USE_LESS
     ),
-
+    
     TOEBOX_LESS_COLOR_PRIMARY => array(
         'label' => __( 'Bootstrap primary color.', 'toebox-basic' ),
         'section' => 'colors',
@@ -46,7 +46,7 @@ $SettingsControls = array(
         'section' => 'colors',
         'settings' => TOEBOX_LESS_COLOR_DANGER,
     ),
-
+    
     /* ----- FONTS ----- */
     TOEBOX_GOOGLE_FONTS =>  array(
         'label' => __( 'Google Fonts (pipe delimited)', 'toebox-basic' ),
@@ -54,7 +54,7 @@ $SettingsControls = array(
         'type' => 'text',
         'settings' => TOEBOX_GOOGLE_FONTS
     ),
-
+    
     TOEBOX_LESS_FONT_SIZE_BASE =>  array(
         'label' => __( 'Base Font Size', 'toebox-basic' ),
         'section' => 'toebox_font_section',
@@ -79,8 +79,8 @@ $SettingsControls = array(
         'type' => 'text',
         'settings' => TOEBOX_LESS_FONT_FAMILY_SANS_SERIF
     ),
-
-
+    
+    
     /* ----- LAYOUT ----- */
     TOEBOX_PAGE_LAYOUT => array(
                             'label' => __( 'Page Layout', 'toebox-basic' ),
@@ -280,11 +280,11 @@ add_action( 'admin_enqueue_scripts', function ( $hook )
 
 add_action( 'customize_preview_init', function()
 {
-	wp_enqueue_script(
+	wp_enqueue_script( 
 		  'toebox-themecustomizer',			//Give the script an ID
 		  get_template_directory_uri().'/js/theme-customizer.js',//Point to file
 		  array( 'jquery','customize-preview' ),	//Define dependencies
-		  null,						//Define a version (optional)
+		  null,						//Define a version (optional) 
 		  true						//Put script in footer?
 	);
 } );
@@ -310,8 +310,8 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         )
         );
 
-
-
+        
+        
         $wp_customize->add_section(
                         'toebox_content_layout_section',
                         array(
@@ -320,7 +320,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                             'priority' => 92,
                         )
         );
-
+        
         $wp_customize->add_section(
                         'toebox_font_section',
                         array(
@@ -345,7 +345,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
             TOEBOX_USE_WIDGET_FOR_HEADER,
             $SettingsControls[TOEBOX_USE_WIDGET_FOR_HEADER]
         );
-
+        
         /**
          * TOEBOX_USE_WIDGET_FOR_NAV_MENU
          */
@@ -356,12 +356,12 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                             'sanitize_callback' => 'sanitize_text_field'
                         )
         );
-
+        
         $wp_customize->add_control(
                         TOEBOX_USE_WIDGET_FOR_NAV_MENU,
                         $SettingsControls[TOEBOX_USE_WIDGET_FOR_NAV_MENU]
         );
-
+        
         /**
          * TOEBOX_PAGE_LAYOUT
          */
@@ -422,7 +422,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                             'transport' => 'postMessage'
                         )
         );
-
+        
         $wp_customize->add_control(
                         TOEBOX_USE_LESS,
                         $SettingsControls[TOEBOX_USE_LESS]
@@ -440,7 +440,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                             'transport'    => 'postMessage'
                         )
         );
-
+        
         $wp_customize->add_control(
                         new WP_Customize_Color_Control(
                                         $wp_customize,
@@ -457,7 +457,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                             'transport'    => 'postMessage'
                         )
         );
-
+        
         $wp_customize->add_control(
                         new WP_Customize_Color_Control(
                                         $wp_customize,
@@ -474,7 +474,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                             'transport'    => 'postMessage'
                         )
         );
-
+        
         $wp_customize->add_control(
                         new WP_Customize_Color_Control(
                                         $wp_customize,
@@ -491,7 +491,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                             'transport'    => 'postMessage'
                         )
         );
-
+        
         $wp_customize->add_control(
                         new WP_Customize_Color_Control(
                                         $wp_customize,
@@ -508,7 +508,7 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                             'transport'    => 'postMessage'
                         )
         );
-
+        
         $wp_customize->add_control(
                         new WP_Customize_Color_Control(
                                         $wp_customize,
@@ -516,11 +516,11 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                                         $SettingsControls[TOEBOX_LESS_COLOR_DANGER]
                         )
         );
-
+        
         /**
          * TOEBOX_FONTS
          */
-
+        
         $wp_customize->add_setting(
                         TOEBOX_GOOGLE_FONTS,
                         array(
@@ -532,9 +532,9 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_GOOGLE_FONTS,
                         $SettingsControls[TOEBOX_GOOGLE_FONTS]
         );
-
-
-
+        
+        
+        
         $wp_customize->add_setting(
                         TOEBOX_LESS_FONT_SIZE_BASE,
                         array(
@@ -546,8 +546,8 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_LESS_FONT_SIZE_BASE,
                         $SettingsControls[TOEBOX_LESS_FONT_SIZE_BASE]
         );
-
-
+        
+        
         $wp_customize->add_setting(
                         TOEBOX_LESS_FONT_FAMILY_MONOSPACE,
                         array(
@@ -559,8 +559,8 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_LESS_FONT_FAMILY_MONOSPACE,
                         $SettingsControls[TOEBOX_LESS_FONT_FAMILY_MONOSPACE]
         );
-
-
+        
+        
         $wp_customize->add_setting(
                         TOEBOX_LESS_FONT_FAMILY_SERIF,
                         array(
@@ -572,8 +572,8 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_LESS_FONT_FAMILY_SERIF,
                         $SettingsControls[TOEBOX_LESS_FONT_FAMILY_SERIF]
         );
-
-
+        
+        
         $wp_customize->add_setting(
                         TOEBOX_LESS_FONT_FAMILY_SANS_SERIF,
                         array(
@@ -585,8 +585,8 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_LESS_FONT_FAMILY_SANS_SERIF,
                         $SettingsControls[TOEBOX_LESS_FONT_FAMILY_SANS_SERIF]
         );
-
-
+        
+        
         /**
          * TOEBOX_LIST_LAYOUT
          */
@@ -634,23 +634,22 @@ add_action( 'customize_register', function(WP_Customize_Manager $wp_customize )
                         TOEBOX_HIDE_SMALL_SIDEBARS,
                         $SettingsControls[TOEBOX_HIDE_SMALL_SIDEBARS]
         );
-
+        
         /**
          * TOEBOX_SETUP
          */
         $wp_customize->add_setting(
-            TOEBOX_SETUP,
-            array(
-                'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_SETUP],
-                'sanitize_callback' => 'tb_setup_field'
-            )
+                        TOEBOX_SETUP,
+                        array(
+                            'default' => toebox\inc\ToeBox::$SettingsDefaults[TOEBOX_SETUP],
+                            'sanitize_callback' => 'tb_setup_field'
+                        )
         );
-
+        
         $wp_customize->add_control(
-            TOEBOX_SETUP,
-            $SettingsControls[TOEBOX_SETUP]
+                        TOEBOX_SETUP,
+                        $SettingsControls[TOEBOX_SETUP]
         );
-
 
 
 });
@@ -667,7 +666,7 @@ function CustomizerSettingsSave()
 function tb_setup_field($value)
 {
     CustomizerSettingsSave();
-    return sanitize_text_field($value)
+    return sanitize_text_field($value);
 }
 
 function toebox_settings_section_callback(  ) {
@@ -688,6 +687,10 @@ function toebox_options_page(  ) {
 
     if(isset($_GET['settings-updated']) && $_GET['settings-updated'])
     {
+        if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_USE_LESS])
+        {
+            WPLessPlugin::getInstance()->processStylesheets();
+        }
         $settings = get_option( 'toebox_settings' );
         foreach($settings as $key => $value)
         {
@@ -714,9 +717,4 @@ function toebox_options_page(  ) {
 	<?php
 
 
-}
-
-add_action('customize_save_after', 'myCustomizeSaveAfter', 99);
-function myCustomizeSaveAfter() {
-    wp_die("Why don't I die?");
 }

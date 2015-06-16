@@ -3003,7 +3003,7 @@ select[multiple].form-group-lg .form-control {
 .btn:hover,
 .btn:focus,
 .btn.focus {
-  color: #e4e4e4;
+  color: #eeeeee;
   text-decoration: none;
 }
 .btn:active,
@@ -3024,9 +3024,9 @@ fieldset[disabled] .btn {
   box-shadow: none;
 }
 .btn-default {
-  color: #e4e4e4;
-  background-color: #222222;
-  border-color: #222222;
+  color: #eeeeee;
+  background-color: #262626;
+  border-color: #262626;
 }
 .btn-default:hover,
 .btn-default:focus,
@@ -3034,9 +3034,9 @@ fieldset[disabled] .btn {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: #e4e4e4;
-  background-color: #080808;
-  border-color: #030303;
+  color: #eeeeee;
+  background-color: #0d0d0d;
+  border-color: #080808;
 }
 .btn-default:active,
 .btn-default.active,
@@ -3061,12 +3061,12 @@ fieldset[disabled] .btn-default:active,
 .btn-default.disabled.active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
-  background-color: #222222;
-  border-color: #222222;
+  background-color: #262626;
+  border-color: #262626;
 }
 .btn-default .badge {
-  color: #222222;
-  background-color: #e4e4e4;
+  color: #262626;
+  background-color: #eeeeee;
 }
 .btn-primary {
   color: #eeeeee;
@@ -5724,7 +5724,7 @@ button.close {
 }
 .modal-content {
   position: relative;
-  background-color: #eeeeee;
+  background-color: #4d4d4d;
   border: 1px solid #999999;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0;
@@ -5922,7 +5922,7 @@ button.close {
   font-weight: normal;
   line-height: 1.42857143;
   text-align: left;
-  background-color: #eeeeee;
+  background-color: #4d4d4d;
   background-clip: padding-box;
   border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -5947,8 +5947,8 @@ button.close {
   margin: 0;
   padding: 8px 14px;
   font-size: 14px;
-  background-color: #e7e7e7;
-  border-bottom: 1px solid #dadada;
+  background-color: #454545;
+  border-bottom: 1px solid #383838;
   border-radius: -1 -1 0 0;
 }
 .popover-content {
@@ -5983,7 +5983,7 @@ button.close {
   bottom: 1px;
   margin-left: -10px;
   border-bottom-width: 0;
-  border-top-color: #eeeeee;
+  border-top-color: #4d4d4d;
 }
 .popover.right > .arrow {
   top: 50%;
@@ -5998,7 +5998,7 @@ button.close {
   left: 1px;
   bottom: -10px;
   border-left-width: 0;
-  border-right-color: #eeeeee;
+  border-right-color: #4d4d4d;
 }
 .popover.bottom > .arrow {
   left: 50%;
@@ -6013,7 +6013,7 @@ button.close {
   top: 1px;
   margin-left: -10px;
   border-top-width: 0;
-  border-bottom-color: #eeeeee;
+  border-bottom-color: #4d4d4d;
 }
 .popover.left > .arrow {
   top: 50%;
@@ -6027,7 +6027,7 @@ button.close {
   content: " ";
   right: 1px;
   border-right-width: 0;
-  border-left-color: #eeeeee;
+  border-left-color: #4d4d4d;
   bottom: -10px;
 }
 .carousel {
@@ -7423,8 +7423,11 @@ article .pagination {
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
   .tb-nav .navbar-nav > .open {
-    background: url(../../../../images/menu_open_bg.svg) no-repeat bottom center transparent;
+    background: url(../../../../images/menu_open_bg.svg) no-repeat bottom center #000000;
     background-size: 15px 15px;
+  }
+  .tb-nav .navbar-nav > .open a {
+    background-color: transparent !important;
   }
 }
 /* Small devices (tablets, 768px and up) */
@@ -7501,6 +7504,13 @@ article .pagination {
   margin-top: 5px;
   margin-right: -10px;
 }
+.panel .panel-title > a {
+  display: block;
+  width: 100%;
+}
+.panel .panel-title > a:focus {
+  outline: none;
+}
 .accordion_container_class .tb-accordion-leaf {
   padding: 10px 15px;
   border-bottom: 1px solid transparent;
@@ -7521,23 +7531,27 @@ article .pagination {
   background-color: #ffffff;
 }
 /* SIDEBAR WIDGETS */
-.sidebar .tb_widget > ul {
+.tb-sidebar .tb_widget > ul {
   float: left;
   margin: 0.4vw;
   padding: 0.4vw;
 }
-.sidebar .tb_widget li {
+.tb-sidebar .tb_widget li {
   list-style: none;
 }
-.sidebar .widget_recent_entries li,
-.sidebar .widget_rss li,
-.sidebar .widget_recent_comments li,
-.sidebar .widget_archive li,
-.sidebar .widget_categories li,
-.sidebar .widget_meta li {
+.tb-sidebar .widget_recent_entries li,
+.tb-sidebar .widget_rss li,
+.tb-sidebar .widget_recent_comments li,
+.tb-sidebar .widget_archive li,
+.tb-sidebar .widget_categories li,
+.tb-sidebar .widget_meta li {
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: thin dotted #eeeeee;
+}
+.tb-sidebar input[type="search"] {
+  width: 14vw !important;
+  max-width: 82%;
 }
 /*  GALLERY */
 .gallery {

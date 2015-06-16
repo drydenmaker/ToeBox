@@ -4,7 +4,6 @@
  * Licensed under MIT (https://github.com/drydenmaker/toebox/blob/master/LICENSE)
  */
 (function($) {
-	console.log('toebox loaded');
 	/**
 	  * NAME: Bootstrap 3 Triple Nested Sub-Menus
 	  * This script will active Triple level multi drop-down menus in Bootstrap 3.*
