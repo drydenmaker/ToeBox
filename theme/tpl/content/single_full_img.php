@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="tb-container-row-fluid">
 <?php
 toebox\inc\ToeBox::HandleFeaturedImage();
 

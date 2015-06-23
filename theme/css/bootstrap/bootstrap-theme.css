@@ -172,9 +172,8 @@
   background-color: #e46414;
 }
 .navbar-default {
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   border-radius: 0;
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075);
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .active > a {

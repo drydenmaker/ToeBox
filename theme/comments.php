@@ -28,7 +28,7 @@
   $aria_req = ($req ? " aria-required='true'" : '');
   $html5 = true;
 ?>
-<div class="row">
+<div class="tb-container-row-fluid">
     <div class="tb-comments">
     
 <div id="comments" class="comments-area">

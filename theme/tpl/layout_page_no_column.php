@@ -8,7 +8,9 @@ get_header();
 ?>
 <!-- START INDEX CONTENT -->
 <div class="container">
-
+<?php
+toebox\inc\ToeBox::HandleDynamicSidebar('toebox-container-header');
+?>
 	<div class="row">
 		<!-- START MAINBODY ROW -->
 		<div class="col-sm-12 tb-main">
@@ -21,6 +23,9 @@ include get_template_directory() . '/tpl/content/loop.php';
 		<!-- END MAINBODY ROW -->
 	</div>
 	<!-- /.row -->
+<?php 
+toebox\inc\ToeBox::HandleDynamicSidebar('toebox-container-footer');
+?>
 </div>
 <!-- /.container -->
 <!-- END INDEX CONTENT -->

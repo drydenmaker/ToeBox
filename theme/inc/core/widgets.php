@@ -30,63 +30,83 @@ add_action( 'widgets_init', function()
 
 
     register_sidebar(array(
-    'name'          => __('Right Sidebar', 'toebox-basic'),
-    'description'   => __('Appears on all pages that have a right sidebar.', 'toebox-basic'),
-    'id'            => 'toebox_right_sidebar',
-    'before_widget' => '<div id="%1$s" class="tb_widget %2$s clearfix">',
-    'after_widget'  => '</div>',
-    'before_title'  => '<h4>',
-    'after_title'   => '</h4>',
+        'name'          => __('Right Sidebar', 'toebox-basic'),
+        'description'   => __('Appears on all pages that have a right sidebar.', 'toebox-basic'),
+        'id'            => 'toebox_right_sidebar',
+        'before_widget' => '<div id="%1$s" class="tb_widget %2$s clearfix">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4>',
+        'after_title'   => '</h4>',
     ));
 
     register_sidebar(array(
-    'name'          => __('Left Sidebar', 'toebox-basic'),
-    'description'   => __('Appears on all pages that have a left sidebar.', 'toebox-basic'),
-    'id'            => 'toebox_left_sidebar',
-    'before_widget' => '<div id="%1$s" class="tb_widget %2$s clearfix">',
-    'after_widget'  => '</div>',
-    'before_title'  => '<h4>',
-    'after_title'   => '</h4>',
+        'name'          => __('Left Sidebar', 'toebox-basic'),
+        'description'   => __('Appears on all pages that have a left sidebar.', 'toebox-basic'),
+        'id'            => 'toebox_left_sidebar',
+        'before_widget' => '<div id="%1$s" class="tb_widget %2$s clearfix">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4>',
+        'after_title'   => '</h4>',
     ));
 
     register_sidebar(array(
-    'name'          => __('Global Header', 'toebox-basic'),
-    'description'   => __('Appears on all pages before all content.', 'toebox-basic'),
-    'id'            => 'toebox-header',
-    'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
-    'after_widget'  => '</div>',
-    'before_title'  => '<!--',
-    'after_title'   => '-->',
+        'name'          => __('Global Header', 'toebox-basic'),
+        'description'   => __('Appears on all pages before all content.', 'toebox-basic'),
+        'id'            => 'toebox-header',
+        'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<!--',
+        'after_title'   => '-->',
     ));
 
     register_sidebar(array(
-    'name'          => __('Global Footer', 'toebox-basic'),
-    'description'   => __('Appears on all pages after all content.', 'toebox-basic'),
-    'id'            => 'toebox-footer',
-    'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
-    'after_widget'  => '</div>',
-    'before_title'  => '<!--',
-    'after_title'   => '-->',
+        'name'          => __('Global Footer', 'toebox-basic'),
+        'description'   => __('Appears on all pages after all content.', 'toebox-basic'),
+        'id'            => 'toebox-footer',
+        'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<!--',
+        'after_title'   => '-->',
+    ));
+    
+    register_sidebar(array(
+        'name'          => __('Container Header', 'toebox-basic'),
+        'description'   => __('Appears on all pages before all content within the container.', 'toebox-basic'),
+        'id'            => 'toebox-container-header',
+        'before_widget' => '<div id="%1$s" class="row tb_widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<!--',
+        'after_title'   => '-->',
+    ));
+    
+    register_sidebar(array(
+        'name'          => __('Container Footer', 'toebox-basic'),
+        'description'   => __('Appears on all pages after all content within the container.', 'toebox-basic'),
+        'id'            => 'toebox-container-footer',
+        'before_widget' => '<div id="%1$s" class="row tb_widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<!--',
+        'after_title'   => '-->',
     ));
 
     register_sidebar(array(
-    'name'          => __('Content Top', 'toebox-basic'),
-    'description'   => __('Appears on all pages before content between sidebars.', 'toebox-basic'),
-    'id'            => 'toebox_content_top',
-    'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
-    'after_widget'  => '</div>',
-    'before_title'  => '<h4>',
-    'after_title'   => '</h4>',
+        'name'          => __('Content Top', 'toebox-basic'),
+        'description'   => __('Appears before post/page content between sidebars.', 'toebox-basic'),
+        'id'            => 'toebox_content_top',
+        'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4>',
+        'after_title'   => '</h4>',
     ));
 
     register_sidebar(array(
-    'name'          => __('Content Bottom', 'toebox-basic'),
-    'description'   => __('Appears on all pages after content between sidebars.', 'toebox-basic'),
-    'id'            => 'toebox_content_bottom',
-    'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
-    'after_widget'  => '</div>',
-    'before_title'  => '<h4>',
-    'after_title'   => '</h4>',
+        'name'          => __('Content Bottom', 'toebox-basic'),
+        'description'   => __('Appears after post/page content between sidebars.', 'toebox-basic'),
+        'id'            => 'toebox_content_bottom',
+        'before_widget' => '<div id="%1$s" class="tb_widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4>',
+        'after_title'   => '</h4>',
     ));
 
 });

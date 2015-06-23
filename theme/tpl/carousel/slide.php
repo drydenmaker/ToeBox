@@ -1,6 +1,7 @@
 <?php 
 $active = true;
 $counter = 0;
+
 ?>
 <div id="carousel-<?php print $carouselCount; ?>" class="carousel slide carousel-effect-<?php print $effect ?>" 
     data-ride="carousel" 

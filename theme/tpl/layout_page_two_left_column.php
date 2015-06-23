@@ -8,7 +8,9 @@ get_header();
 ?>
 <!-- START two right CONTENT -->
 <div class="container">
-
+<?php
+toebox\inc\ToeBox::HandleDynamicSidebar('toebox-container-header');
+?>
 	<div class="row">
 		<!-- START MAINBODY ROW -->
 
@@ -34,6 +36,9 @@ include get_template_directory() . '/tpl/content/loop.php';
 		<!-- END MAINBODY ROW -->
 	</div>
 	<!-- /.row -->
+<?php 
+toebox\inc\ToeBox::HandleDynamicSidebar('toebox-container-footer');
+?>
 </div>
 <!-- /.container -->
 <!-- END two right CONTENT -->

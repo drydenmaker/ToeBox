@@ -1,7 +1,7 @@
 <?php 
 
-//$arr = get_defined_vars();
-//print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
+// $arr = get_defined_vars();
+// print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($arr, true)).'</pre>';
 
 ?>
 <div class="<?php print $container_class ?> clearfix" style="background: url(<?php print $background ?>) <?php print $background_style ?>">

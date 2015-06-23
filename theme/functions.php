@@ -189,6 +189,7 @@ if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_U
     $less->addVariable('font-family-monospace', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_MONOSPACE]); //14px;
     $less->addVariable('font-family-serif', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_SERIF]); //14px;
     $less->addVariable('font-family-sans-serif', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_SANS_SERIF]); //14px;
+    
 }
 
 
