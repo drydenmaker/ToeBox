@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: drydenmaker
-Donate link: http://gettobox.com
+Donate link: http://gettoebox.com
 Tags: bootstrap, shortcodes, carousel, button
 Requires at least: 4.0.0
 Tested up to: 4.1.1
@@ -12,6 +12,7 @@ A complement to any Bootstrap based theme. Adds a simple way to manage Carousels
 
 == Description ==
 
+This plugin adds two post types for special purposes. The primary post type is a way to create and manage a carousel. One post type is for a simple separation of templates if your theme supports it.
 
 == Installation ==
 

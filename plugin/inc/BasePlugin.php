@@ -1,10 +1,27 @@
 <?php
 namespace toebox\plugin\inc;
+require_once  dirname(__FILE__) . '/core/StringTransform.php';
 
-
+/**
+ * class to be extended to create plugins of all sorts
+ * @author alton.crossley
+ *
+ */
 abstract class BasePlugin
 {
     protected $Tag = 'base';
+    /**
+     * unique-key => class name array of widget classes
+     * use the simple name ex: MyWidget instead of toebox\plugin\inc\widget\MyWidget
+     * since the include path and namespace will be prepended
+     * because of this widget classes need to be stored in inc/widget directory
+     * and they must be defined in the toebox\plugin\inc\widget namespace
+     * 
+     * @since 1.0.0
+     * @access protected
+     * @var unknown
+     */
+    protected $Widgets = array();
     /**
      * filter => toebox\plugin\inc\Hook array of filters
      *
@@ -97,6 +114,7 @@ abstract class BasePlugin
         $this->AddAction('init', 'RegisterPostTypes');
         $this->AddAction('wp_enqueue_scripts', 'RegisterWordpressStylesAndScripts');
         $this->AddAction('admin_init', 'AdminInitialize');
+        $this->AddAction('widgets_init', 'RegisterWidgets');
         $this->RegisterWordpressActions();
 
         $this->Prepare();
@@ -155,6 +173,10 @@ abstract class BasePlugin
             {
                 $this->hookFilter($method);
             }
+            else if (method_exists($this, $method))
+            {
+                add_filter($filter, array($this, $method));
+            }
             else
             {
                 add_filter($filter, $method);
@@ -212,7 +234,7 @@ abstract class BasePlugin
      * Register styles and scripts with wordpress
      * 
      * @since 1.0.0
-     * @access protected
+     * @access public
      */
     public final function RegisterWordpressStylesAndScripts()
     {
@@ -229,7 +251,7 @@ abstract class BasePlugin
      * Register styles and scripts with wordpress
      *
      * @since 1.0.0
-     * @access protected
+     * @access public
      */
     public final function RegisterWordpressAdminStylesAndScripts()
     {
@@ -240,6 +262,34 @@ abstract class BasePlugin
         foreach ($this->AdminScripts as $uid => $uri)
         {
             wp_enqueue_script($uid, $uri);
+        }
+    }
+    /**
+     * Register wordpress widgets
+     * 
+     * @since 1.0.0
+     * @access public
+     */
+    public final function RegisterWidgets()
+    {
+        static $namespace = 'toebox\\plugin\\inc\\widget\\';
+        static $path = 'widget/';
+        foreach ($this->Widgets as $className)
+        {
+            $namespacedClassName = $namespace.$className;
+            
+            if (!class_exists($namespacedClassName))
+            {
+                $classPath = PluginController::$IncPath.$path.$className.'.php';
+                
+                if (file_exists($classPath))
+                {
+                    include_once $classPath;
+                }
+                
+            }
+            //print __FUNCTION__.'<pre>registering '.htmlspecialchars(print_r($namespacedClassName, true)).'</pre>';
+            register_widget($namespacedClassName);
         }
     }
     /**
@@ -277,6 +327,7 @@ abstract class BasePlugin
     { 
         // override and put your functionality here 
     }
+    
     protected $defaultSetting = array(
         'title' => '',
         'label' => '',
@@ -284,41 +335,46 @@ abstract class BasePlugin
         'sanitize_callback' => 'sanitize_text_field',
         'choices' => array(),
     );
+    
     /**
-     * Page Title => 
-     *   Section Title => 
-     *       id => {title, description, placeholder default, type, sanitize_callback}
-     *       
-     * settings 
+     * multi-level array
      * 
+     * page
+     *   section
+     *     Setting
+     *     
      * @var array
      */
     public $Settings = array();
-    /**
-     * Process settings array and create settings screen
-     */
-    public final function ProcessSettingsScreen()
+
+    public function addSetting(Setting $setting, $page = 'main', $section = 'primary')
     {
-        foreach ($this->Settings as $page => $settingsSection)
-        {
-            $pageSlug = $this->LowerScore($page);
-            add_theme_page($page, $page, 'edit_theme_options', $pageSlug);
-            
-            foreach ($settingsSection as $sectionTitle => $options)
-            {
-                $sectionSlug = $this->LowerScore($sectionTitle);
-                add_settings_section($sectionSlug, $sectionTitle, function(){ print "<h4>$sectionTitle</h4>"; }, $pageSlug);
-                
-                foreach ($options as $id => $field)
-                {
-                    $id = $this->LowerScore($id);
-                    $filteredField = array_merge($this->defaultSetting, $field, array('id' => $id, 'section' => $sectionSlug));
-                    
-                    add_settings_field($id, $filteredField['title'], array($this, 'RenderField'), $pageSlug, $sectionSlug, $filteredField);
-                }
-            }
-        }
+        $this->GetSettingSection($section, $page);
+        $this->Settings[$page][$section][$setting->Id] = $setting;
     }
+    
+    public function GetSettingPage($key)
+    {
+        if (!array_key_exists($key, $this->Settings))
+        {
+            $this->Settings[$key] = array();
+        }
+    
+        return $this->Settings[$key];
+    }
+    
+    public function GetSettingSection($section, $page = 'main')
+    {
+        $pageArray = $this->GetSettingPage($page);
+    
+        if (!array_key_exists($section, $pageArray))
+        {
+            $this->Settings[$page][$section] = array();
+        }
+    
+        return $pageArray[$section];
+    }
+
     /**
      * 
      * 
@@ -450,16 +506,62 @@ abstract class BasePlugin
     /**
      * filter a string and add lowerscores in place of spaces
      * 
-     * @param string $stringToFilter
+     * @param string $subject
      * @return mixed
      */
-    protected final function LowerScore($stringToFilter)
+    protected final function LowerScore($subject)
     {
-        return preg_replace( "/[^a-z0-9_]/", "", 
-                        str_replace('-', '_',
-                        str_replace(' ', '_', str_tolower($stringToFilter))
-                                        ));
+        return \toebox\plugin\inc\core\StringTransform::LowerScore($subject);
     }
+    /**
+     * protect p and br from remove function
+     * @param string $subject
+     * @return string
+     */
+    protected function preservePBR($subject)
+    {
+        return \toebox\plugin\inc\core\StringTransform::preservePBR($subject);
+    }
+    /**
+     * restore p and br from preserv function
+     * @param string $subject
+     * @return string
+     */
+    protected function restorePBR($subject)
+    {
+        return \toebox\plugin\inc\core\StringTransform::restorePBR($subject);
+    }
+    /***
+     * strip extra p and br tags
+     *
+     * @param string $subject
+     * @return string
+     */
+    function removeBreakParagraph($subject)
+    {
+        return \toebox\plugin\inc\core\StringTransform::removeBreakParagraph($subject);
+    }
+    /**
+     * removes the wp closing p at the begining of a string and
+     * removes the opening p at the end of a string
+     *
+     * @param string $subject
+     * @return string
+     */
+    protected function removeInverseP($subject)
+    {
+        return \toebox\plugin\inc\core\StringTransform::removeInverseP($subject);
+    }
+    /**
+     * combines remove and restore p and br functions
+     * @param string $subject
+     * @return string
+     */
+    protected function removeAndRestorePBR($subject)
+    {
+        return \toebox\plugin\inc\core\StringTransform::removeAndRestorePBR($subject);
+    }
+    
 }
 
 ?>

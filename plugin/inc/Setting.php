@@ -24,8 +24,8 @@ class Setting
     public $Label;
     /**
      * type of control to use in a settings form
-     * text|url|email|select
-     * @var unknown
+     * text|url|email|select|checkbox|radio
+     * @var string
      */
     public $Type;
     /**
@@ -42,5 +42,25 @@ class Setting
     function __construct()
     {
         
+    }
+    /**
+     * factory
+     * 
+     * @param unknown $id
+     * @param string $label
+     * @param string $type
+     * @param mixed $default
+     * @param string|function $sanitizeCallback
+     */
+    public static function Create($id, $label, $type, $default, $sanitizeCallback)
+    {
+        $instance = new self();
+        $instance->Id = $id;
+        $instance->Label = $label;
+        $instance->Type = $type;
+        $instance->DefaultValue = $default;
+        $instance->SanitizeCallback = $sanitizeCallback;
+        
+        return $instance;
     }
 }

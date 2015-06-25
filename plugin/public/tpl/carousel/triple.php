@@ -2,9 +2,10 @@
 $active = true;
 $counter = 0;
 ?>
+<!-- <?php echo basename(__FILE__); ?> -->
 <div class="container-fluid">
     <div class="row-fluid">
-<div id="carousel-<?php print $carouselCount; ?>" class="carousel-short carousel slide carousel-effect-<?php print $effect ?>" 
+<div id="carousel-<?php print $carouselCount; ?>" class="carousel tripple carousel-effect-<?php print $effect ?>  <?php $class ?>" 
     data-ride="carousel" 
     data-interval="<?php print $interval?>"
     data-pause="<?php print $pause ?>"
@@ -13,7 +14,7 @@ $counter = 0;
 	<!-- Indicators -->
 	<ol class="carousel-indicators">
 	<?php for ($x = 0; $x < ($post_count / 3); $x++) :?>
-		<li data-target="#carousel-<?php print $carouselCount; ?>" data-slide-to="<?php print $counter++; ?>" <?php if ($active) print 'class="active"'; ?>></li>
+		<li data-target="#carousel-<?php print $carousel_count; ?>" data-slide-to="<?php print $counter++; ?>" <?php if ($active) print 'class="active"'; ?>></li>
     <?php
         $active = false; 
         endfor;
@@ -36,9 +37,7 @@ $counter = 0;
             
             <img src="<?php print get_theme_root_uri() . '/images/carousel_triple_clear_bg.png' ?>">
             <div class="carousel-caption">
-		<?php endif;
-		
-		?>
+		<?php endif; ?>
               <div class="col col-md-4">
                 <div class="inner-item_<?php print $position ?>" style="background-image: url(<?php print \toebox\inc\ToeBox::GetImageUrlForPost($slide->ID, 'full'); ?>);">
 

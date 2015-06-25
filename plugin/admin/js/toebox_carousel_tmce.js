@@ -33,14 +33,17 @@ if (typeof window.tb_carousel_button_disable == 'undefined') window.tb_carousel_
                                                                                     ]},
                     ],
                     onsubmit: function(e) {
-                    	shortcode = '[carousel category="' + e.data.category + '" ' +
-                    				'style="' + e.data.style + '" ' +
-                    				'interval="' + e.data.interval + '" ' +
-                    				'pause="' + e.data.pause + '" ' +
-                    				'wrap="' + e.data.wrap + '" ' +
-                    				'keyboard="' + e.data.keyboard + '" ' +
-                    				'effect="' + e.data.effect + '" ' +
-                    				']';
+                    	shortcode = '[carousel  ';
+                    	
+                    	if (e.data.category != '') shortcode += 'category="' +  e.data.category + '" ';    
+                    	if (e.data.style != '') shortcode += 'style="' +  e.data.style + '" ';
+                    	if (e.data.interval != '5000') shortcode += 'interval="' +  e.data.interval + '" ';
+                    	if (e.data.pause != 'hover') shortcode += 'pause="' +  e.data.pause + '" ';
+                    	if (e.data.wrap != true) shortcode += 'wrap="' +  e.data.wrap + '" ';
+                    	if (e.data.keyboard != true) shortcode += 'keyboard="' +  e.data.keyboard + '" ';
+                    	if (e.data.effect != '') shortcode += 'effect="' +  e.data.effect + '" ';
+                    	
+                    	shortcode += ']'; 
                     	
                         editor.selection.setContent(shortcode);
                     }
