@@ -12,6 +12,7 @@ if (!isset($content_width)) {
 	$content_width = 1170;
 }
 
+require_once get_template_directory() . '/inc/core/settings.php';
 toebox\inc\Toebox::InitSettings();
 
 /**
@@ -48,6 +49,9 @@ add_action( 'init', function()
 	    }
 	    return $args;
 	});
+	
+	    allow_data_event_content('data-parent');
+	    allow_data_event_content('data-toggle');	    
 
 });
 
@@ -115,6 +119,7 @@ add_filter('wp_link_pages', function($atts){
 require_once get_template_directory() . '/inc/core/search.php';
 require_once get_template_directory() . '/inc/core/post_status.php';
 require_once get_template_directory() . '/inc/core/theme_settings.php';
+require_once get_template_directory() . '/inc/core/theme_customizer.php';
 require_once get_template_directory() . '/inc/core/upload_mimes.php';
 require_once get_template_directory() . '/inc/core/widgets.php';
 
@@ -179,17 +184,57 @@ if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_U
     $less = WPLessPlugin::getInstance();
     $less->dispatch();
 
+    // COLORS
+    $less->addVariable('body-bg', '#'.get_theme_mod( 'background_color', '333' ));
+    
     $less->addVariable('brand-primary', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_PRIMARY]); //EC7225
     $less->addVariable('brand-success', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_SUCCESS]); //18987B
     $less->addVariable('brand-info', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_INFO]); //24569B
     $less->addVariable('brand-warning', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_WARNING]); //ECA125
     $less->addVariable('brand-danger', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_DANGER]); //EF5870
     
-    $less->addVariable('font-size-base', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_SIZE_BASE]); //14px;
-    $less->addVariable('font-family-monospace', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_MONOSPACE]); //14px;
-    $less->addVariable('font-family-serif', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_SERIF]); //14px;
-    $less->addVariable('font-family-sans-serif', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_SANS_SERIF]); //14px;
+    // FONTS
+    $less->addVariable('font-size-base', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_SIZE_BASE]); 
+    $less->addVariable('font-family-monospace', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_MONOSPACE]); 
+    $less->addVariable('font-family-serif', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_SERIF]); 
+    $less->addVariable('font-family-sans-serif', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_FONT_FAMILY_SANS_SERIF]);
+
+    // CORNERS
+    $less->addVariable(TOEBOX_BORDER_RADIUS_BASE, \toebox\inc\ToeBox::$Settings[TOEBOX_BORDER_RADIUS_BASE]);
+    $less->addVariable(TOEBOX_BORDER_RADIUS_LARGE, \toebox\inc\ToeBox::$Settings[TOEBOX_BORDER_RADIUS_LARGE]);
+    $less->addVariable(TOEBOX_BORDER_RADIUS_SMALL, \toebox\inc\ToeBox::$Settings[TOEBOX_BORDER_RADIUS_SMALL]);
+    
+    $less->addVariable(TOEBOX_BORDER_RADIUS_BUTTON_BASE, \toebox\inc\ToeBox::$Settings[TOEBOX_BORDER_RADIUS_BUTTON_BASE]);
+    $less->addVariable(TOEBOX_BORDER_RADIUS_BUTTON_LARGE, \toebox\inc\ToeBox::$Settings[TOEBOX_BORDER_RADIUS_BUTTON_LARGE]);
+    $less->addVariable(TOEBOX_BORDER_RADIUS_BUTTON_SMALL, \toebox\inc\ToeBox::$Settings[TOEBOX_BORDER_RADIUS_BUTTON_SMALL]);
     
 }
 
+/**
+ * Add to extended_valid_elements for TinyMCE
+ *
+ * @param $init assoc. array of TinyMCE options
+ * @return $init the changed assoc. array
+ */
+add_filter('tiny_mce_before_init', function( $init ) {
+    // Command separated string of extended elements
+    $ext = 'pre[id|name|class|style|role|data-toggle|data-parent|data-*]'; //
 
+    // Add to extended_valid_elements if it alreay exists
+    if ( isset( $init['extended_valid_elements'] ) ) {
+        $init['extended_valid_elements'] .= ',' . $ext;
+    } else {
+        $init['extended_valid_elements'] = $ext;
+    }
+
+    // Super important: return $init!
+    return $init;
+});
+
+function allow_data_event_content($tag)
+{
+    global $allowedposttags, $allowedtags;
+    
+    $allowedposttags["a"][$tag] = true;
+    $allowedtags["a"][$tag] = true;
+}

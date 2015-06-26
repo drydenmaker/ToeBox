@@ -1,59 +1,7 @@
 <?php
 namespace toebox\inc;
 
-define('TOEBOX_MORE_TEXT', 'toebox_more_text');
 
-define('TOEBOX_PAGE_LAYOUT', 'toebox_page_laout');
-define('TOEBOX_FEATURED_STORY_LAYOUT', 'toebox_custom_page_laout');
-define('TOEBOX_LIST_LAYOUT', 'toebox_list_laout');
-define('TOEBOX_STORY_LAYOUT', 'toebox_story_laout');
-define('TOEBOX_HIDE_SMALL_SIDEBARS', 'toebox_hide_small_sidebars');
-define('TOEBOX_FEATURED_IMG_CLASS', 'toebox_featured_img_class');
-define('TOEBOX_CONTENT_BACKGROUND_COLOR', 'toebox_background_collor');
-
-define('TOEBOX_USE_WIDGET_FOR_HEADER', 'toebox_header_widget');
-define('TOEBOX_USE_WIDGET_FOR_NAV_MENU', 'toebox_nav_widget');
-
-define('TOEBOX_404_MESSAGE', 'toebox_404_message');
-define('TOEBOX_ENABLE_404_SEARCH', 'toebox_404_search');
-define('TOEBOX_ENABLE_LIST_PAGING', 'toebox_list_paging');
-
-define('TOEBOX_MENU_SUBTITLES', 'toebox_menu_subtitles');
-
-define('TOEBOX_TITLE_SEO', 'toebox_title_seo');
-
-define('TOEBOX_TEMPLATE_SINGLE', 'single');
-define('TOEBOX_TEMPLATE_LIST', 'list');
-
-define('TOEBOX_LINK_PAGES_ARGS', 'toebox_link_pages_args');
-
-define('TOEBOX_SETUP', 'toebox_setup');
-define('TOEBOX_USE_LESS', 'toebox_use_less');
-
-define('TOEBOX_LESS_COLOR_PRIMARY', 'toebox_less_primary');
-define('TOEBOX_LESS_COLOR_SUCCESS', 'toebox_less_success');
-define('TOEBOX_LESS_COLOR_INFO', 'toebox_less_info');
-define('TOEBOX_LESS_COLOR_WARNING', 'toebox_less_warning');
-define('TOEBOX_LESS_COLOR_DANGER', 'toebox_less_danger');
-
-define('TOEBOX_LESS_FONT_SIZE_BASE', 'font_size_base');
-define('TOEBOX_LESS_FONT_FAMILY_MONOSPACE', 'font_family_monospace');
-define('TOEBOX_LESS_FONT_FAMILY_SERIF', 'font_family_serif');
-define('TOEBOX_LESS_FONT_FAMILY_SANS_SERIF', 'font_family_sans_serif');
-
-define('TOEBOX_GOOGLE_FONTS', 'google_fonts');
-
-$pageLayoutOptions = array(
-    'open' => __( 'Open','toebox-basic' ),
-    'no_column' => __( 'Single Column','toebox-basic' ),
-    'left_column' => __( 'Left Column','toebox-basic' ),
-    'three_column' => __( 'Three Column','toebox-basic' ),
-    'right_column' => __( 'Right Column','toebox-basic' ),
-    'two_right_column' => __( 'Two Right Columns','toebox-basic' ),
-    'two_left_column' => __( 'Two Left Columns','toebox-basic' ),
-    'featured_story' => __( 'Featured Story','toebox-basic' ),
-    'featured_story_left_sidebar' => __( 'Featured Story Left Sidebar','toebox-basic' ),
-);
 
 /**
  *
@@ -71,53 +19,12 @@ class ToeBox
      * settings registry
      * @var Array
      */
-    public static $SettingsDefaults = array(
-        'ver' => '0.0.1',
-        TOEBOX_SETUP => false,
-        TOEBOX_USE_LESS => false,
-        TOEBOX_MORE_TEXT => 'More...',
-        TOEBOX_PAGE_LAYOUT => 'right_column',
-        TOEBOX_FEATURED_STORY_LAYOUT => 'featured_story',
-        TOEBOX_LIST_LAYOUT => 'list_large_img',
-        TOEBOX_STORY_LAYOUT => 'single_full_img',
-        TOEBOX_HIDE_SMALL_SIDEBARS => '1',
-        TOEBOX_FEATURED_IMG_CLASS => 'img-rounded',
-        TOEBOX_CONTENT_BACKGROUND_COLOR => '#222',
-        TOEBOX_404_MESSAGE => '<p>Sorry, no content was found.</p>',
-        TOEBOX_ENABLE_404_SEARCH => true,
-        TOEBOX_ENABLE_LIST_PAGING => true,
-        TOEBOX_USE_WIDGET_FOR_HEADER => false,
-        TOEBOX_USE_WIDGET_FOR_NAV_MENU => false,
-        TOEBOX_USE_LESS => false,
-        
-        TOEBOX_LESS_COLOR_PRIMARY => '#EC7225',
-        TOEBOX_LESS_COLOR_SUCCESS => '#18987B',
-        TOEBOX_LESS_COLOR_INFO => '#24569B',
-        TOEBOX_LESS_COLOR_WARNING => '#ECA125',
-        TOEBOX_LESS_COLOR_DANGER => '#EF5870',
-        
-
-        TOEBOX_LESS_FONT_SIZE_BASE => '14px',
-        TOEBOX_LESS_FONT_FAMILY_MONOSPACE => 'Inconsolata, Menlo, Monaco, Consolas, "Courier New", monospace',
-        TOEBOX_LESS_FONT_FAMILY_SERIF => 'Playfair, Georgia, "Times New Roman", Times, serif',
-        TOEBOX_LESS_FONT_FAMILY_SANS_SERIF => 'Arimo, "Helvetica Neue", Helvetica, Arial, sans-serif',
-        
-        TOEBOX_GOOGLE_FONTS => 'Arimo|Playfair|Inconsolata',
-
-        TOEBOX_MENU_SUBTITLES => true,
-
-        TOEBOX_TITLE_SEO => true,
-
-        TOEBOX_LINK_PAGES_ARGS => array(
-            'before'      => '<nav><ul class="page-links pagination"><li>',
-            'after'       => '</li></ul></nav>',
-            'link_before' => '',
-            'link_after'  => '',
-            'pagelink'    => '%',
-            'separator'   => '</li><li>',
-            )
-
-    );
+    public static $SettingsDefaults = array( );
+    /**
+     * theme options to include in settings array
+     * @var unknown
+     */
+    public static $OptionsToInclude = array();
     /**
      * prepare settings with defaults
      * @param array $otherSettings
@@ -126,11 +33,18 @@ class ToeBox
     {
         self::$Debug = WP_DEBUG;
         
+        $options = array();
+        foreach (self::$OptionsToInclude as $key)
+        {
+            $value = get_option($key);
+            if ($value !== false) $options[$key] = $value;
+        }
+        
         $themeMods = get_theme_mods();
         if (is_array($themeMods)) $themeMods[TOEBOX_SETUP] = true;
         $themeMods = (!empty($themeMods) && is_array($themeMods)) ? $themeMods : array() ;
 
-        self::$Settings = array_merge(self::$SettingsDefaults, $themeMods, $otherSettings);
+        self::$Settings = array_merge(self::$SettingsDefaults, $themeMods, $options, $otherSettings);
     }
     /**
      * output dynamic sidebar contnet
@@ -140,7 +54,7 @@ class ToeBox
     {
         if ( is_active_sidebar( $sidebarName ) )
         {
-            print sprintf('<div id="sidebar-%1$s" class="%1$s sidebar" role="complementary">', esc_attr($sidebarName));
+            print sprintf('<div id="sidebar-%1$s" class="%1$s tb-sidebar" role="complementary">', esc_attr($sidebarName));
             dynamic_sidebar( $sidebarName );
             print sprintf('</div><!-- #%1$s -->', $sidebarName);
         }

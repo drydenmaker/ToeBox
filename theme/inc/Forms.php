@@ -52,6 +52,24 @@ class Forms
         ob_end_clean();
         return $output;
     }
+    
+    public static function FormatTextArea($name, $value)
+    {
+        ob_start();
+        include get_template_directory().self::$FormTemplatePrefix . '/control_textarea.php';
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+    
+    public static function FormatTextbox($name, $value, $type = "text")
+    {
+        ob_start();
+        include get_template_directory().self::$FormTemplatePrefix . '/control_textbox.php';
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
 }
 
 ?>

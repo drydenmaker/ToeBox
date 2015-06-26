@@ -38,18 +38,18 @@
 }
 .btn-default:hover,
 .btn-default:focus {
-  background-color: #080808;
+  background-color: rgba(0, 0, 0, 0);
   background-position: 0 -15px;
 }
 .btn-default:active,
 .btn-default.active {
-  background-color: #080808;
-  border-color: #030303;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0);
 }
 .btn-default.disabled,
 .btn-default:disabled,
 .btn-default[disabled] {
-  background-color: #080808;
+  background-color: rgba(0, 0, 0, 0);
   background-image: none;
 }
 .btn-primary {

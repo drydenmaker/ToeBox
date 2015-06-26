@@ -23,3 +23,22 @@ ToeBox is the other end of the boot.  It's intention is to give you all the flex
 Because it is based on Bootstrap you are able to use all its elements and styles.  It is compatible with any Bootstrap related plug-ins like the ToeBox plug-in which offers a Carousel post type among other Bootstrap compatible featuers.
 Install WP-Less and you will be able to create completely custom colour schemes right from WordPress. 
 
+== CHANGELOG ==
+v1.2.0
+adding advanced settings screen
+adding header and footer injection text
+exposing 'More' text setting
+adding options for border raidus, global and buttons
+
+== CHANGELOG ==
+v1.1.1
+clean up
+update of thumbnail
+
+v1.1.0
+Menu Bug Fixes
+Other styling bug fixes
+
+v0.1.19 
+First version base functionality
+

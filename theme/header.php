@@ -44,6 +44,7 @@ if (!empty(get_header_image())) :?>
   
 <?php endif; ?>
     </style>
+<?php print toebox\inc\ToeBox::$Settings[TOEBOX_EXTRA_HEADER]; ?>
 
 </head>
 <body <?php body_class(); ?>>
