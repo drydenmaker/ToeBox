@@ -2,9 +2,9 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 
-    <header class="entry-header">
-        <h3><a href="<?php the_permalink(); ?>"><?php print $post_title; ?></a></h3>
-    </header>
+<?php
+        print \toebox\inc\ToeBox::FormatListTitle($post_title, get_the_permalink());
+    ?>
     <div class="entry-metadata">
             <!-- TODO: allow setting for turning author and date off on posts -->
             <span class="tb-date"><?php the_time(get_option('date_format')); ?></span>

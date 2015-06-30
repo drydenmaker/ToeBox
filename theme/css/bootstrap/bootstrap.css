@@ -6416,8 +6416,8 @@ button.close {
 .tb-container-row-fluid:after,
 .entry-paging:before,
 .entry-paging:after,
-.tb-sidebar:before,
-.tb-sidebar:after {
+.tb-sidebar > div:before,
+.tb-sidebar > div:after {
   content: " ";
   display: table;
 }
@@ -6441,7 +6441,7 @@ button.close {
 .tb-container-row:after,
 .tb-container-row-fluid:after,
 .entry-paging:after,
-.tb-sidebar:after {
+.tb-sidebar > div:after {
   clear: both;
 }
 .center-block {
@@ -6700,6 +6700,141 @@ button.close {
 .btn-group-sm > .btn {
   border-radius: 0;
 }
+.btn-gray {
+  color: #eeeeee;
+  background-color: #555555;
+  border-color: #555555;
+}
+.btn-gray:hover,
+.btn-gray:focus,
+.btn-gray.focus,
+.btn-gray:active,
+.btn-gray.active,
+.open > .dropdown-toggle.btn-gray {
+  color: #eeeeee;
+  background-color: #3b3b3b;
+  border-color: #363636;
+}
+.btn-gray:active,
+.btn-gray.active,
+.open > .dropdown-toggle.btn-gray {
+  background-image: none;
+}
+.btn-gray.disabled,
+.btn-gray[disabled],
+fieldset[disabled] .btn-gray,
+.btn-gray.disabled:hover,
+.btn-gray[disabled]:hover,
+fieldset[disabled] .btn-gray:hover,
+.btn-gray.disabled:focus,
+.btn-gray[disabled]:focus,
+fieldset[disabled] .btn-gray:focus,
+.btn-gray.disabled.focus,
+.btn-gray[disabled].focus,
+fieldset[disabled] .btn-gray.focus,
+.btn-gray.disabled:active,
+.btn-gray[disabled]:active,
+fieldset[disabled] .btn-gray:active,
+.btn-gray.disabled.active,
+.btn-gray[disabled].active,
+fieldset[disabled] .btn-gray.active {
+  background-color: #555555;
+  border-color: #555555;
+}
+.btn-gray .badge {
+  color: #555555;
+  background-color: #eeeeee;
+}
+.btn-silver {
+  color: #111111;
+  background-color: #c0c0c0;
+  border-color: #c0c0c0;
+}
+.btn-silver:hover,
+.btn-silver:focus,
+.btn-silver.focus,
+.btn-silver:active,
+.btn-silver.active,
+.open > .dropdown-toggle.btn-silver {
+  color: #111111;
+  background-color: #a7a7a7;
+  border-color: #a1a1a1;
+}
+.btn-silver:active,
+.btn-silver.active,
+.open > .dropdown-toggle.btn-silver {
+  background-image: none;
+}
+.btn-silver.disabled,
+.btn-silver[disabled],
+fieldset[disabled] .btn-silver,
+.btn-silver.disabled:hover,
+.btn-silver[disabled]:hover,
+fieldset[disabled] .btn-silver:hover,
+.btn-silver.disabled:focus,
+.btn-silver[disabled]:focus,
+fieldset[disabled] .btn-silver:focus,
+.btn-silver.disabled.focus,
+.btn-silver[disabled].focus,
+fieldset[disabled] .btn-silver.focus,
+.btn-silver.disabled:active,
+.btn-silver[disabled]:active,
+fieldset[disabled] .btn-silver:active,
+.btn-silver.disabled.active,
+.btn-silver[disabled].active,
+fieldset[disabled] .btn-silver.active {
+  background-color: #c0c0c0;
+  border-color: #c0c0c0;
+}
+.btn-silver .badge {
+  color: #c0c0c0;
+  background-color: #111111;
+}
+.btn-silver-bordered {
+  color: #111111;
+  background-color: #c0c0c0;
+  border-color: #111111;
+}
+.btn-silver-bordered:hover,
+.btn-silver-bordered:focus,
+.btn-silver-bordered.focus,
+.btn-silver-bordered:active,
+.btn-silver-bordered.active,
+.open > .dropdown-toggle.btn-silver-bordered {
+  color: #111111;
+  background-color: #a7a7a7;
+  border-color: #000000;
+}
+.btn-silver-bordered:active,
+.btn-silver-bordered.active,
+.open > .dropdown-toggle.btn-silver-bordered {
+  background-image: none;
+}
+.btn-silver-bordered.disabled,
+.btn-silver-bordered[disabled],
+fieldset[disabled] .btn-silver-bordered,
+.btn-silver-bordered.disabled:hover,
+.btn-silver-bordered[disabled]:hover,
+fieldset[disabled] .btn-silver-bordered:hover,
+.btn-silver-bordered.disabled:focus,
+.btn-silver-bordered[disabled]:focus,
+fieldset[disabled] .btn-silver-bordered:focus,
+.btn-silver-bordered.disabled.focus,
+.btn-silver-bordered[disabled].focus,
+fieldset[disabled] .btn-silver-bordered.focus,
+.btn-silver-bordered.disabled:active,
+.btn-silver-bordered[disabled]:active,
+fieldset[disabled] .btn-silver-bordered:active,
+.btn-silver-bordered.disabled.active,
+.btn-silver-bordered[disabled].active,
+fieldset[disabled] .btn-silver-bordered.active {
+  background-color: #c0c0c0;
+  border-color: #111111;
+}
+.btn-silver-bordered .badge {
+  color: #c0c0c0;
+  background-color: #111111;
+}
 .panel .panel-title > a {
   display: block;
   width: 100%;
@@ -6840,23 +6975,6 @@ button.close {
 .navbar-inverse .navbar-nav > li > .dropdown-menu > li > a {
   color: #ffffff;
 }
-.navbar-form .search-form input {
-  background-color: #f09054;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
-  width: 45%;
-  float: right;
-}
-.navbar-form .search-form input::-moz-placeholder {
-  color: #ffffff;
-  opacity: 1;
-}
-.navbar-form .search-form input:-ms-input-placeholder {
-  color: #ffffff;
-}
-.navbar-form .search-form input::-webkit-input-placeholder {
-  color: #ffffff;
-}
 .navbar-form .search-form input:focus {
   width: 100%;
 }
@@ -6915,6 +7033,10 @@ button.close {
   margin-top: 8px;
   margin-bottom: 8px;
 }
+.v-margin-10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 /* Padding */
 pad-2 {
   padding: 2px;
@@ -6970,6 +7092,12 @@ pad-4 {
 .v-pad-10 {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+/* alignment */
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
 }
 /* IMAGES */
 img {
@@ -7059,6 +7187,35 @@ img[src$=".svg"] {
   .img-lg {
     width: 920px;
   }
+}
+.search-form input[type=search] {
+  background-color: #f09054;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  width: 45%;
+  float: right;
+  border: 1px solid #ec7225;
+  transition-property: width;
+  transition-timing-function: ease;
+}
+.search-form input[type=search]::-moz-placeholder {
+  color: #ffffff;
+  opacity: 1;
+}
+.search-form input[type=search]:-ms-input-placeholder {
+  color: #ffffff;
+}
+.search-form input[type=search]::-webkit-input-placeholder {
+  color: #ffffff;
+}
+.search-form input[type=search]:focus {
+  width: 80%;
+}
+.search-form button[type=submit] {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 /* =WordPress Core
 -------------------------------------------------------------- */
@@ -7660,7 +7817,7 @@ article .pagination {
   margin-right: -10px;
 }
 /* SIDEBAR WIDGETS */
-.tb-sidebar {
+.tb-sidebar > div {
   margin-left: -15px;
   margin-right: -15px;
 }
@@ -7741,5 +7898,359 @@ article .pagination {
 }
 .gallery-caption {
   text-transform: uppercase;
+}
+.wpcf7-form select,
+.wpcf7-form textarea,
+.wpcf7-form input[type="text"],
+.wpcf7-form input[type="password"],
+.wpcf7-form input[type="datetime"],
+.wpcf7-form input[type="datetime-local"],
+.wpcf7-form input[type="date"],
+.wpcf7-form input[type="month"],
+.wpcf7-form input[type="time"],
+.wpcf7-form input[type="week"],
+.wpcf7-form input[type="number"],
+.wpcf7-form input[type="email"],
+.wpcf7-form input[type="url"],
+.wpcf7-form input[type="search"],
+.wpcf7-form input[type="tel"],
+.wpcf7-form input[type="color"] {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #eeeeee;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.wpcf7-form select:focus,
+.wpcf7-form textarea:focus,
+.wpcf7-form input[type="text"]:focus,
+.wpcf7-form input[type="password"]:focus,
+.wpcf7-form input[type="datetime"]:focus,
+.wpcf7-form input[type="datetime-local"]:focus,
+.wpcf7-form input[type="date"]:focus,
+.wpcf7-form input[type="month"]:focus,
+.wpcf7-form input[type="time"]:focus,
+.wpcf7-form input[type="week"]:focus,
+.wpcf7-form input[type="number"]:focus,
+.wpcf7-form input[type="email"]:focus,
+.wpcf7-form input[type="url"]:focus,
+.wpcf7-form input[type="search"]:focus,
+.wpcf7-form input[type="tel"]:focus,
+.wpcf7-form input[type="color"]:focus {
+  border-color: #f4af83;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(244, 175, 131, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(244, 175, 131, 0.6);
+}
+.wpcf7-form select::-moz-placeholder,
+.wpcf7-form textarea::-moz-placeholder,
+.wpcf7-form input[type="text"]::-moz-placeholder,
+.wpcf7-form input[type="password"]::-moz-placeholder,
+.wpcf7-form input[type="datetime"]::-moz-placeholder,
+.wpcf7-form input[type="datetime-local"]::-moz-placeholder,
+.wpcf7-form input[type="date"]::-moz-placeholder,
+.wpcf7-form input[type="month"]::-moz-placeholder,
+.wpcf7-form input[type="time"]::-moz-placeholder,
+.wpcf7-form input[type="week"]::-moz-placeholder,
+.wpcf7-form input[type="number"]::-moz-placeholder,
+.wpcf7-form input[type="email"]::-moz-placeholder,
+.wpcf7-form input[type="url"]::-moz-placeholder,
+.wpcf7-form input[type="search"]::-moz-placeholder,
+.wpcf7-form input[type="tel"]::-moz-placeholder,
+.wpcf7-form input[type="color"]::-moz-placeholder {
+  color: #333333;
+  opacity: 1;
+}
+.wpcf7-form select:-ms-input-placeholder,
+.wpcf7-form textarea:-ms-input-placeholder,
+.wpcf7-form input[type="text"]:-ms-input-placeholder,
+.wpcf7-form input[type="password"]:-ms-input-placeholder,
+.wpcf7-form input[type="datetime"]:-ms-input-placeholder,
+.wpcf7-form input[type="datetime-local"]:-ms-input-placeholder,
+.wpcf7-form input[type="date"]:-ms-input-placeholder,
+.wpcf7-form input[type="month"]:-ms-input-placeholder,
+.wpcf7-form input[type="time"]:-ms-input-placeholder,
+.wpcf7-form input[type="week"]:-ms-input-placeholder,
+.wpcf7-form input[type="number"]:-ms-input-placeholder,
+.wpcf7-form input[type="email"]:-ms-input-placeholder,
+.wpcf7-form input[type="url"]:-ms-input-placeholder,
+.wpcf7-form input[type="search"]:-ms-input-placeholder,
+.wpcf7-form input[type="tel"]:-ms-input-placeholder,
+.wpcf7-form input[type="color"]:-ms-input-placeholder {
+  color: #333333;
+}
+.wpcf7-form select::-webkit-input-placeholder,
+.wpcf7-form textarea::-webkit-input-placeholder,
+.wpcf7-form input[type="text"]::-webkit-input-placeholder,
+.wpcf7-form input[type="password"]::-webkit-input-placeholder,
+.wpcf7-form input[type="datetime"]::-webkit-input-placeholder,
+.wpcf7-form input[type="datetime-local"]::-webkit-input-placeholder,
+.wpcf7-form input[type="date"]::-webkit-input-placeholder,
+.wpcf7-form input[type="month"]::-webkit-input-placeholder,
+.wpcf7-form input[type="time"]::-webkit-input-placeholder,
+.wpcf7-form input[type="week"]::-webkit-input-placeholder,
+.wpcf7-form input[type="number"]::-webkit-input-placeholder,
+.wpcf7-form input[type="email"]::-webkit-input-placeholder,
+.wpcf7-form input[type="url"]::-webkit-input-placeholder,
+.wpcf7-form input[type="search"]::-webkit-input-placeholder,
+.wpcf7-form input[type="tel"]::-webkit-input-placeholder,
+.wpcf7-form input[type="color"]::-webkit-input-placeholder {
+  color: #333333;
+}
+.wpcf7-form select[disabled],
+.wpcf7-form textarea[disabled],
+.wpcf7-form input[type="text"][disabled],
+.wpcf7-form input[type="password"][disabled],
+.wpcf7-form input[type="datetime"][disabled],
+.wpcf7-form input[type="datetime-local"][disabled],
+.wpcf7-form input[type="date"][disabled],
+.wpcf7-form input[type="month"][disabled],
+.wpcf7-form input[type="time"][disabled],
+.wpcf7-form input[type="week"][disabled],
+.wpcf7-form input[type="number"][disabled],
+.wpcf7-form input[type="email"][disabled],
+.wpcf7-form input[type="url"][disabled],
+.wpcf7-form input[type="search"][disabled],
+.wpcf7-form input[type="tel"][disabled],
+.wpcf7-form input[type="color"][disabled],
+.wpcf7-form select[readonly],
+.wpcf7-form textarea[readonly],
+.wpcf7-form input[type="text"][readonly],
+.wpcf7-form input[type="password"][readonly],
+.wpcf7-form input[type="datetime"][readonly],
+.wpcf7-form input[type="datetime-local"][readonly],
+.wpcf7-form input[type="date"][readonly],
+.wpcf7-form input[type="month"][readonly],
+.wpcf7-form input[type="time"][readonly],
+.wpcf7-form input[type="week"][readonly],
+.wpcf7-form input[type="number"][readonly],
+.wpcf7-form input[type="email"][readonly],
+.wpcf7-form input[type="url"][readonly],
+.wpcf7-form input[type="search"][readonly],
+.wpcf7-form input[type="tel"][readonly],
+.wpcf7-form input[type="color"][readonly],
+fieldset[disabled] .wpcf7-form select,
+fieldset[disabled] .wpcf7-form textarea,
+fieldset[disabled] .wpcf7-form input[type="text"],
+fieldset[disabled] .wpcf7-form input[type="password"],
+fieldset[disabled] .wpcf7-form input[type="datetime"],
+fieldset[disabled] .wpcf7-form input[type="datetime-local"],
+fieldset[disabled] .wpcf7-form input[type="date"],
+fieldset[disabled] .wpcf7-form input[type="month"],
+fieldset[disabled] .wpcf7-form input[type="time"],
+fieldset[disabled] .wpcf7-form input[type="week"],
+fieldset[disabled] .wpcf7-form input[type="number"],
+fieldset[disabled] .wpcf7-form input[type="email"],
+fieldset[disabled] .wpcf7-form input[type="url"],
+fieldset[disabled] .wpcf7-form input[type="search"],
+fieldset[disabled] .wpcf7-form input[type="tel"],
+fieldset[disabled] .wpcf7-form input[type="color"] {
+  background-color: #555555;
+  opacity: 1;
+}
+.wpcf7-form select[disabled],
+.wpcf7-form textarea[disabled],
+.wpcf7-form input[type="text"][disabled],
+.wpcf7-form input[type="password"][disabled],
+.wpcf7-form input[type="datetime"][disabled],
+.wpcf7-form input[type="datetime-local"][disabled],
+.wpcf7-form input[type="date"][disabled],
+.wpcf7-form input[type="month"][disabled],
+.wpcf7-form input[type="time"][disabled],
+.wpcf7-form input[type="week"][disabled],
+.wpcf7-form input[type="number"][disabled],
+.wpcf7-form input[type="email"][disabled],
+.wpcf7-form input[type="url"][disabled],
+.wpcf7-form input[type="search"][disabled],
+.wpcf7-form input[type="tel"][disabled],
+.wpcf7-form input[type="color"][disabled],
+fieldset[disabled] .wpcf7-form select,
+fieldset[disabled] .wpcf7-form textarea,
+fieldset[disabled] .wpcf7-form input[type="text"],
+fieldset[disabled] .wpcf7-form input[type="password"],
+fieldset[disabled] .wpcf7-form input[type="datetime"],
+fieldset[disabled] .wpcf7-form input[type="datetime-local"],
+fieldset[disabled] .wpcf7-form input[type="date"],
+fieldset[disabled] .wpcf7-form input[type="month"],
+fieldset[disabled] .wpcf7-form input[type="time"],
+fieldset[disabled] .wpcf7-form input[type="week"],
+fieldset[disabled] .wpcf7-form input[type="number"],
+fieldset[disabled] .wpcf7-form input[type="email"],
+fieldset[disabled] .wpcf7-form input[type="url"],
+fieldset[disabled] .wpcf7-form input[type="search"],
+fieldset[disabled] .wpcf7-form input[type="tel"],
+fieldset[disabled] .wpcf7-form input[type="color"] {
+  cursor: not-allowed;
+}
+textarea.wpcf7-form select,
+textarea.wpcf7-form textarea,
+textarea.wpcf7-form input[type="text"],
+textarea.wpcf7-form input[type="password"],
+textarea.wpcf7-form input[type="datetime"],
+textarea.wpcf7-form input[type="datetime-local"],
+textarea.wpcf7-form input[type="date"],
+textarea.wpcf7-form input[type="month"],
+textarea.wpcf7-form input[type="time"],
+textarea.wpcf7-form input[type="week"],
+textarea.wpcf7-form input[type="number"],
+textarea.wpcf7-form input[type="email"],
+textarea.wpcf7-form input[type="url"],
+textarea.wpcf7-form input[type="search"],
+textarea.wpcf7-form input[type="tel"],
+textarea.wpcf7-form input[type="color"] {
+  height: auto;
+}
+.wpcf7-form textarea {
+  height: auto;
+}
+.wpcf7-form input[type="button"],
+.wpcf7-form input[type="submit"] {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-radius: 0;
+  color: #ffffff;
+  background-color: #ec7225;
+  border-color: #e46414;
+}
+.wpcf7-form input[type="button"]:focus,
+.wpcf7-form input[type="submit"]:focus,
+.wpcf7-form input[type="button"]:active:focus,
+.wpcf7-form input[type="submit"]:active:focus,
+.wpcf7-form input[type="button"].active:focus,
+.wpcf7-form input[type="submit"].active:focus,
+.wpcf7-form input[type="button"].focus,
+.wpcf7-form input[type="submit"].focus,
+.wpcf7-form input[type="button"]:active.focus,
+.wpcf7-form input[type="submit"]:active.focus,
+.wpcf7-form input[type="button"].active.focus,
+.wpcf7-form input[type="submit"].active.focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.wpcf7-form input[type="button"]:hover,
+.wpcf7-form input[type="submit"]:hover,
+.wpcf7-form input[type="button"]:focus,
+.wpcf7-form input[type="submit"]:focus,
+.wpcf7-form input[type="button"].focus,
+.wpcf7-form input[type="submit"].focus {
+  color: #ffffff;
+  text-decoration: none;
+}
+.wpcf7-form input[type="button"]:active,
+.wpcf7-form input[type="submit"]:active,
+.wpcf7-form input[type="button"].active,
+.wpcf7-form input[type="submit"].active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.wpcf7-form input[type="button"].disabled,
+.wpcf7-form input[type="submit"].disabled,
+.wpcf7-form input[type="button"][disabled],
+.wpcf7-form input[type="submit"][disabled],
+fieldset[disabled] .wpcf7-form input[type="button"],
+fieldset[disabled] .wpcf7-form input[type="submit"] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.wpcf7-form input[type="button"]:hover,
+.wpcf7-form input[type="submit"]:hover,
+.wpcf7-form input[type="button"]:focus,
+.wpcf7-form input[type="submit"]:focus,
+.wpcf7-form input[type="button"].focus,
+.wpcf7-form input[type="submit"].focus,
+.wpcf7-form input[type="button"]:active,
+.wpcf7-form input[type="submit"]:active,
+.wpcf7-form input[type="button"].active,
+.wpcf7-form input[type="submit"].active,
+.open > .dropdown-toggle.wpcf7-form input[type="button"],
+.open > .dropdown-toggle.wpcf7-form input[type="submit"] {
+  color: #ffffff;
+  background-color: #cc5a12;
+  border-color: #ab4b0f;
+}
+.wpcf7-form input[type="button"]:active,
+.wpcf7-form input[type="submit"]:active,
+.wpcf7-form input[type="button"].active,
+.wpcf7-form input[type="submit"].active,
+.open > .dropdown-toggle.wpcf7-form input[type="button"],
+.open > .dropdown-toggle.wpcf7-form input[type="submit"] {
+  background-image: none;
+}
+.wpcf7-form input[type="button"].disabled,
+.wpcf7-form input[type="submit"].disabled,
+.wpcf7-form input[type="button"][disabled],
+.wpcf7-form input[type="submit"][disabled],
+fieldset[disabled] .wpcf7-form input[type="button"],
+fieldset[disabled] .wpcf7-form input[type="submit"],
+.wpcf7-form input[type="button"].disabled:hover,
+.wpcf7-form input[type="submit"].disabled:hover,
+.wpcf7-form input[type="button"][disabled]:hover,
+.wpcf7-form input[type="submit"][disabled]:hover,
+fieldset[disabled] .wpcf7-form input[type="button"]:hover,
+fieldset[disabled] .wpcf7-form input[type="submit"]:hover,
+.wpcf7-form input[type="button"].disabled:focus,
+.wpcf7-form input[type="submit"].disabled:focus,
+.wpcf7-form input[type="button"][disabled]:focus,
+.wpcf7-form input[type="submit"][disabled]:focus,
+fieldset[disabled] .wpcf7-form input[type="button"]:focus,
+fieldset[disabled] .wpcf7-form input[type="submit"]:focus,
+.wpcf7-form input[type="button"].disabled.focus,
+.wpcf7-form input[type="submit"].disabled.focus,
+.wpcf7-form input[type="button"][disabled].focus,
+.wpcf7-form input[type="submit"][disabled].focus,
+fieldset[disabled] .wpcf7-form input[type="button"].focus,
+fieldset[disabled] .wpcf7-form input[type="submit"].focus,
+.wpcf7-form input[type="button"].disabled:active,
+.wpcf7-form input[type="submit"].disabled:active,
+.wpcf7-form input[type="button"][disabled]:active,
+.wpcf7-form input[type="submit"][disabled]:active,
+fieldset[disabled] .wpcf7-form input[type="button"]:active,
+fieldset[disabled] .wpcf7-form input[type="submit"]:active,
+.wpcf7-form input[type="button"].disabled.active,
+.wpcf7-form input[type="submit"].disabled.active,
+.wpcf7-form input[type="button"][disabled].active,
+.wpcf7-form input[type="submit"][disabled].active,
+fieldset[disabled] .wpcf7-form input[type="button"].active,
+fieldset[disabled] .wpcf7-form input[type="submit"].active {
+  background-color: #ec7225;
+  border-color: #e46414;
+}
+.wpcf7-form input[type="button"] .badge,
+.wpcf7-form input[type="submit"] .badge {
+  color: #ec7225;
+  background-color: #ffffff;
 }
 /*# sourceMappingURL=bootstrap.css.map */

@@ -67,6 +67,44 @@ add_action( 'admin_init', function (  ) {
         get_option(TOEBOX_MORE_TEXT)
     );
     
+
+
+    // TOEBOX_LIST_HEADER
+    register_setting("toeboxSettingsSection", TOEBOX_LIST_HEADER);
+    add_settings_field(
+                    TOEBOX_LIST_HEADER,
+                    __( 'Title Format: LIST', 'toebox-basic' ),
+                    function($value){
+    
+                        DisplayTextArea(TOEBOX_LIST_HEADER);
+                        print "<div><small>This is the format of the title when listing posts.</small></div>";
+                        print "<div><small>Use the following place holders <b>{title}</b> post title, <b>{link}</b> perma link, <b>{class}</b> extra css classes </small></div>";
+    
+                    },
+                    'theme-options',
+                    'toeboxSettingsSection',
+                    get_option(TOEBOX_LIST_HEADER)
+    );
+    
+
+
+    // TOEBOX_SINGLE_HEADER
+    register_setting("toeboxSettingsSection", TOEBOX_SINGLE_HEADER);
+    add_settings_field(
+                    TOEBOX_SINGLE_HEADER,
+                    __( 'Title Format: SINGLE', 'toebox-basic' ),
+                    function($value){
+    
+                        DisplayTextArea(TOEBOX_SINGLE_HEADER);
+                        print "<div><small>This is the format of the title when showing only one.</small></div>";
+                        print "<div><small>Use the following place holders <b>{title}</b> post title, <b>{link}</b> perma link, <b>{class}</b> extra css classes </small></div>";
+    
+                    },
+                    'theme-options',
+                    'toeboxSettingsSection',
+                    get_option(TOEBOX_SINGLE_HEADER)
+    );
+    
     // TOEBOX_EXTRA_HEADER
     register_setting("toeboxSettingsSection", TOEBOX_EXTRA_HEADER);
     add_settings_field(
@@ -196,6 +234,7 @@ add_action( 'admin_init', function (  ) {
                     'toeboxButtonCornerLayousSection',
                     get_option(TOEBOX_BORDER_RADIUS_BUTTON_SMALL)
     );
+    
 
 });
 

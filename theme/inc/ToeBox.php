@@ -112,6 +112,26 @@ class ToeBox
         require $templatePath;
     }
     /**
+     * format the title string using the given template
+     * @param unknown $title
+     * @param string $link
+     * @param string $extraClasses
+     */
+    public static function FormatListTitle($title, $link = '#', $extraClasses = '')
+    {
+        return str_replace('{title}', $title, 
+                        str_replace('{link}', $link,
+                        str_replace('{class}', $extraClasses, 
+                                        self::$Settings[TOEBOX_LIST_HEADER])));
+    }
+    public static function FormatSingleTitle($title, $link = '#', $extraClasses = '')
+    {
+        return str_replace('{title}', $title,
+                        str_replace('{link}', $link,
+                        str_replace('{class}', $extraClasses,
+                                        self::$Settings[TOEBOX_LIST_HEADER])));
+    }
+    /**
      * location and prefix of layout pages
      * @var string
      */

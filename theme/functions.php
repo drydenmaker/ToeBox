@@ -11,10 +11,14 @@ require_once 'inc/ToeBox.php';
 if (!isset($content_width)) {
 	$content_width = 1170;
 }
-
+/**
+ * ---------------------------------------------------------------------------- SETTINGS
+ */
 require_once get_template_directory() . '/inc/core/settings.php';
 toebox\inc\Toebox::InitSettings();
-
+/**
+ * ---------------------------------------------------------------------------- INIT
+ */
 /**
  * init general
  */
@@ -36,23 +40,30 @@ add_action( 'init', function()
 	require_once get_template_directory().'/inc/Walker/NavMenu/Bare.php';
 	require_once get_template_directory().'/inc/Walker/NavMenu/Flat.php';
 	add_filter( 'wp_nav_menu_args', 'toebox\\inc\\Walker\\NavMenu\\Touch::MenuArguments');
-    /**
-     * seo the title
-     */
-	add_filter('wp_title', function($args){
-
-	    if (\toebox\inc\ToeBox::$Settings[TOEBOX_TITLE_SEO])
-	    {
-	        $args .= (strlen($args)) ? ' | ' : get_bloginfo( 'description') . ' | ';
-	        $blogName = get_bloginfo('name');
-	        return str_ireplace($blogName, '', $args) . $blogName;
-	    }
-	    return $args;
-	});
-	
+    
+	/*\
+	 * Allow bootstrap html attributes
+	\*/
 	    allow_data_event_content('data-parent');
-	    allow_data_event_content('data-toggle');	    
+	    allow_data_event_content('data-toggle');	   
+	    allow_data_event_content('aria-haspopup');
+	    allow_data_event_content('aria-haspopup');
+	    
 
+});
+
+/**
+ * seo the title
+ */
+add_filter('wp_title', function($args){
+
+    if (\toebox\inc\ToeBox::$Settings[TOEBOX_TITLE_SEO])
+    {
+        $args .= (strlen($args)) ? ' | ' : get_bloginfo( 'description') . ' | ';
+        $blogName = get_bloginfo('name');
+        return str_ireplace($blogName, '', $args) . $blogName;
+    }
+    return $args;
 });
 
 
@@ -86,35 +97,7 @@ add_action( 'wp_enqueue_scripts', function()
 
 });// toeboxBasicEnqueueScripts
 
-/**
- * make embed responsive
- */
-add_filter( 'embed_oembed_html', function ( $html, $data, $url )
-{
-    return (stripos($html, 'youtube.com') === false) ? $html :
-                '<div class="embed-responsive embed-responsive-16by9">' . $html . '</div>';
-    
-}, 10, 3 );
 
-/**
- * alter paging links
- */
-add_filter('wp_link_pages_link', function($link){
-
-    if (strstr($link, 'href') === false)
-    {
-        $link = "<a href='#'>{$link}</a>" ;
-    }
-
-    return $link;
-});
-
-add_filter('wp_link_pages', function($atts){
-
-    $atts = str_replace("<li><a href='#'", "<li class='active'><a href='#'", $atts);
-
-    return $atts;
-});
 
 require_once get_template_directory() . '/inc/core/search.php';
 require_once get_template_directory() . '/inc/core/post_status.php';
@@ -209,7 +192,41 @@ if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_U
     $less->addVariable(TOEBOX_BORDER_RADIUS_BUTTON_SMALL, \toebox\inc\ToeBox::$Settings[TOEBOX_BORDER_RADIUS_BUTTON_SMALL]);
     
 }
+/**
+ * ---------------------------------------------------------------------------- INTERNAL
+ */
+/**
+ * make embed responsive
+ */
+add_filter( 'embed_oembed_html', function ( $html, $data, $url )
+{
+    return (stripos($html, 'youtube.com') === false) ? $html :
+    '<div class="embed-responsive embed-responsive-16by9">' . $html . '</div>';
 
+}, 10, 3 );
+
+/**
+ * alter paging links
+*/
+add_filter('wp_link_pages_link', function($link){
+
+    if (strstr($link, 'href') === false)
+    {
+        $link = "<a href='#'>{$link}</a>" ;
+    }
+
+    return $link;
+});
+
+add_filter('wp_link_pages', function($atts){
+
+    $atts = str_replace("<li><a href='#'", "<li class='active'><a href='#'", $atts);
+
+    return $atts;
+});
+/**
+ * ---------------------------------------------------------------------------- ALLOW BOOTSTRAP ATTRIBUTES
+ */
 /**
  * Add to extended_valid_elements for TinyMCE
  *

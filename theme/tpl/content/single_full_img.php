@@ -5,9 +5,10 @@ toebox\inc\ToeBox::HandleFeaturedImage();
 
 ?>
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-        <header class="entry-header">
-            <h3><a href="<?php the_permalink(); ?>"><?php print $post_title; ?></a></h3>
-        </header>
+
+    <?php
+        print \toebox\inc\ToeBox::FormatSingleTitle($post_title, get_the_permalink());
+    ?>
         
         <?php if (!is_page()) : ?>
         <div class="entry-metadata">
