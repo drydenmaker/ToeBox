@@ -149,6 +149,9 @@ add_action( 'after_setup_theme', function()
             )
         )
     );
+    
+    
+    add_filter('show_admin_bar', function(){ return is_user_logged_in(); });
 
 
 }); // toeboxBasicSetup

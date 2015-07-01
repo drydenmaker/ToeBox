@@ -38,18 +38,18 @@
 }
 .btn-default:hover,
 .btn-default:focus {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(20, 20, 20, 0.4);
   background-position: 0 -15px;
 }
 .btn-default:active,
 .btn-default.active {
-  background-color: rgba(0, 0, 0, 0);
-  border-color: rgba(0, 0, 0, 0);
+  background-color: rgba(20, 20, 20, 0.4);
+  border-color: rgba(15, 15, 15, 0.4);
 }
 .btn-default.disabled,
 .btn-default:disabled,
 .btn-default[disabled] {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(20, 20, 20, 0.4);
   background-image: none;
 }
 .btn-primary {

@@ -6,6 +6,7 @@ Description: A Page with a fluid container and featured header and footer.
 wp_enqueue_style('toebox-theme-style', get_theme_root_uri() . '/css/featured_story.css');
 wp_enqueue_script('toebox-script', get_theme_root_uri() . '/js/featured_story.js', array(), false, true);
 global $the_nav_header;
+
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>/>
@@ -31,6 +32,9 @@ global $the_nav_header;
 <?php wp_head(); ?>
 <!-- WP HEAD END -->
 
+<style>
+<?php print get_post_meta($post->ID, 'featured_story_css', true); ?>
+</style>
 </head>
 <body <?php body_class(); ?>>
 <!--[if lt IE 9]>
@@ -40,27 +44,23 @@ global $the_nav_header;
 <!-- TOEBOX HEADER -->
 <?php
 toebox\inc\ToeBox::HandleDynamicSidebar('featured_header');
-print $the_nav_header;
-?>
-<!-- END TOEBOX HEADER -->
 
-<!-- START INDEX CONTENT -->
-<div class="container-fluid">
+$slug = empty($slug) ? 'content' : $slug;
 
-	<div class="row">
-		<!-- START MAINBODY ROW -->
+if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>       
+
+<div class="clearfix">
+ <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> title="<?php esc_attr(get_the_title()) ?>">
+            <?php the_content() ?>
+ </article>
+    
+</div><!-- /row -->
+
+<?php 
+endwhile; else: ?>
+<p>Error</p>
 <?php
-include get_template_directory() . '/tpl/content/loop.php';
-?>
-		<!-- END MAINBODY ROW -->
-	</div><!-- /.row -->
-
-</div>
-<!-- /.container -->
-<!-- END INDEX CONTENT -->
-
-<!-- TOEBOX FOOTER -->
-<?php
+endif;
 toebox\inc\ToeBox::HandleDynamicSidebar('featured_footer');
 ?>
 <!-- END TOEBOX FOOTER -->
