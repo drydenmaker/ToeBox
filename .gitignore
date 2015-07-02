@@ -46,6 +46,8 @@ node_modules
 /php/js/toebox.js
 /php/js/vendor/modernizr.min.js
 /.buildpath
-/theme/
 /vendor
 /dist
+/theme/compiled-css
+/theme/composer.lock
+/theme/html

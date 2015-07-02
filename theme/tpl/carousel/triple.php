@@ -2,6 +2,7 @@
 $active = true;
 $counter = 0;
 ?>
+<!--  TOEBOX THEME TEMPLATE FOR CAROUSEL -->
 <div class="container-fluid">
     <div class="row-fluid">
 <div id="carousel-<?php print $carouselCount; ?>" class="carousel-short carousel slide carousel-effect-<?php print $effect ?>" 

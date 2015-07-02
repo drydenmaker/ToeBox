@@ -1,0 +1,26 @@
+.search-form
+{
+    input[type=search]
+    {
+	    background-color: @brand-light;
+	    .border-left-radius(@border-radius-button-base);
+	    .placeholder(@brand-text-contrast);
+	    width: 45%;
+	    float: right;
+        border: 1px solid @brand-text;
+
+        transition-property: width;
+        transition-timing-function: ease;
+    }
+
+    input[type=search]:focus
+    {
+        width: 80%;
+    }
+    button[type=submit]
+    {
+        .border-left-radius(0);
+        border-bottom-right-radius: @border-radius-button-base !important;
+        border-top-right-radius: @border-radius-button-base !important;
+    }
+}

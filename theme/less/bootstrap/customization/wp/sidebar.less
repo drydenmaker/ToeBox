@@ -1,0 +1,28 @@
+/* SIDEBAR WIDGETS */
+.tb-sidebar
+{
+	>div
+	{
+		.make-row();
+	}
+    .tb_widget {
+        > ul
+		{
+  			float: left;
+			margin: 0.4vw;
+			padding: 0.4vw;
+		}
+		li
+		{
+			list-style: none;
+		}
+    }
+    .widget_recent_entries, .widget_rss, .widget_recent_comments, .widget_archive, .widget_categories, .widget_meta {
+        li {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-bottom: thin dotted @gray-darker;
+        }
+    }
+
+}

@@ -1,0 +1,41 @@
+.btn {
+  border-radius: @border-radius-button-base;
+}
+.btn-lg {
+    border-radius: @border-radius-button-large;
+}
+.btn-sm, .btn-xs {
+    border-radius: @border-radius-button-small;
+}
+
+/*
+    .button-variant(color; bg; border);
+*/
+
+.btn-gray {
+  .button-variant(#EEE; #555; #555);
+}
+
+.btn-silver {
+  .button-variant(#111; #C0C0C0; #C0C0C0);
+}
+
+.btn-silver-bordered {
+  .button-variant(#111; #C0C0C0; #111);
+}
+
+.btn-transparent-white {
+  .button-variant(#eee; transparent; transparent);
+}
+
+.btn-transparent-black {
+  .button-variant(#111; transparent; transparent);
+}
+
+.btn-transparent-silver {
+  .button-variant(#C0C0C0; transparent; transparent);
+}
+
+.btn-transparent-gray {
+  .button-variant(#555; transparent; transparent);
+}

@@ -3,6 +3,7 @@ $active = true;
 $counter = 0;
 
 ?>
+<!--  TOEBOX THEME TEMPLATE FOR CAROUSEL -->
 <div id="carousel-<?php print $carouselCount; ?>" class="carousel slide carousel-effect-<?php print $effect ?>" 
     data-ride="carousel" 
     data-interval="<?php print $interval?>"

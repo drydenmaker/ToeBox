@@ -1,0 +1,118 @@
+// Optional captions
+// -----------------------------
+// Hidden by default for smaller viewports
+.carousel-caption-left {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  bottom: 20px;
+  z-index: 10;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: @carousel-caption-color;
+  text-align: left;
+  text-transform: uppercase;
+  text-shadow: @carousel-text-shadow;
+  
+  .tagline
+  {
+	color: white;
+	font-style: italic;
+	font-size: 3em;
+	font-size: 4vw;
+	line-height: 0.6em;
+	text-transform: uppercase;
+	font-family: @font-family-sans-serif;
+	margin: 3px;
+  }
+  h3
+  {
+	color: @brand-primary;
+	font-size: 4em;
+	font-size: 5vw;
+	line-height: 0.7em;
+	text-transform: uppercase;
+	font-family: @font-family-sans-serif;
+	font-weight: bolder;
+	margin: 3px;
+  }  
+}
+
+.carousel-short
+{
+	.item-section
+	{
+		float: left;
+		width: 33%;
+	}
+	.carousel-caption
+	{
+		height: 100%;
+		left: 0;
+		right: 0;
+		padding: 6px;
+		.inner-item
+		{
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: cover; 
+			height:100%; 
+		}
+		
+		.col
+		{
+			height: 100%;
+		}
+		
+		.inner-item_, .inner-item_top-left, .inner-item_top-right, 
+		  .inner-item_bottom-left, .inner-item_bottom-right
+		{
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: cover; 
+			min-height: 10vw;
+			height:100%; 
+			padding: 20px 0 0 0;
+		}
+		.carousel-caption-bottom-left
+		{
+			bottom: 6px;
+		  	left: 6px;
+		}
+		.carousel-caption-top-left {
+		  top: 6px;
+		  left: 6px;
+		}
+		.carousel-caption-bottom-right
+		{
+			bottom: 6px;
+		  	right: 6px;
+		}
+		.carousel-caption-top-right {
+		    top: 6px;
+		    right: 6px;
+		}
+	}
+	
+	
+	.tagline, h3
+  	  {
+  	  	margin: 1px;
+  	  }
+	  .tagline
+	  {
+		font-size: 1em;
+		font-size: 1.3vw;
+		line-height: 0.2em;
+		line-height: 1.2vw;
+		margin: 1px;
+	  }
+	  h3
+	  {
+		font-size: 1.3em;
+		font-size: 1.6vw;
+		line-height: 0.23em;
+		line-height: 1.7vw;
+		
+	  }
+}

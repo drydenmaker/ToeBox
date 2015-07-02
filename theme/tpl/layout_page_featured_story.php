@@ -31,10 +31,11 @@ global $the_nav_header;
 <!-- WP HEAD -->
 <?php wp_head(); ?>
 <!-- WP HEAD END -->
-
+<!--  FEATURED STORY CSS -->
 <style>
 <?php print get_post_meta($post->ID, 'featured_story_css', true); ?>
 </style>
+<!--  FEATURED STORY CSS -->
 </head>
 <body <?php body_class(); ?>>
 <!--[if lt IE 9]>

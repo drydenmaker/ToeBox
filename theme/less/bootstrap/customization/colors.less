@@ -1,0 +1,54 @@
+// grays levels
+@gray-0:              #000;
+@gray-1:            lighten(@gray-base, 13.5%); // #222
+@gray-2:              lighten(@gray-base, 20%);   // #333
+@gray:                   lighten(@gray-base, 33.5%); // #555 (always gray no matter what)
+@gray-3:             lighten(@gray-base, 60%);   // #999
+@gray-4:           lighten(@gray-base, 93.5%); // #eee
+
+// default grays
+@gray-base:              @gray-0;
+@gray-darker:            @gray-1; // #222
+@gray-dark:              @gray-2;   // #333
+@gray-light:             @gray-3;   // #999
+@gray-lighter:           @gray-4; // #eee
+
+// PRIMARY defalut
+//@brand-primary:         #EC7225; 
+@brand-text:            @brand-primary;
+@brand-text-contrast:   contrast(@brand-text);
+
+@brand-dark:            darken(@brand-primary, 10%);
+@brand-text-dark:       darken(@brand-text, 10%);
+@brand-darker:          darken(@brand-primary, 20%);
+@brand-text-darker:     darken(@brand-text-dark, 20%);
+
+@brand-light:           lighten(@brand-primary, 10%);
+@brand-text-light:      lighten(@brand-text, 10%);
+@brand-lighter:         lighten(@brand-primary, 20%);
+@brand-text-lighter:    lighten(@brand-text-light, 20%);
+
+// SUCCESS defalut
+//@brand-success:         #18987B; 
+@brand-success-text:    contrast(@brand-success);
+
+// INFO defalut
+//@brand-info:         #24569B; 
+@brand-info-text:		contrast(@brand-info);
+
+// WARNING defalut
+//@brand-warning:         #ECA125; 
+@brand-warning-text:	contrast(@brand-warning);
+
+// DANGER defalut
+//@brand-danger:         #EF5870;
+@brand-danger-text:		contrast(@brand-danger);
+
+@brand-contrast:            contrast(@brand-primary);
+@brand-success-contrast:    contrast(@brand-success);
+@brand-info-contrast:       contrast(@brand-info);
+@brand-warning-contrast:    contrast(@brand-warning);
+@brand-danger-contrast:     contrast(@brand-danger);
+
+
+
