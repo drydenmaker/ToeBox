@@ -140,7 +140,6 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
      */
     function GetItemWrap($args)
     {
-        
         $term_id = (array_key_exists('menu', $args) && $args['menu']) ? $args['menu'] : ++self::$foeMenuId;
         
         $templatePath = realpath( path_join(get_theme_root(), '/plugin_tpl/widget/') .'/'.$this->WrapTemplate.'.php' );

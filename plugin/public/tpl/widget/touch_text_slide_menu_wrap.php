@@ -8,13 +8,12 @@ if (isset($args['background']) && !empty($args['background']))
 }
 
 ?>
-
-<!-- TEXT MENU -->
+<!-- SLIDE MENU -->
 <div class="nav-container container-fluid">
   <div class="row" <?php echo $backgroundStyle; ?>>	
-	<div class="col-sm-8 tb-nav navbar-menu">
+	<div class="col-sm-9 tb-nav navbar-menu">
     	<div class="navbar-header">
-        		 <button type="button" class="navbar-toggle pull-left collapsed" data-toggle="collapse" data-target="#tb-navbar-collapse">
+        		 <button type="button" class="navbar-toggle pull-left collapsed" data-toggle="overlay" data-target="#tb-navbar-collapse">
         		   <span class="sr-only">Toggle navigation</span>
         		   <span class="icon-bar"></span>
         		   <span class="icon-bar"></span>
@@ -35,13 +34,13 @@ if (isset($args['background']) && !empty($args['background']))
 	   }
 	  ?>
         </div>
-    	<div class="collapse navbar-collapse" id="tb-navbar-collapse">
+    	<div class="navbar-overlay" id="tb-navbar-collapse">
     		<ul class="nav navbar-nav">
     			%3$s
     		</ul>
     	</div>
 	</div>
-	<div class="hidden-xs col-sm-4 tb-nav-text">
+	
 	  <?php
 	   if (isset($args['extra_text']) && !empty($args['extra_text'])) 
 	   {
@@ -54,8 +53,8 @@ if (isset($args['background']) && !empty($args['background']))
 	       print $content;
 	   }
 	  ?>
-	</div>
+	
 	
   </div>	
 </div>
-<!-- TEXT MENU END -->
+<!-- END SLIDE MENU -->

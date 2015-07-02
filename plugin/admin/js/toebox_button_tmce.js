@@ -30,6 +30,9 @@ if (typeof window.tb_button_button_disable == 'undefined') window.tb_button_butt
                                                                                     {text: 'warning', value: 'warning'}, 
                                                                                     {text: 'danger', value: 'danger'}, 
                                                                                     {text: 'link', value: 'link'},
+                                                                                    {text: 'gray', value: 'gray'},
+                                                                                    {text: 'silver', value: 'silver'},
+                                                                                    {text: 'bordered', value: 'bordered'},
                                                                                     ]},
                         {type: 'listbox', name: 'size', label: 'Size', 'values': [
                                                                                     {text: 'Normal', value: '3'},

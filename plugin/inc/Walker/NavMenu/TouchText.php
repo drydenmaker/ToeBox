@@ -370,12 +370,10 @@ class TouchText extends AbstractMenu
     }
     public static function MenuArguments($args = array())
     {
-        // print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($args, true)).'</pre>';
-        
         $args['container'] = 'nav';
         if (empty($args['walker'])) 
         {
-            $args['container_class'] = 'tb-nav navbar navbar-default X ' . 
+            $args['container_class'] = 'tb-nav navbar navbar-default ' . 
                                     ((array_key_exists('container_class', $args)) ? $args['container_class']:'') ;
             
             $args['menu_class'] = 'nav navbar-nav';

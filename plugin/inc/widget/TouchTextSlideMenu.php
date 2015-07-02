@@ -1,33 +1,33 @@
 <?php
 namespace toebox\plugin\inc\widget;
 require_once plugin_dir_path(__FILE__).'/BaseWidget.php';
-require_once plugin_dir_path(__FILE__).'../Walker/NavMenu/TouchText.php';
+require_once plugin_dir_path(__FILE__).'../Walker/NavMenu/TouchTextSlide.php';
 
-class TouchTextMenu extends BaseWidget
+class TouchTextSlideMenu extends BaseWidget
 {
     // WIDGET SETTINGS 
     /**
      * Base ID
      * @var string
      */
-    public $BaseId = 'toebox_touch_text_menu_widget';
+    public $BaseId = 'toebox_touch_text_slide_menu_widget';
     /**
      * Friendly Widget Name
      * @var string
      */
-    public $Name = 'Touch Menu with extra text fields.';
+    public $Name = 'Touch Menu that slides in from the left';
     /**
      * Friendly Widget Name
      *
      * @var string
      */
-    public $Description = 'A responsive widget for displaying a horizontal menu in a touch friendly way. 
-                    It has a place for arbitrary text that supports short codes.';
+    public $Description = 'A resposive widget for displaying a horizontal menu in a touch friendly way. 
+                    The hamburger slides in from the left.';
     /**
      * unique template part
      * @var string
      */
-    public $TemplateName = 'touch_text_menu';
+    public $TemplateName = 'touch_text_slide_menu';
 
     /**
      * allow the persistance of html

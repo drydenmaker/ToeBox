@@ -30,9 +30,6 @@ $counter = 0;
 	   $slide = $carouselQuery->next_post(); 	
 	   if (empty($mobilePost)) $mobilePost = $slide;
 	   
-// 	   $meta = get_post_meta($slide->ID, 'carousel_link_post_url', true);
-// 	   print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($meta, true)).'</pre>';
-	   
 	?>
 	
 		<div id="frame-<?php print $counter++?>" class="item<?php print $active ?>">

@@ -80,7 +80,7 @@ class BootstrapShortcodes extends BasePlugin
     {
         $homeUrl = esc_url(home_url('/'));
         $defaults = array(
-            'class' => 'search-form form-inline',
+            'class' => 'form-inline search-form',
             'style' => '',
             'action' => $homeUrl,
             'method' => 'get'
@@ -90,12 +90,12 @@ class BootstrapShortcodes extends BasePlugin
         $attirbutes = array_map('strtolower', shortcode_atts($defaults, $attirbutes, 'tb_search'));
         
         return '<form role="search" '.$this->getNodeAttributes($attirbutes).'>
-                    <div class="form-group">
+                    <div class="form-group btn-group" role="group">
+                        <button type="submit" class="search-submit btn btn-primary pull-right"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 		<label class="screen-reader-text sr-only" for="s">'.__( 'Search for:', 'label', 'toebox-basic').'</label>
                 		<input type="search" class="search-field form-control" placeholder="'.esc_attr_x( 'Search &hellip;', 'placeholder', 'flat-bootstrap' ).'" 
                 		                value="'.esc_attr( get_search_query() ).'" name="s">
                     </div>
-                        <button type="submit" class="search-submit btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 </form>';
         return get_search_form(false);
     }
