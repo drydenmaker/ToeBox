@@ -7159,6 +7159,9 @@ fieldset[disabled] .btn-transparent-gray.active {
   color: #ffffff;
 }
 @media (max-width: 767px) {
+  .navbar .subtitle {
+    display: none;
+  }
   .navbar .width {
     position: absolute;
     z-index: 10000;
