@@ -26,9 +26,35 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
      * @return string
      */
     abstract function EndLevel($depth = 0, $args = array());
-    
+    /**
+     * create a way to display leaf elements
+     * @param unknown $item
+     * @param number $depth
+     * @param unknown $args
+     * @param number $id
+     */
     abstract function StartLeafElement($item, $depth = 0, $args = array(), $id = 0);
     
+    /**
+     * template for drop down icon
+     * @var string
+     */
+    public static $IconTemplate = '<span class="glyphicon glyphicon-%s" aria-hidden="true"></span>';
+    /**
+     * formats icion span with icon name
+     * @param unknown $icon
+     */
+    public function GetDropDownIcon($icon)
+    {
+        return sprintf(self::$IconTemplate, $icon);
+    }
+    /**
+     * creat a way to display branch elements
+     * @param unknown $item
+     * @param number $depth
+     * @param unknown $args
+     * @param number $id
+     */
     abstract function StartBranchElement($item, $depth = 0, $args = array(), $id = 0);    
     
     /**
@@ -141,6 +167,7 @@ abstract class AbstractMenu extends \Walker_Nav_Menu
     function GetItemWrap($args)
     {
         $term_id = (array_key_exists('menu', $args) && $args['menu']) ? $args['menu'] : ++self::$foeMenuId;
+        $args['menu_id'] = $term_id;
         
         $templatePath = realpath( path_join(get_theme_root(), '/plugin_tpl/widget/') .'/'.$this->WrapTemplate.'.php' );
         if (empty($templatePath)) $templatePath = '/public/tpl/widget/'.$this->WrapTemplate.'.php';

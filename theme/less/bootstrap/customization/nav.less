@@ -83,46 +83,73 @@
 	}
 }
 
-.navbar
-{
-    .navbar-overlay
+@media (max-width: @screen-xs-max) {
+    .navbar
     {
-        .navbar-collapse;
-        display: block;
+        .width 
+        {
+            position: absolute;
+            z-index: 10000;
 
-              transition-property: width;
-              transition-timing-function: ease-in;
-              transition-duration: 1.5s;
-
-          background-color: red;
+            margin-right: 12vw;
+            left: 0;
+            width: 88vw; 
 
           &.collapsing
           {
-              background-color: blue;
-              transition-duration: 0;
+              background-color: black;
           }
 
           &.in
           {
-              background-color: yellowgreen;
+              background-color: @gray-dark;
           }
 
-    }
-}
-
-@media (max-width: @screen-xs-max) {
-    .navbar
-    {
-        .navbar-overlay
-        {
-            .collapse;
-        /*
-            position: absolute;
-            z-index: 10000;
-        */
-         margin-right: 12vw;
-         left: 0;
-         width: 88vw; 
+          .navbar-nav
+          {
+              a {
+                  width: 100%;
+              }
+              .open > a {
+                    color: @gray;
+                    background: @gray-dark !important;
+                    -webkit-box-shadow: none;
+                    box-shadow: none;
+                }
+              >li {
+                  border-bottom: 1px solid #414042;
+                  >a{
+                        color: @gray;
+                        text-shadow: none;
+                        letter-spacing: .1rem;
+                        font-size: 2rem;
+                        font-weight: 700;
+                    }
+              }
+              .dropdown-menu
+              {
+                  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+                  border-radius: 0;
+                  padding-bottom: 0;
+                  margin-left: -5px;
+                  margin-right: -10px;
+                  background-color: @gray;
+                  >li
+                  {
+                      
+                      border-bottom: 1px solid #414042;
+                      >a {
+                          font-weight: 400;
+                          font-size: 14px;
+                          width: 100%;
+                          color: @gray-dark;
+                      }
+                      >a:hover {
+                          color: @gray-lighter;
+                      }
+                  }
+             }
+          }
         }
     }
 }

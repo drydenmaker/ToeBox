@@ -13,7 +13,7 @@ if (isset($args['background']) && !empty($args['background']))
   <div class="row" <?php echo $backgroundStyle; ?>>	
 	<div class="col-sm-9 tb-nav navbar-menu">
     	<div class="navbar-header">
-        		 <button type="button" class="navbar-toggle pull-left collapsed" data-toggle="overlay" data-target="#tb-navbar-collapse">
+        		 <button type="button" class="navbar-toggle pull-left collapsed" data-toggle="overlay" data-target="#tb-navbar-touchtextslide-<?php echo $args['menu_id']; ?>">
         		   <span class="sr-only">Toggle navigation</span>
         		   <span class="icon-bar"></span>
         		   <span class="icon-bar"></span>
@@ -34,7 +34,7 @@ if (isset($args['background']) && !empty($args['background']))
 	   }
 	  ?>
         </div>
-    	<div class="navbar-overlay" id="tb-navbar-collapse">
+    	<div class="navbar-overlay" id="tb-navbar-touchtextslide-<?php echo $args['menu_id']; ?>">
     		<ul class="nav navbar-nav">
     			%3$s
     		</ul>

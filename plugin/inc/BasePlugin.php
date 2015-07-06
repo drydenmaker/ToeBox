@@ -244,8 +244,9 @@ abstract class BasePlugin
         }
         foreach ($this->Scripts as $uid => $uri)
         {
+            
             if (strpos($uri, '//') === false) 
-                $uri = PluginController::$PublicPath  . $uri;
+                $uri = PluginController::$PluginPublicUrl . 'js/' . $uri;
             
             wp_enqueue_script($uid, $uri);
         }

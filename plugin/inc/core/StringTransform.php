@@ -74,5 +74,14 @@ class StringTransform
     {
         return self::removeInverseP(self::restorePBR(self::removeBreakParagraph($subject)));
     }
+    /**
+     * changes slash direction to leaning forward
+     * @param string $path path to normalize slashes in
+     * @return string
+     */
+     static function normalizeSlashes($path)
+     {
+         return str_replace('\\', '/', $path);
+     }
     
 }

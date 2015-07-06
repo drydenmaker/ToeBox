@@ -45,12 +45,14 @@ class TouchTextMenu extends BaseWidget
         $this->defaultValue($args, 'hide_on_small', '');
         $this->defaultValue($args, 'show_only_on_small', '');
         $this->defaultValue($args, 'open_on_small', '');
+        $this->defaultValue($args, 'drop_down_icon', 'chevron-down');
         $this->defaultValue($args, 'extra_header_text', '');
         $this->defaultValue($args, 'extra_header_text_strip_p', true);
         $this->defaultValue($args, 'extra_text', '');
         $this->defaultValue($args, 'extra_text_strip_p', true);
         $this->defaultValue($args, 'sub_text', false);
         $this->defaultValue($args, 'container_class', '');
+        $this->defaultValue($args, 'anamate_width', true);       
 
     }
     

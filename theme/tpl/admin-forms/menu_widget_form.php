@@ -5,10 +5,9 @@ $menus = get_terms( 'nav_menu', array( 'hide_empty' => false ) );
 <div class="widget-content">
 	<p>
 		<label for="<?php echo $widget->get_field_id( 'menu_id' ); ?>"><?php _e( 'Select Menu', 'toebox-basic' ); ?>:</label>
-		<select 
+		<select  class="widefat"
 		  id="<?php echo $widget->get_field_id( 'menu_id' ); ?>" 
-		  name="<?php echo $widget->get_field_name( 'menu_id' ); ?>"
-		  value="<?php echo esc_attr( $menu_id ); ?>">
+		  name="<?php echo $widget->get_field_name( 'menu_id' ); ?>">
 		      <option value="0">- Select -</option><?php
 		  
 		foreach ( $menus as $menu )
@@ -21,3 +20,4 @@ $menus = get_terms( 'nav_menu', array( 'hide_empty' => false ) );
 		?></select>
 	</p>
 </div>
+

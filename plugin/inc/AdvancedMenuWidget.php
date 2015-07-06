@@ -2,10 +2,10 @@
 namespace toebox\plugin\inc;
 use toebox\plugin\inc\BasePlugin;
 
-class TouchTextSlideWidget extends BasePlugin
+class AdvancedMenuWidget extends BasePlugin
 {
     protected $Widgets = array(
-        'TouchTextSlideMenu'
+        'AdvancedMenu'
     );
 
     protected $Scripts = array(

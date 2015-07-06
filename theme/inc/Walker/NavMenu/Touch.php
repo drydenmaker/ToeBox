@@ -84,7 +84,12 @@ class Touch extends AbstractMenu
         return $this->StartElement($id, $class_names) . apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
     }
     
-    public static $ChevronTop = '<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>';
+    public static $IconTemplate = '<span class="glyphicon glyphicon-%s" aria-hidden="true"></span>';
+    
+    public function GetDropDownIcon($icon)
+    {
+        return sprintf(self::$IconTemplate, $icon);
+    }
     
     public function StartBranchElement($item, $depth = 0, $args = array(), $id = 0)
     {
@@ -125,7 +130,7 @@ class Touch extends AbstractMenu
         {
             $title .= '<a href="#" class="'. $toggle .'" '.
                         'data-toggle="dropdown" aria-expanded="false">'.
-                        self::$ChevronTop.
+                        $this->GetDropDownIcon($args->drop_down_icon).
                         '</a>';
             
             if (isset($args->sub_text) && $args->sub_text) $title .= $this->GetSubTitle($item);
@@ -135,7 +140,7 @@ class Touch extends AbstractMenu
         }
         else 
         {
-            $title .= ' &nbsp; ' . self::$ChevronTop;
+            $title .= ' &nbsp; ' . $this->GetDropDownIcon($args->drop_down_icon);
             
             if (isset($args->sub_text) && $args->sub_text) $title .= $this->GetSubTitle($item);
             

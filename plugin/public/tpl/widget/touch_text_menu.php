@@ -12,4 +12,6 @@ toebox\plugins\inc\Walker\NavMenu\TouchText::HandleMenu(array(
     'background'         => $background,
     'sub_text'           => $sub_text,
     'container_class'    => $container_class,
+    'drop_down_icon'     => $drop_down_icon,
+    'anamate_width'      => $anamate_width,
 ));

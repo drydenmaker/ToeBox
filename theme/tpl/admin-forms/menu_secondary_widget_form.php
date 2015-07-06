@@ -20,4 +20,3 @@ $menus = get_terms( 'nav_menu', array( 'hide_empty' => false ) );
 		?></select>
 	</p>
 </div>
-

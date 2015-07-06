@@ -1,5 +1,6 @@
 <?php
 namespace toebox\plugin\inc;
+use toebox\plugin\inc\core\StringTransform;
 require_once  plugin_dir_path(__FILE__) . '/BasePlugin.php';
 require_once  plugin_dir_path(__FILE__) . '/Hook.php';
 
@@ -23,6 +24,10 @@ class PluginController
     
     public static $AdminPath;
     
+    public static $PluginBaseUrl;
+    public static $PluginPublicUrl;
+    public static $PluginAdminUrl;
+    
     public static $Instance;
     /**
      * primary method
@@ -34,8 +39,12 @@ class PluginController
         self::$IncPath = plugin_dir_path( __FILE__ );
         
         self::$PluginPath = plugin_dir_path(realpath(self::$IncPath . '/'));
-        self::$PublicPath = self::$PluginPath . 'public/';
-        self::$AdminPath = self::$PluginPath . 'admin/';
+        self::$PublicPath = StringTransform::normalizeSlashes(self::$PluginPath . 'public/');
+        self::$AdminPath = StringTransform::normalizeSlashes(self::$PluginPath . 'admin/');
+        
+        self::$PluginBaseUrl = plugin_dir_url( __FILE__ );
+        self::$PluginPublicUrl = plugin_dir_url( self::$PublicPath.'.' );
+        self::$PluginAdminUrl = plugin_dir_url( self::$AdminPath.'.' );
     
         $instance = new $pluginClass();
         if (!($instance instanceof PluginController)) throw new \Exception("$pluginClass does not extend PluginController");

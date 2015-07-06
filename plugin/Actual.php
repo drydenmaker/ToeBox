@@ -67,6 +67,6 @@ PluginController::RegisterPlugin('FeaturedStoryPostType');
 PluginController::RegisterPlugin('CarouselPostType');
 PluginController::RegisterPlugin('AccordionMenu');
 PluginController::RegisterPlugin('TouchTextWidget');
-PluginController::RegisterPlugin('TouchTextSlideWidget');
+//PluginController::RegisterPlugin('AdvancedMenuWidget');
 PluginController::Init('\toebox\plugin\Actual');
 

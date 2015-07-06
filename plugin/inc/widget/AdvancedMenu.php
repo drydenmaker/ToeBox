@@ -3,19 +3,19 @@ namespace toebox\plugin\inc\widget;
 require_once plugin_dir_path(__FILE__).'/BaseWidget.php';
 require_once plugin_dir_path(__FILE__).'../Walker/NavMenu/TouchTextSlide.php';
 
-class TouchTextSlideMenu extends BaseWidget
+class AdvancedMenu extends BaseWidget
 {
     // WIDGET SETTINGS 
     /**
      * Base ID
      * @var string
      */
-    public $BaseId = 'toebox_touch_text_slide_menu_widget';
+    public $BaseId = 'toebox_advanced_menu_widget';
     /**
      * Friendly Widget Name
      * @var string
      */
-    public $Name = 'Touch Menu that slides in from the left';
+    public $Name = 'Toebox Advanced Menu';
     /**
      * Friendly Widget Name
      *
@@ -45,6 +45,7 @@ class TouchTextSlideMenu extends BaseWidget
         $this->defaultValue($args, 'hide_on_small', '');
         $this->defaultValue($args, 'show_only_on_small', '');
         $this->defaultValue($args, 'open_on_small', '');
+        $this->defaultValue($args, 'drop_down_icon', 'chevron-down');
         $this->defaultValue($args, 'extra_header_text', '');
         $this->defaultValue($args, 'extra_header_text_strip_p', true);
         $this->defaultValue($args, 'extra_text', '');

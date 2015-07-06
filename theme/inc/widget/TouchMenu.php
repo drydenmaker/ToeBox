@@ -15,7 +15,7 @@ class TouchMenu extends BaseWidget
      * Friendly Widget Name
      * @var string
      */
-    public $Name = 'Horizontal Touch Menu';
+    public $Name = 'Touch Menu';
     /**
      * Friendly Widget Name
      *
@@ -39,6 +39,7 @@ class TouchMenu extends BaseWidget
         $this->defaultValue($args, 'show_only_on_small', '');
         $this->defaultValue($args, 'open_on_small', '');
         $this->defaultValue($args, 'sub_text', false);
+        $this->defaultValue($args, 'drop_down_icon', 'chevron-down');
 
     }
     

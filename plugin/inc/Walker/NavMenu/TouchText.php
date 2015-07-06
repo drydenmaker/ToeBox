@@ -21,12 +21,8 @@ class TouchText extends AbstractMenu
      */
     function GetItemWrap($args)
     {
-        //print __FUNCTION__.'<pre>'.htmlspecialchars(print_r($args, true)).'</pre>';
-        
-        //$text = ($args['extra_text_strip_p']) ? $args['extra_text'] : $args['extra_text'];
-        
         $wrap = parent::GetItemWrap($args);
-        return str_replace('tb-navbar-collapse', 'tb-navbar-collapse-' . self::$foeMenuId,
+        return str_replace('tb-navbar-collapse', 'tb-navbar-touchtext-' . self::$foeMenuId,
                         str_replace('<!-- NAVTEXT -->', '<!-- NAVTEXT CC -->', $wrap));
     }
     
@@ -132,7 +128,7 @@ class TouchText extends AbstractMenu
         {
             $title .= '<a href="#" class="'. $toggle .'" '.
                         'data-toggle="dropdown" aria-expanded="false">'.
-                        self::$ChevronTop.
+                        $this->GetDropDownIcon($args->drop_down_icon).
                         '</a>';
             
             if (isset($args->sub_text) && $args->sub_text) $title .= $this->GetSubTitle($item);
@@ -142,7 +138,7 @@ class TouchText extends AbstractMenu
         }
         else 
         {
-            $title .= ' &nbsp; ' . self::$ChevronTop;
+            $title .= ' &nbsp; ' . $this->GetDropDownIcon($args->drop_down_icon);
             
             if (isset($args->sub_text) && $args->sub_text) $title .= $this->GetSubTitle($item);
             
