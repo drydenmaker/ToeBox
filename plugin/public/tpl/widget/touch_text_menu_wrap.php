@@ -35,7 +35,8 @@ if (isset($args['background']) && !empty($args['background']))
 	   }
 	  ?>
         </div>
-    	<div class="collapse navbar-collapse<?php echo (isset($args['anamate_width']) && $args['anamate_width']) ? ' width' : null; ?>" id="tb-navbar-touchtext-<?php echo $args['menu_id']; ?>">
+        <?php $width = ($args['anamate_width']==='on') ? ' width' : '';?>
+    	<div class="collapse navbar-collapse<?php echo $width ?>" id="tb-navbar-touchtext-<?php echo $args['menu_id']; ?>">
     		<ul class="nav navbar-nav">
     			%3$s
     		</ul>

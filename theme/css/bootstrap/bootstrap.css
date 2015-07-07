@@ -7168,12 +7168,16 @@ fieldset[disabled] .btn-transparent-gray.active {
     margin-right: 12vw;
     left: 0;
     width: 88vw;
+    transform: translateX(-100%);
+    transition: width 0.8s, background-color 0.3s, transform 0.4s;
+    background-color: #ec7225;
   }
   .navbar .width.collapsing {
-    background-color: black;
+    background-color: #ec7225;
   }
   .navbar .width.in {
     background-color: #999999;
+    transform: translateX(0);
   }
   .navbar .width .navbar-nav a {
     width: 100%;

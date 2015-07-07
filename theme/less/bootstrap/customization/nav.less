@@ -98,15 +98,19 @@
             margin-right: 12vw;
             left: 0;
             width: 88vw; 
+            transform: translateX(-100%);
+            transition: width 0.0s, background-color 0.4s, transform .3s;
+            background-color: @brand-primary;
 
           &.collapsing
           {
-              background-color: black;
+            background-color: black;  
           }
 
           &.in
           {
               background-color: @gray-dark;
+              transform: translateX(0);
           }
 
           .navbar-nav

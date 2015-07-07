@@ -5,7 +5,7 @@
 
     <input <?php checked($anamate_width, 'on'); ?>
 		id="<?php echo $widget->get_field_id( 'anamate_width' ); ?>"
-		name="<?php echo $widget->get_field_name( 'anamate_width' ); ?>" type="checkbox" >
+		name="<?php echo $widget->get_field_name( 'anamate_width' ); ?>" type="checkbox" value='on'>
 		
 	<small>(display link titles as sub-text)</small>
 	</p>
