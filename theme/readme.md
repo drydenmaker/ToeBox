@@ -24,6 +24,11 @@ Because it is based on Bootstrap you are able to use all its elements and styles
 Install WP-Less and you will be able to create completely custom colour schemes right from WordPress. 
 
 == CHANGELOG ==
+v1.3.2
+moved advanced settings page to plugin (back to Customizer only)
+cleaning up theme files
+removing direct writing of style to header
+
 v1.3.1
 adding title format template to advanced settings
 alowing bootstrap html attributes

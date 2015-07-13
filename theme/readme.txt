@@ -1,4 +1,4 @@
-===Bootstrap Basic===
+===Toebox===
 Author: Alton Crossley
 Author URI: http://getToeBox.com
 Description: Flexible Bootstrap v.3 theme with highly customizable colours and layout.
@@ -9,9 +9,11 @@ Tags: orange, white, gray, dark, one-column, two-columns, three-columns, left-si
 ToeBox WordPress theme, Copyright (C) 2015
 ToeBox WordPress theme is licensed under the MIT.
 
-ToeBox Uses Bootstrap http://getbootstrap.com/, licensed under Apache 2.0.
-ToeBox Uses Modernizr http://modernizr.com, licensed under MIT.
-ToeBox Uses TGM Plugin Activation https://github.com/thomasgriffin/TGM-Plugin-Activation, licensed under GPL v2 or later
+== License ==
+ToeBox Uses 
+Bootstrap http://getbootstrap.com/ Copyright (c) 2011-2015 Twitter, Inc, licensed under MIT. https://raw.githubusercontent.com/twbs/bootstrap/master/LICENSE
+Modernizr http://modernizr.com, licensed under MIT. http://modernizr.com/license/
+TGM Plugin Activation https://github.com/thomasgriffin/TGM-Plugin-Activation, licensed under GPL v2 or later https://raw.githubusercontent.com/TGMPA/TGM-Plugin-Activation/develop/LICENSE.md
 
 ==Description==
 
@@ -24,6 +26,11 @@ Because it is based on Bootstrap you are able to use all its elements and styles
 Install WP-Less and you will be able to create completely custom colour schemes right from WordPress. 
 
 == CHANGELOG ==
+v1.3.2
+moved advanced settings page to plugin (back to Customizer only)
+cleaning up theme files
+removing direct writing of style to header
+
 v1.3.1
 adding title format template to advanced settings
 alowing bootstrap html attributes

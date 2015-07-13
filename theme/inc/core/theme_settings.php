@@ -48,7 +48,7 @@ function toebox_theme_options_page(  ) {
 
 add_action( 'admin_init', function (  ) {
     
-    
+    //                      id                      title       callback    page
     add_settings_section("toeboxSettingsSection", "Global Text", null, "theme-options");
     
     // TOEBOX_MORE_TEXT

@@ -86,22 +86,35 @@ add_action( 'wp_enqueue_scripts', function()
         wp_enqueue_style('bootstrap', $templateDir. '/css/bootstrap/bootstrap.min.css');
         wp_enqueue_style('bootstrap-theme', $templateDir. '/css/bootstrap/bootstrap-theme.min.css');
     }
-
-    wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
     
-    wp_enqueue_style('tb-google-fonts', 'https://fonts.googleapis.com/css?family=' . \toebox\inc\ToeBox::$Settings[TOEBOX_GOOGLE_FONTS]);
+    wp_enqueue_script('html5shiv_ielt9', $templateDir . '/js/vendor/html5shiv.min.js', array(), '3.7.2', false);
+    wp_enqueue_script('modernizr_ielt9', $templateDir . '/js/vendor/respond.min.js', array(), '1.4.2', false);
 
-    wp_enqueue_script('bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array(), null, true);
+    // external fonts
+    // wp_enqueue_style('fontawesome-style', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+    wp_enqueue_style('tb-google-fonts', '//fonts.googleapis.com/css?family=' . \toebox\inc\ToeBox::$Settings[TOEBOX_GOOGLE_FONTS]);
+
+    // them scripts
+    wp_enqueue_script('bootstrap', $templateDir. '/js/bootstrap.min.js', array('jquery'), null, true);
     wp_enqueue_script('modernizr', $templateDir . '/js/vendor/modernizr.min.js', array('jquery'), null, true);
     wp_enqueue_script('toebox', $templateDir . '/js/toebox.js', array('jquery', 'bootstrap'), null, true);
 
 });// toeboxBasicEnqueueScripts
 
+// add ie conditional on tags with _ielt9 suffix
+add_filter('script_loader_tag', function($tag, $handle){
+    $needle = '_ielt9';
+    if (($temp = strlen($handle) - strlen($needle)) >= 0 && strpos($handle, $needle, $temp) !== FALSE)
+    {
+        $tag = "<!--[if lt IE 9]>$tag<![endif]-->";
+    }
+    return $tag;
+}, null, 2);
+
 
 
 require_once get_template_directory() . '/inc/core/search.php';
 require_once get_template_directory() . '/inc/core/post_status.php';
-require_once get_template_directory() . '/inc/core/theme_settings.php';
 require_once get_template_directory() . '/inc/core/theme_customizer.php';
 require_once get_template_directory() . '/inc/core/upload_mimes.php';
 require_once get_template_directory() . '/inc/core/widgets.php';
@@ -172,6 +185,8 @@ if (class_exists('WPLessPlugin', false) && toebox\inc\ToeBox::$Settings[TOEBOX_U
 
     // COLORS
     $less->addVariable('body-bg', '#'.get_theme_mod( 'background_color', '333' ));
+    
+    $less->addVariable('tb-main-bg-color', toebox\inc\Toebox::$Settings[TOEBOX_CONTENT_BACKGROUND_COLOR]);
     
     $less->addVariable('brand-primary', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_PRIMARY]); //EC7225
     $less->addVariable('brand-success', \toebox\inc\ToeBox::$Settings[TOEBOX_LESS_COLOR_SUCCESS]); //18987B

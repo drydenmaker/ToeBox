@@ -7169,11 +7169,11 @@ fieldset[disabled] .btn-transparent-gray.active {
     left: 0;
     width: 88vw;
     transform: translateX(-100%);
-    transition: width 0.8s, background-color 0.3s, transform 0.4s;
+    transition: width 0s, background-color 0.4s, transform 0.3s;
     background-color: #ec7225;
   }
   .navbar .width.collapsing {
-    background-color: #ec7225;
+    background-color: black;
   }
   .navbar .width.in {
     background-color: #333333;
@@ -7644,6 +7644,9 @@ table .table {
   text-align: justify;
   margin: 10px;
   font-size: 12px;
+}
+.tb-main {
+  background-color: #222222;
 }
 /* =Page Semantic Layout
 -------------------------------------------------------------- */

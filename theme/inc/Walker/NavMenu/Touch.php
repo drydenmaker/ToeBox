@@ -128,10 +128,13 @@ class Touch extends AbstractMenu
         // decide if the link should be split
         if ($atts['href'] != '#')
         {
-            $title .= '<a href="#" class="'. $toggle .'" '.
-                        'data-toggle="dropdown" aria-expanded="false">'.
-                        $this->GetDropDownIcon($args->drop_down_icon).
-                        '</a>';
+            if (@$args->drop_down_icon)
+            {
+                $title .= '<a href="#" class="'. $toggle .'" '.
+                            'data-toggle="dropdown" aria-expanded="false">'.
+                            $this->GetDropDownIcon($args->drop_down_icon).
+                            '</a>';
+            }
             
             if (isset($args->sub_text) && $args->sub_text) $title .= $this->GetSubTitle($item);
             
@@ -140,7 +143,10 @@ class Touch extends AbstractMenu
         }
         else 
         {
-            $title .= ' &nbsp; ' . $this->GetDropDownIcon($args->drop_down_icon);
+            if (@$args->drop_down_icon)
+            {
+                $title .= ' &nbsp; ' . $this->GetDropDownIcon($args->drop_down_icon);
+            }
             
             if (isset($args->sub_text) && $args->sub_text) $title .= $this->GetSubTitle($item);
             
