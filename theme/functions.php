@@ -119,8 +119,6 @@ require_once get_template_directory() . '/inc/core/theme_customizer.php';
 require_once get_template_directory() . '/inc/core/upload_mimes.php';
 require_once get_template_directory() . '/inc/core/widgets.php';
 
-require_once get_template_directory() . '/inc/core/plugins.php';
-
 add_action( 'after_setup_theme', function()
 {
     load_theme_textdomain('toebox-basic', get_template_directory() . '/languages');
