@@ -51,6 +51,8 @@ class FeaturedStoryPostType extends BasePlugin
                     'register_meta_box_cb' => array($this, 'AddMetaboxes'),
         );
         
+        $this->PostTypeTemplates[self::POST_TYPE] = 'featured_story/layout_page.php';
+        
         $this->AddAction('save_post', 'SavePost');
         
     }

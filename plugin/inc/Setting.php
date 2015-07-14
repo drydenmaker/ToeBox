@@ -29,15 +29,20 @@ class Setting
      */
     public $Type;
     /**
-     * callback for filtering values from the settings form
+     * callback for rendering input fields from the settings form
      * @var string|function
      */
-    public $SanitizeCallback;
+    public $RenderCallBack;
     /**
      * whitelist filter of values
      * @var array of mixed
      */
     public $Choices = array();
+    /**
+     * description of setting value
+     * @var string
+     */
+    public $Description;
 
     function __construct()
     {
@@ -50,16 +55,18 @@ class Setting
      * @param string $label
      * @param string $type
      * @param mixed $default
-     * @param string|function $sanitizeCallback
+     * @param string|function $renderCallback
      */
-    public static function Create($id, $label, $type, $default, $sanitizeCallback)
+    public static function Create($id, $label, $type, $default, $renderCallback, $description = null)
     {
         $instance = new self();
         $instance->Id = $id;
         $instance->Label = $label;
         $instance->Type = $type;
         $instance->DefaultValue = $default;
-        $instance->SanitizeCallback = $sanitizeCallback;
+        $instance->RenderCallBack = $renderCallback;
+        
+        $instance->Description = $description;
         
         return $instance;
     }

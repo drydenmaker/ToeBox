@@ -1,0 +1,1 @@
+<input type="$type" name='<?php print $name ?>' value=<?php print htmlentities($value)?> style="width:90%; display: block;"/>

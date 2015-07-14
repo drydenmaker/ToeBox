@@ -7025,6 +7025,12 @@ fieldset[disabled] .btn-transparent-gray.active {
 .panel .panel-title > a:focus {
   outline: none;
 }
+.panel.slick-sandwich h4,
+.panel.slick-sandwich h4 a {
+  font-family: nimbus-sans-condensed, "HelveticaNeue-CondensedBold", "Helvetica Neue", Helvetica, sans-serif;
+  color: #fff;
+  font-weight: bold;
+}
 .accordion_container_class .tb-accordion-leaf {
   padding: 10px 15px;
   border-bottom: 1px solid transparent;

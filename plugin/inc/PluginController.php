@@ -3,11 +3,11 @@ namespace toebox\plugin\inc;
 use toebox\plugin\inc\core\StringTransform;
 require_once  plugin_dir_path(__FILE__) . '/BasePlugin.php';
 require_once  plugin_dir_path(__FILE__) . '/Hook.php';
+require_once  plugin_dir_path(__FILE__) . '/Setting.php';
+require_once  plugin_dir_path(__FILE__) . '/core/Forms.php';
 
 class PluginController
 {
-    protected static $TagSpace = 'toebox_plugin';
-    
     protected static $Version = '1.0.1';
     
     protected static $Plugins = array();
@@ -29,6 +29,12 @@ class PluginController
     public static $PluginAdminUrl;
     
     public static $Instance;
+    
+    public $PluginSlug;
+    public $PluginTitle;
+    
+    
+    
     /**
      * primary method
     */
@@ -52,6 +58,7 @@ class PluginController
         register_deactivation_hook( __FILE__, array($instance, 'Deactivate') );
         
         add_action('admin_menu', array($instance, 'RegisterSettingsPage'));
+        add_action('admin_init', array($instance, 'ProcessSettings' ));
         
         $instance->LoadPlugins();
     }
@@ -83,9 +90,7 @@ class PluginController
     }
 // ---------------------------------------------------------------------------- local vars and methods    
 
-    public $PluginSlug = "toebox-plugin";
-    public $PluginTitle = "Toebox Plugin";
-    public $SettingsPageTitle = "Tobox Plugin Settings";
+    public $SettingsPageTitle = "Settings";
     public $SettingsDashIcon = "dashicons-admin-tools";
     public $SettingsCapability = 'manage_options';
     
@@ -128,22 +133,86 @@ class PluginController
         $this->initPrimarySettings();
         $this->initPluginSettings();
         
-        add_menu_page($this->SettingsPageTitle,
-            $this->PluginTitle,
-            $this->SettingsCapability,
-            $this->PluginSlug,
-            array($this, 'RenderSettingsPage'));
+        // only register the page if there are settings to show
+        if (count($this->settings['main']['primary'] > 1) ||
+                        count($this->settings['main']) > 1 ||
+                        count($this->settings) > 1)
+        {
+            add_options_page($this->SettingsPageTitle,
+                $this->SettingsPageTitle,
+                $this->SettingsCapability,
+                $this->PluginSlug,
+                array($this, 'RenderSettingsPage'));
+        }
     }
     /**
      * initialize primary settings
      */
     public function initPrimarySettings()
     {
-        // OVERWRITE for your plugin    
+        // OVERLOAD THIS
     }
+    /**
+     * initialize primary settings
+     */
+    public function ProcessSettings()
+    {
+        $this->ProcessSettingsArray($this->settings);
+    }
+    
+    public function ProcessSettingsArray($settings)
+    {
+        foreach ($settings as $tabKey => $sections)
+        {
+        
+            if ($tabKey != 'title' && is_array($sections))
+                foreach ($sections as $sectionKey => $settings)
+                {
+                    $this->registerSettingsTabSection($tabKey, $sectionKey, $settings);
+        
+                    if ($sectionKey != 'title' && is_array($settings))
+                        foreach($settings as $setting => $settingObj)
+                        {
+                            if ($setting != 'title')
+                                $this->registerSettingField($setting, $settingObj, $sectionKey);
+                        }
+                }
+        }
+    }
+
+    protected function registerSettingsTabSection($tabKey, $sectionKey, $values)
+    {
+        $title = (array_key_exists('title', $values)) ? $values['title'] : $sectionKey;
+        
+        add_settings_section($sectionKey, __( $title, 'toebox-basic' ), function() use($title){
+            echo "<hr><h3>$title</h3>";
+        }, $this->PluginSlug);
+        
+    }
+   
+    protected function registerSettingField($setting, \toebox\plugin\inc\Setting $settingObj, $sectionKey)
+    {
+        register_setting($sectionKey, $settingObj->Id);
+        add_settings_field(
+                        $settingObj->Id,
+                        __( $settingObj->Label, 'toebox-basic' ),
+                        
+                        $settingObj->RenderCallBack,
+                        
+                        $this->PluginSlug,
+                        $sectionKey,                        
+                        
+                        array($settingObj, get_option($settingObj->Id))
+        );
+        
+    }
+    
     public function initPluginSettings()
     {
-        //TODO: cycle through plugins and get their settings
+        foreach(self::$PluginInstancess as $plugin)
+        {
+            $this->settings = array_merge($this->settings, $plugin->Settings);
+        }
     }
     /**
      * capture the output of a lamda function
@@ -170,12 +239,19 @@ class PluginController
      *     Setting
      * @var array
      */
-    protected $settings = array('main' => array('primary' => array()));
+    protected $settings = array('main' => array('primary' => array('title' => 'Primary Settings')));
     /**
      * display the actual settings page
      */
     public function RenderSettingsPage()
     {
+        if(isset($_GET['settings-updated']) && $_GET['settings-updated'])
+        {
+        
+            // do stuff on save
+        
+        }
+        
         include self::$AdminPath . 'tpl/settings.php';
     }
     
@@ -185,8 +261,8 @@ class PluginController
     }
     
     public function addPrimarySetting(Setting $setting)
-    {
-        $this->settings['main']['primary'][$setting->Id] = $setting;        
+    {  
+        $this->addSetting($setting);
     }
     
     public function addSetting(Setting $setting, $page = 'main', $section = 'primary')
@@ -243,5 +319,42 @@ class PluginController
                         str_replace('\\', '/', self::$PluginPath), null,
                         str_replace('\\', '/', $fileName));
     }
+    
+    //---------------------------------------------------------------------------- FORM RENDER FUNCTIONS
+    
+    public function RenderCheckbox($args)
+    {
+        $setting = $args[0];
+        $currentValue = $args[1];
+        
+        print \toebox\plugin\inc\core\Forms::FormatCheckbox(true, $setting->Id, $currentValue);
+//         print \toebox\plugin\inc\core\Forms::FormatLabel($setting->Label, $setting->Id);
+        print $setting->Description;
+        
+    }
+    
+
+    public function RenderInput($args)
+    {
+        $setting = $args[0];
+        $currentValue = $args[1];
+    
+//         print \toebox\plugin\inc\core\Forms::FormatLabel($setting->Label, $setting->Id);
+        print \toebox\plugin\inc\core\Forms::FormatTextbox($setting->Id, $currentValue);
+        print $setting->Description;
+        
+    }
+    
+    public function RenderTextArea($args)
+    {
+        $setting = $args[0];
+        $currentValue = $args[1];
+    
+//         print \toebox\plugin\inc\core\Forms::FormatLabel($setting->Label, $setting->Id);
+        print \toebox\plugin\inc\core\Forms::FormatTextArea($setting->Id, $currentValue);
+        print $setting->Description;
+        
+    }
+    
     
 }

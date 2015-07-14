@@ -57,6 +57,33 @@ class Forms
     {
         return plugin_dir_path(__FILE__) . '../../' . self::$FormTemplatePrefix;
     }
+    
+    public static function FormatTextArea($name, $value)
+    {
+        ob_start();
+        include self::GetPluginTemplateDir() . '/control_textarea.php';
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+    
+    public static function FormatTextbox($name, $value, $type = "text")
+    {
+        ob_start();
+        include self::GetPluginTemplateDir() . '/control_textbox.php';
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+    
+    public static function FormatLabel($label, $for)
+    {
+        ob_start();
+        include self::GetPluginTemplateDir() . '/control_label.php';
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
 }
 
 ?>

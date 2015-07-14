@@ -41,32 +41,41 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class Actual extends \toebox\plugin\inc\PluginController
 {
-    const TOEBOX_PRIMARY_SETTINGS_TAB = 'toebox_primary';
+    const TOEBOX_ADVANCED_SETTINGS_TAB = 'toebox_advanced';
     const TOEBOX_CAROUSEL_SETTINGS_TAB = 'toebox_carousel';
     const TOEBOX_FEATURED_SETTINGS_TAB = 'toebox_featured';
     
     public $PluginSlug = "toebox_plugin";
     public $PluginTitle = "Toebox Plugin";
-    public $SettingsPageLink = "Tobox Plugin Settings";
-        
+    
+    public $SettingsPageTitle = "Toebox";
+            
     public function initPrimarySettings()
     {
         $this->addPrimarySetting(
-                   Setting::Create('enable_featured', 'Enable Featured Stories', 'checkbox', 'false', 'checkbox'));
+                   Setting::Create('enable_advanced', 'Enable Advanced Toebox Settings', 'checkbox', 'false', array($this, 'RenderCheckbox')));
         $this->addPrimarySetting(
-                   Setting::Create('enable_carousel', 'Enable Featured Stories', 'checkbox', 'false', 'checkbox'));
+                   Setting::Create('enable_carousel', 'Enable Carousel Post Type', 'checkbox', 'false', array($this, 'RenderCheckbox')));
         $this->addPrimarySetting(
-                   Setting::Create('enable_featured', 'Enable Featured Stories', 'checkbox', 'false', 'checkbox'));
+                   Setting::Create('enable_featured', 'Enable Featured Stories Post Type', 'checkbox', 'false', array($this, 'RenderCheckbox')));
 
     }
         
 }
 
 PluginController::RegisterPlugin('BootstrapShortcodes');
-PluginController::RegisterPlugin('FeaturedStoryPostType');
-PluginController::RegisterPlugin('CarouselPostType');
+
+if (get_option('enable_advanced'))    
+    PluginController::RegisterPlugin('ToeBoxAdvanced');
+if (get_option('enable_carousel'))
+    PluginController::RegisterPlugin('CarouselPostType');
+if (get_option('enable_featured'))
+    PluginController::RegisterPlugin('FeaturedStoryPostType');
+
+    
 PluginController::RegisterPlugin('AccordionMenu');
 PluginController::RegisterPlugin('TouchTextWidget');
 //PluginController::RegisterPlugin('AdvancedMenuWidget');
+
 PluginController::Init('\toebox\plugin\Actual');
 

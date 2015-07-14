@@ -86,7 +86,15 @@ abstract class BasePlugin
      */
     protected $PostTypes = array();
     /**
+     * List of post type templates     * 
+     * post-type-key -> path to public template
+     * note: post-type-key corrisponds to key in PostTypes
+     * @var array
+     */
+    protected $PostTypeTemplates = array();
+    /**
      * required initialization function
+     * executed before any registering happens
      * @since 1.0.0
      * @access protected
      */
@@ -307,6 +315,23 @@ abstract class BasePlugin
         {
             register_post_type($uid, $params);
         }
+        
+        if (count($this->PostTypes)) add_filter("single_template", array($this, 'MapSingleTemplates'));        
+    }
+    /**
+     * callback used as a hook to remap a template to a single post type
+     * 
+     * @param unknown $singleTemplate
+     * @return string
+     */
+    public final function MapSingleTemplates($singleTemplate)
+    {
+        global $post;
+        if (array_key_exists($post->post_type, $this->PostTypeTemplates))
+        {
+            $singleTemplate = PluginController::$PublicPath . 'tpl/' . $this->PostTypeTemplates[$post->post_type];
+        }
+        return $singleTemplate;
     }
     /**
      * admin initialize scripts styles and hooks
@@ -341,45 +366,6 @@ abstract class BasePlugin
     );
     
     /**
-     * multi-level array
-     * 
-     * page
-     *   section
-     *     Setting
-     *     
-     * @var array
-     */
-    public $Settings = array();
-
-    public function addSetting(Setting $setting, $page = 'main', $section = 'primary')
-    {
-        $this->GetSettingSection($section, $page);
-        $this->Settings[$page][$section][$setting->Id] = $setting;
-    }
-    
-    public function GetSettingPage($key)
-    {
-        if (!array_key_exists($key, $this->Settings))
-        {
-            $this->Settings[$key] = array();
-        }
-    
-        return $this->Settings[$key];
-    }
-    
-    public function GetSettingSection($section, $page = 'main')
-    {
-        $pageArray = $this->GetSettingPage($page);
-    
-        if (!array_key_exists($section, $pageArray))
-        {
-            $this->Settings[$page][$section] = array();
-        }
-    
-        return $pageArray[$section];
-    }
-
-    /**
      * 
      * 
      * @param array $field
@@ -395,6 +381,8 @@ abstract class BasePlugin
         register_setting($field['section'], $field['id'], $validator);
         
     }
+    
+    
     /**
      * validate settings using settings definition
      * 
@@ -566,6 +554,80 @@ abstract class BasePlugin
         return \toebox\plugin\inc\core\StringTransform::removeAndRestorePBR($subject);
     }
     
+    // ------------------------------------------------------------------------ SETTINGS
+
+    /**
+     * multi-level array
+     *
+     * page
+     *   section
+     *     Setting
+     *
+     * @var array
+     */
+    public $Settings = array();
+    
+    public function AddSetting(Setting $setting, $page = 'main', $section = 'primary')
+    {
+        $this->GetSettingSection($section, $page);
+        $this->Settings[$page][$section][$setting->Id] = $setting;
+    }
+    
+    public function GetSettingPage($key)
+    {
+        if (!array_key_exists($key, $this->Settings))
+        {
+            $this->Settings[$key] = array();
+        }
+    
+        return $this->Settings[$key];
+    }
+    
+    public function GetSettingSection($section, $page = 'main')
+    {
+        $pageArray = $this->GetSettingPage($page);
+    
+        if (!array_key_exists($section, $pageArray))
+        {
+            $this->Settings[$page][$section] = array();
+        }
+    
+        return $this->Settings[$page][$section];
+    }
+    
+    //---------------------------------------------------------------------------- FORM RENDER FUNCTIONS
+    
+    public function RenderCheckbox($args)
+    {
+        $setting = $args[0];
+        $currentValue = $args[1];
+    
+        print \toebox\plugin\inc\core\Forms::FormatCheckbox(true, $setting->Id, $currentValue);
+//         print \toebox\plugin\inc\core\Forms::FormatLabel($setting->Label, $setting->Id);
+        print $setting->Description;
+    
+    }
+    
+    public function RenderInput($args)
+    {
+        $setting = $args[0];
+        $currentValue = $args[1];
+        
+//         print \toebox\plugin\inc\core\Forms::FormatLabel($setting->Label, $setting->Id);
+        print \toebox\plugin\inc\core\Forms::FormatTextbox($setting->Id, $currentValue);
+        print $setting->Description;
+    }
+    
+    public function RenderTextArea($args)
+    {
+        $setting = $args[0];
+        $currentValue = $args[1];
+        
+//         print \toebox\plugin\inc\core\Forms::FormatLabel($setting->Label, $setting->Id);
+        print \toebox\plugin\inc\core\Forms::FormatTextArea($setting->Id, $currentValue);
+        print $setting->Description;
+    }
+        
 }
 
 ?>
