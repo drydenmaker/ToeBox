@@ -9,5 +9,8 @@ We started with Bootstrap, extracted colors to it's own file with light and dark
 2. Click 'Add New'
 3. Search "toebox"
 4. click install on the ToeBox thumbnail
+5. Ejoy
+
+*The plugin is not yet hosted so it is a manual install, recomended for the experienced only.
 
 more info: https://wordpress.org/themes/toebox/
